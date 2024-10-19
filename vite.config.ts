@@ -1,5 +1,8 @@
+import legacy from '@vitejs/plugin-legacy';
 import react from '@vitejs/plugin-react';
+import { visualizer } from 'rollup-plugin-visualizer';
 import { ConfigEnv, defineConfig, loadEnv, UserConfig } from 'vite';
+import viteCompression from 'vite-plugin-compression';
 
 /**
  * https://vitejs.dev/config/
@@ -28,7 +31,24 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
       port: 3000,
       open: true,
     },
-    plugins: [react()],
+    plugins: [
+      react(),
+      // 打包后开启资源大小分析页面
+      visualizer({ open: true }),
+      // 兼容低版本浏览器
+      legacy({
+        targets: ['chrome 52', 'Android > 39', 'iOS >= 10.3', 'iOS >= 10.3'], // 需要兼容的目标列表，可以设置多个
+        additionalLegacyPolyfills: ['regenerator-runtime/runtime'], // 面向IE11时需要此插件
+      }),
+      // 开启 gzip 压缩
+      viteCompression({
+        verbose: true,
+        disable: false,
+        threshold: 10240,
+        algorithm: 'gzip',
+        ext: '.gz',
+      }),
+    ],
     resolve: {
       // 路径别名
       alias: {
@@ -40,10 +60,13 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
       minify: 'terser',
       terserOptions: {
         compress: {
+          // 移除生产环境的 debug 和 console
           drop_console: true,
           drop_debugger: true,
         },
       },
+      // 移除生产环境的 sourcemap
+      sourcemap: false,
     },
     optimizeDeps: {
       // 依赖预构建( esbuild ), vite 会将预构建存放在 node_modules/.vite 中
