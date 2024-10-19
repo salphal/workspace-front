@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import classNames from 'classnames';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import styles from './index.module.scss';
 
@@ -14,7 +14,10 @@ const Overview: React.FC<OverviewProps> = (props: OverviewProps) => {
 
   return (
     <React.Fragment>
-      <div className={classNames([styles.overview])}>{t('title')}</div>
+      <div className={classNames([styles.overview])}>
+        <h1>overview page</h1>
+        {t('title')}
+      </div>
     </React.Fragment>
   );
 };
