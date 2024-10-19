@@ -130,6 +130,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
           entryFileNames: 'js/[name]-[hash].js', // 包的入口文件名称
           assetFileNames: '[ext]/[name]-[hash].[ext]', // 资源文件像 字体，图片等
           manualChunks(id) {
+            // 将 node_modules 打成一个包, 好方便缓存
             if (id.includes('node_modules')) {
               return 'vendor';
             }
