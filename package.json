@@ -35,7 +35,6 @@
     "react-dom": "^18.2.0",
     "react-i18next": "^15.0.3",
     "react-router-dom": "^6.22.3",
-    "recoil": "^0.7.7",
     "rehype-sanitize": "^6.0.0"
   },
   "devDependencies": {
@@ -52,7 +51,6 @@
     "@types/mockjs": "^1.0.10",
     "@types/react": "^18.2.64",
     "@types/react-dom": "^18.2.21",
-    "@types/recoil": "^0.0.9",
     "@types/uuid": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
