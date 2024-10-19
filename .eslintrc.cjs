@@ -15,7 +15,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint', 'prettier'],
+  plugins: ['@typescript-eslint', 'prettier', 'unused-imports'],
   rules: {
     // 'indent': ['error', 2],
     quotes: ['error', 'single'],
@@ -27,5 +27,18 @@ module.exports = {
 
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/no-unused-vars': 0,
+
+    // 保存时自动去除未使用的引用
+    'no-unused-vars': 'off', // or "@typescript-eslint/no-unused-vars": "off",
+    'unused-imports/no-unused-imports': 'error',
+    'unused-imports/no-unused-vars': [
+      'warn',
+      {
+        vars: 'all',
+        varsIgnorePattern: '^_',
+        args: 'after-used',
+        argsIgnorePattern: '^_',
+      },
+    ],
   },
 };
