@@ -1,5 +1,5 @@
 import react from '@vitejs/plugin-react';
-import { ConfigEnv, defineConfig, loadEnv, optimizeDeps, UserConfig } from 'vite';
+import { ConfigEnv, defineConfig, loadEnv, UserConfig } from 'vite';
 
 /**
  * https://vitejs.dev/config/
@@ -53,7 +53,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
       preprocessorOptions: {
         scss: {
           // 加入全局变量( 不要加入样式，否则在最中产物中会重复出现 )
-          // additionalData: `@import '@/styles/variables.scss';`,
+          additionalData: "@import '@/styles/variables.scss';",
         },
       },
       modules: {
