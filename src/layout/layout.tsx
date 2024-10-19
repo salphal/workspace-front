@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { RedoOutlined, UploadOutlined } from '@ant-design/icons';
 import { ProLayout } from '@ant-design/pro-components';
-import { Button } from 'antd';
+import { Button, Spin } from 'antd';
 import classNames from 'classnames';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -70,7 +70,7 @@ const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
         )}
         layout="top"
       >
-        {props.children}
+        <Suspense fallback={<Spin size={'large'} />}>{props.children}</Suspense>
       </ProLayout>
     </React.Fragment>
   );
