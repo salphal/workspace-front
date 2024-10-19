@@ -30,3 +30,4 @@ components/*/*.jsx
 .history
 **/*.yml
 *.html
+pnpm-lock.yaml
