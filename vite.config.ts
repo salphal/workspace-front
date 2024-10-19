@@ -1,8 +1,13 @@
 import legacy from '@vitejs/plugin-legacy';
 import react from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
+import AutoImport from 'unplugin-auto-import/vite';
+import { ArcoResolver } from 'unplugin-vue-components/resolvers';
+import Components from 'unplugin-vue-components/vite';
 import { ConfigEnv, defineConfig, loadEnv, UserConfig } from 'vite';
+import viteCDNPlugin from 'vite-plugin-cdn-import';
 import viteCompression from 'vite-plugin-compression';
+import viteImagemin from 'vite-plugin-imagemin';
 
 /**
  * https://vitejs.dev/config/
@@ -33,6 +38,17 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
     },
     plugins: [
       react(),
+      AutoImport({
+        resolvers: [ArcoResolver()],
+      }),
+      // 按需引入组件库
+      Components({
+        resolvers: [
+          ArcoResolver({
+            sideEffect: true,
+          }),
+        ],
+      }),
       // 打包后开启资源大小分析页面
       visualizer({ open: true }),
       // 兼容低版本浏览器
@@ -40,7 +56,11 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
         targets: ['chrome 52', 'Android > 39', 'iOS >= 10.3', 'iOS >= 10.3'], // 需要兼容的目标列表，可以设置多个
         additionalLegacyPolyfills: ['regenerator-runtime/runtime'], // 面向IE11时需要此插件
       }),
-      // 开启 gzip 压缩
+      // 开启 gzip 压缩, 服务端 nginx 还需要配置一下才能生效
+      // http {
+      //   gzip_static on;
+      //   gzip_proxied any;
+      // }
       viteCompression({
         verbose: true,
         disable: false,
@@ -48,6 +68,45 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
         algorithm: 'gzip',
         ext: '.gz',
       }),
+      // 图片压缩
+      viteImagemin({
+        gifsicle: {
+          optimizationLevel: 7,
+          interlaced: false,
+        },
+        optipng: {
+          optimizationLevel: 7,
+        },
+        mozjpeg: {
+          quality: 20,
+        },
+        pngquant: {
+          quality: [0.8, 0.9],
+          speed: 4,
+        },
+        svgo: {
+          plugins: [
+            {
+              name: 'removeViewBox',
+            },
+            {
+              name: 'removeEmptyAttrs',
+              active: false,
+            },
+          ],
+        },
+      }),
+      // 开启 cdn
+      // viteCDNPlugin({
+      //   // 需要 CDN 加速的模块
+      //   modules: [
+      //     {
+      //       name: 'lodash',
+      //       var: '_',
+      //       path: `https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js`
+      //     }
+      //   ]
+      // })
     ],
     resolve: {
       // 路径别名
@@ -63,6 +122,18 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
           // 移除生产环境的 debug 和 console
           drop_console: true,
           drop_debugger: true,
+        },
+      },
+      rollupOptions: {
+        output: {
+          chunkFileNames: 'js/[name]-[hash].js', // 引入文件名的名称
+          entryFileNames: 'js/[name]-[hash].js', // 包的入口文件名称
+          assetFileNames: '[ext]/[name]-[hash].[ext]', // 资源文件像 字体，图片等
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              return 'vendor';
+            }
+          },
         },
       },
       // 移除生产环境的 sourcemap
