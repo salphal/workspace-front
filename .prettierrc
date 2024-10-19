@@ -5,6 +5,9 @@
   "trailingComma": "all",
   "printWidth": 100,
   "proseWrap": "never",
+  "tabWidth": 2,
+  "endOfLine": "auto",
+  "arrowParens": "always",
   "importOrder": ["^(react|react-dom)$", "^([a-z]|@[a-z])", "", ".*"],
   "plugins": ["@ianvs/prettier-plugin-sort-imports"],
   "overrides": [
