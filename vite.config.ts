@@ -1,5 +1,7 @@
 import legacy from '@vitejs/plugin-legacy';
 import react from '@vitejs/plugin-react';
+import autoprefixer from 'autoprefixer';
+import postCssPxToRem from 'postcss-pxtorem';
 import { visualizer } from 'rollup-plugin-visualizer';
 import AutoImport from 'unplugin-auto-import/vite';
 import { ArcoResolver } from 'unplugin-vue-components/resolvers';
@@ -180,10 +182,39 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
       exclude: [''],
     },
     css: {
+      postcss: {
+        // 添加浏览器兼容前缀
+        plugins: [
+          autoprefixer(),
+          /**
+           * 将 px 单位转换为视图单位(vw, vh, vmin, vmax)的 PostCSS 插件
+           * @see https://github.com/lkxian888/postcss-px-to-viewport-8-plugin#readme
+           */
+          postCssPxToRem({
+            // 换算基数( 根元素字体大小 )
+            rootValue: 16,
+            // 允许REM单位增长到的十进制数字, 小数点后保留的位数
+            unitPrecision: 5,
+            // 可以从 px 变为 rem 的属性
+            propList: ['*'], // 所有 属性值 都转 px
+            // 默认false，可以( reg )利用正则表达式排除某些文件夹的方法，例如 /(node_module)/
+            // 如果想把前端UI框架内的 px 也转换成 rem, 请把此属性设为默认值
+            exclude: /(node_module)/,
+            //( 布尔值 )允许在媒体查询中转换px
+            mediaQuery: false,
+            // 要忽略并保留为 px 的选择器, 本项目我是用的 vant ui 框架，所以忽略他
+            selectorBlackList: [''],
+            // 设置要替换的最小像素值
+            minPixelValue: 1,
+          }),
+        ],
+      },
       preprocessorOptions: {
         scss: {
           // 加入全局变量( 不要单独引入该文件样式，否则在最中产物中会重复出现 )
+          // 引入多个文件以；分割
           additionalData: "@import '@/styles/variables.scss';",
+          javascriptEnabled: true,
         },
       },
       modules: {
