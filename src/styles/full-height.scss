@@ -3,13 +3,23 @@ html,
 body,
 #root,
 .root,
-#app,
 .app,
-#layout,
 .layout {
   height: 100%;
 }
 
 #root {
   overflow: hidden;
+}
+
+.ant-pro-layout {
+  background: red;
+
+  .ant-layout {
+    height: 100%;
+
+    .ant-pro-layout-container {
+      height: 100%;
+    }
+  }
 }
