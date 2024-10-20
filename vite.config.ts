@@ -178,18 +178,21 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
       sourcemap: false,
     },
     optimizeDeps: {
+      // 自定义预构建的入口文件
+      entries: ['@/main.tsx'],
+      // 让 vite启动的时候预编译一些包, 而不是运行网页的时候才编译
+      // 这样可以加快网页首次的加载速度, 但是可能vite首次启动会比较慢点
+      include: [],
       // 依赖预构建( esbuild ), vite 会将预构建存放在 node_modules/.vite 中
       exclude: [''],
+      // 强制依赖预构建，而忽略之前已经缓存过的、已经优化过的依赖
+      force: true,
     },
     css: {
       postcss: {
         // 添加浏览器兼容前缀
         plugins: [
           autoprefixer(),
-          /**
-           * 将 px 单位转换为视图单位(vw, vh, vmin, vmax)的 PostCSS 插件
-           * @see https://github.com/lkxian888/postcss-px-to-viewport-8-plugin#readme
-           */
           postCssPxToRem({
             // 换算基数( 根元素字体大小 )
             rootValue: 16,
@@ -217,6 +220,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
           javascriptEnabled: true,
         },
       },
+      // css 文件打包命名规则
       modules: {
         /**
          * @param name {string} - 当前文件名
