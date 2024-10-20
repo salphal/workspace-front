@@ -59,10 +59,13 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
     },
     plugins: [
       react(),
+      // 自动全局引入指定 API
       AutoImport({
         resolvers: [ArcoResolver()],
+        // 需要配置 tsconfig.json 中 includes: ['auto-imports.d.ts']
+        imports: ['react', 'react-router-dom'],
       }),
-      // 按需引入组件库
+      // 按需引入组件库: 插件会自动解析模板中的使用到的组件, 并导入组件和对应的样式文件
       Components({
         resolvers: [
           ArcoResolver({
@@ -79,15 +82,22 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
       }),
       // 开启 gzip 压缩, 服务端 nginx 还需要配置一下才能生效
       // http {
-      //   gzip_static on;
-      //   gzip_proxied any;
+      //    # 启用 Gzip 压缩功能
+      //    gzip on;
+      //    # Nginx 检查是否存在预压缩的 .gz 文件，如果有的话，就直接发送这些文件而不是压缩原文件
+      //    gzip_static on;
+      //    # 指定哪些 MIME 类型的响应会被压缩
+      //    gzip_types text/plain text/html text/css application/javascript application/xml;
+      //    # 小于 10240 字节的响应不会被压缩
+      //    gzip_min_length 10240;
       // }
       viteCompression({
-        verbose: true,
+        verbose: true, // 是否在控制台中输出压缩结果
         disable: false,
-        threshold: 10240,
-        algorithm: 'gzip',
+        threshold: 10240, // 如果体积大于阈值，将被压缩，单位为b，体积过小时请不要压缩，以免适得其反
+        algorithm: 'gzip', // 压缩算法，可选['gzip'，' brotliccompress '，'deflate '，'deflateRaw']
         ext: '.gz',
+        // deleteOriginFile: true, // 源文件压缩后是否删除( 为了看压缩后的效果，先选择了 true )
       }),
       // 图片压缩
       viteImagemin({
@@ -154,6 +164,10 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
             // 将 node_modules 打成一个包, 好方便缓存
             if (id.includes('node_modules')) {
               return 'vendor';
+            }
+            // 对 d3 图表展示库 单独打包
+            if (id.includes('d3')) {
+              return 'd3';
             }
           },
         },
