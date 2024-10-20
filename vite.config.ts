@@ -35,6 +35,27 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
     server: {
       port: 3000,
       open: true,
+      proxy: {
+        // http 请求代理
+        '/api': {
+          target: 'http://192.168.1.193:10001',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, '/api/rest'),
+        },
+        // graphql 的 subscription 代理( web socket )
+        '/v1/graphql': {
+          target: 'ws://192.168.1.193:10001/',
+          changeOrigin: true,
+          ws: true,
+          // rewrite: (path) => path.replace(/^\/v1\/graphql/, ''),
+        },
+        // graphql 的 query 和 mutation 代理
+        '/v1': {
+          target: 'http://192.168.1.193:10001/',
+          changeOrigin: true,
+          // rewrite: (path) => path.replace(/^\/v1\/graphql/, ''),
+        },
+      },
     },
     plugins: [
       react(),
@@ -147,7 +168,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
     css: {
       preprocessorOptions: {
         scss: {
-          // 加入全局变量( 不要加入样式，否则在最中产物中会重复出现 )
+          // 加入全局变量( 不要单独引入该文件样式，否则在最中产物中会重复出现 )
           additionalData: "@import '@/styles/variables.scss';",
         },
       },
