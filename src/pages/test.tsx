@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Segmented, Typography } from 'antd';
 
 import styles from './test.module.scss';
+import { testGraphqlSubscription } from '@/apis/__test__/graphql.ts';
 
 const { Title, Paragraph, Text, Link } = Typography;
 
@@ -27,14 +28,14 @@ const Test: React.FC<TestProps> = (props: TestProps) => {
 
   const socketRef = useRef<any>();
 
-  // useEffect(() => {
-  //   testGraphqlSubscription({ onMessage: dataOnMessage }).then((ws) => {
-  //     socketRef.current = ws;
-  //   });
-  //   return () => {
-  //     typeof socketRef.current.disconnect === 'function' && socketRef.current.disconnect();
-  //   };
-  // }, []);
+  useEffect(() => {
+    testGraphqlSubscription({ onMessage: dataOnMessage }).then((ws) => {
+      socketRef.current = ws;
+    });
+    return () => {
+      typeof socketRef.current.disconnect === 'function' && socketRef.current.disconnect();
+    };
+  }, []);
 
   const dataOnMessage = (data: any) => {
     if (Array.isArray(data.envs)) {
