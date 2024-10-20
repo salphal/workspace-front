@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Segmented, Typography } from 'antd';
 
+import styles from './test.module.scss';
+
 const { Title, Paragraph, Text, Link } = Typography;
 
 export interface TestProps {
@@ -64,7 +66,7 @@ const Test: React.FC<TestProps> = (props: TestProps) => {
         size={'large'}
         block
       />
-      <Typography style={{ padding: '24px 0' }}>
+      <Typography className={styles.content}>
         {segmented === 'testGraphqlQuery' && (
           <>
             <Paragraph>testGraphqlQuery</Paragraph>
