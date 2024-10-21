@@ -60,7 +60,10 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
       },
     },
     plugins: [
-      // code-inspector-plugin should be used before @vitejs/plugin-react
+      /**
+       * code-inspector-plugin + locatorJs( chrome plugin )
+       * 开发时通过点击快速跳转到源码
+       */
       codeInspectorPlugin({ bundler: 'vite' }),
       react(),
       /**
@@ -187,9 +190,9 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
           /** 自定义分包策略 */
           manualChunks(id) {
             // 将 node_modules 打成一个包, 好方便缓存
-            if (id.includes('node_modules')) {
-              return 'vendor';
-            }
+            // if (id.includes('node_modules')) {
+            //   return 'vendor';
+            // }
             // 对 d3 图表展示库 单独打包
             if (id.includes('d3')) {
               return 'd3';
