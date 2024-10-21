@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { Segmented, Typography } from 'antd';
 
 import styles from './test.module.scss';
