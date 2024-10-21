@@ -1,5 +1,16 @@
 # React + TypeScript + Vite
 
+待实现
+
+```
+
+环境变量配置
+
+scss 工具方法定义 及 全局引入
+
+
+```
+
 ## 依赖
 
 ### 基础组件库
@@ -22,7 +33,6 @@
 - 图表: D3
 - css: tailwind, sass, postcss
 - ... ...
-
 
 ### rollup 分包
 
