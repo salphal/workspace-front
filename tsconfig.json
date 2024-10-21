@@ -31,7 +31,8 @@
   },
   "include": [
     "src",
-    "auto-imports.d.ts"
+    "auto-imports.d.ts",
+    "node_modules/vite-plugin-pwa/client.d.ts"
   ],
   "references": [
     {
