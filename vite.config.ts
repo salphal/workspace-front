@@ -19,9 +19,9 @@ import { VitePWA } from 'vite-plugin-pwa';
  * @param mode {string} - 环境
  */
 export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
-  console.log('=>(vite.config.ts:11) mode', mode);
-  console.log('=>(vite.config.ts:11) command', command);
-  console.log('=>(vite.config.ts:11) command', process.cwd());
+  console.log('=>(vite.config.ts) mode', mode);
+  console.log('=>(vite.config.ts) command', command);
+  console.log('=>(vite.config.ts) command', process.cwd());
 
   const root = process.cwd(); // 根目录
   /**
@@ -32,7 +32,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
    * @return {[key: string]: string} - 返回的值类型都是字符串
    */
   const envs = loadEnv(mode, root, 'VITE_');
-  console.log('=>(vite.config.ts:22) envs', envs);
+  console.log('=>(vite.config.ts) envs', envs);
 
   return {
     server: {
