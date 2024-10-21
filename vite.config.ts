@@ -1,6 +1,7 @@
 import legacy from '@vitejs/plugin-legacy';
 import react from '@vitejs/plugin-react';
 import autoprefixer from 'autoprefixer';
+import { codeInspectorPlugin } from 'code-inspector-plugin';
 import postCssPxToRem from 'postcss-pxtorem';
 import { visualizer } from 'rollup-plugin-visualizer';
 import AntdResolver from 'unplugin-antd-resolver';
@@ -59,6 +60,8 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
       },
     },
     plugins: [
+      // code-inspector-plugin should be used before @vitejs/plugin-react
+      codeInspectorPlugin({ bundler: 'vite' }),
       react(),
       /**
        * 自动全局引入指定 API
