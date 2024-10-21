@@ -1,4 +1,6 @@
 .js
+.cjs
+.mjs
 .jsx
 .ts
 .tsx
