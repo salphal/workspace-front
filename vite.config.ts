@@ -3,9 +3,8 @@ import react from '@vitejs/plugin-react';
 import autoprefixer from 'autoprefixer';
 import postCssPxToRem from 'postcss-pxtorem';
 import { visualizer } from 'rollup-plugin-visualizer';
+import AntdResolver from 'unplugin-antd-resolver';
 import AutoImport from 'unplugin-auto-import/vite';
-import { ArcoResolver } from 'unplugin-vue-components/resolvers';
-import Components from 'unplugin-vue-components/vite';
 import { ConfigEnv, defineConfig, loadEnv, UserConfig } from 'vite';
 import viteCDNPlugin from 'vite-plugin-cdn-import';
 import viteCompression from 'vite-plugin-compression';
@@ -61,28 +60,39 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
     },
     plugins: [
       react(),
-      // 自动全局引入指定 API
+      /**
+       * 自动全局引入指定 API
+       * https://github.com/unplugin/unplugin-auto-import
+       */
       AutoImport({
-        resolvers: [ArcoResolver()],
+        resolvers: [AntdResolver()],
         // 需要配置 tsconfig.json 中 includes: ['auto-imports.d.ts']
-        imports: ['react', 'react-router-dom'],
-      }),
-      // 按需引入组件库: 插件会自动解析模板中的使用到的组件, 并导入组件和对应的样式文件
-      Components({
-        resolvers: [
-          ArcoResolver({
-            sideEffect: true,
-          }),
+        imports: [
+          'react',
+          'react-router-dom',
+          // {
+          //   react: [
+          //     // default imports
+          //     ['default', 'React'], // import { default as axios } from 'axios',
+          //   ],
+          // },
         ],
       }),
-      // 打包后开启资源大小分析页面
+      /**
+       * 打包后开启资源大小分析页面
+       */
       visualizer({ open: true }),
-      // 兼容低版本浏览器
+      /**
+       * 兼容低版本浏览器
+       */
       legacy({
         targets: ['chrome 52', 'Android > 39', 'iOS >= 10.3', 'iOS >= 10.3'], // 需要兼容的目标列表，可以设置多个
         additionalLegacyPolyfills: ['regenerator-runtime/runtime'], // 面向IE11时需要此插件
       }),
-      // 开启 gzip 压缩, 服务端 nginx 还需要配置一下才能生效
+      /**
+       * 开启 gzip 压缩
+       * 服务端 nginx 还需要配置一下才能生效
+       */
       // http {
       //    # 启用 Gzip 压缩功能
       //    gzip on;
@@ -101,7 +111,9 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
         ext: '.gz',
         // deleteOriginFile: true, // 源文件压缩后是否删除( 为了看压缩后的效果，先选择了 true )
       }),
-      // 图片压缩
+      /**
+       * 图片压缩
+       */
       viteImagemin({
         gifsicle: {
           optimizationLevel: 7,
@@ -129,7 +141,9 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
           ],
         },
       }),
-      // 开启 cdn
+      /**
+       * 开启 cdn
+       */
       // viteCDNPlugin({
       //   // 需要 CDN 加速的模块
       //   modules: [
@@ -142,7 +156,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
       // })
     ],
     resolve: {
-      // 路径别名
+      /** 定义路径别名 */
       alias: {
         '@': '/src',
       },
@@ -152,16 +166,22 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
       minify: 'terser',
       terserOptions: {
         compress: {
-          // 移除生产环境的 debug 和 console
+          /**
+           * 移除生产环境的 debug 和 console
+           */
           drop_console: true,
           drop_debugger: true,
         },
       },
       rollupOptions: {
         output: {
-          chunkFileNames: 'js/[name]-[hash].js', // 引入文件名的名称
-          entryFileNames: 'js/[name]-[hash].js', // 包的入口文件名称
-          assetFileNames: '[ext]/[name]-[hash].[ext]', // 资源文件像 字体，图片等
+          /** 定义动态分块文件的命名格式 */
+          chunkFileNames: 'js/[name]-[hash].js', //
+          /** 定义包入口文件的命名格式 */
+          entryFileNames: 'js/[name]-[hash].js', //
+          /** 定义资源文件( 如字体、图片等 )的命名格式 */
+          assetFileNames: '[ext]/[name]-[hash].[ext]',
+          /** 自定义分包策略 */
           manualChunks(id) {
             // 将 node_modules 打成一个包, 好方便缓存
             if (id.includes('node_modules')) {
