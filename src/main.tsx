@@ -7,7 +7,7 @@ import App from './App.tsx';
 import 'normalize.css';
 import '@/styles/full-height.scss';
 import '@/utils/rem.ts';
-import '@/i18n';
+import '@/locales';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   // <React.StrictMode>
