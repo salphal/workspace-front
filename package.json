@@ -44,7 +44,8 @@
     "rehype-sanitize": "^6.0.0",
     "unplugin-auto-import": "^0.18.3",
     "vite-plugin-cdn-import": "^1.0.1",
-    "vite-plugin-imagemin": "^0.6.1"
+    "vite-plugin-imagemin": "^0.6.1",
+    "vite-plugin-pwa": "^0.20.5"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.3.0",

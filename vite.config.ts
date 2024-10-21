@@ -10,6 +10,7 @@ import { ConfigEnv, defineConfig, loadEnv, UserConfig } from 'vite';
 import viteCDNPlugin from 'vite-plugin-cdn-import';
 import viteCompression from 'vite-plugin-compression';
 import viteImagemin from 'vite-plugin-imagemin';
+import { VitePWA } from 'vite-plugin-pwa';
 
 /**
  * https://vitejs.dev/config/
@@ -60,12 +61,69 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
       },
     },
     plugins: [
+      react(),
       /**
        * code-inspector-plugin + locatorJs( chrome plugin )
        * 开发时通过点击快速跳转到源码
        */
       codeInspectorPlugin({ bundler: 'vite' }),
-      react(),
+      /**
+       * https://github.com/vite-pwa/vite-plugin-pwa/blob/main/src/types.ts
+       * 离线缓存
+       *   - workbox    // 内部使用 google 开发的这个库
+       ** 该插件为官方插件
+       */
+      VitePWA({
+        includeAssets: ['favicon.svg'],
+        manifest: false,
+        registerType: 'autoUpdate',
+        workbox: {
+          runtimeCaching: [
+            {
+              urlPattern: /v1/i, // 接口缓存 此处填你想缓存的接口正则匹配
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'interface-cache',
+                expiration: {
+                  maxEntries: 30, // 最多缓存30个，超过的按照LRU原则删除
+                  maxAgeSeconds: 0.5 * (24 * 60 * 60), // 缓存 半天
+                },
+                cacheableResponse: {
+                  statuses: [200],
+                },
+              },
+            },
+            {
+              urlPattern: /(.*?)\.(js|css|ts)/, // js /css /ts 静态资源缓存
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'js-css-cache',
+                expiration: {
+                  // maxEntries: 30, // 最多缓存30个，超过的按照LRU原则删除
+                  maxAgeSeconds: 30 * (24 * 60 * 60), // 缓存 30天
+                },
+                cacheableResponse: {
+                  statuses: [200],
+                },
+              },
+            },
+            {
+              urlPattern: /(.*?)\.(png|jpe?g|svg|gif|bmp|psd|tiff|tga|eps)/, // 图片缓存
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'image-cache',
+                expiration: {
+                  // maxEntries: 30, // 最多缓存30个，超过的按照LRU原则删除
+                  maxAgeSeconds: 30 * (24 * 60 * 60), // 缓存 30天
+                },
+                cacheableResponse: {
+                  statuses: [200],
+                },
+              },
+            },
+          ],
+        },
+      }),
       /**
        * 自动全局引入指定 API
        * https://github.com/unplugin/unplugin-auto-import
