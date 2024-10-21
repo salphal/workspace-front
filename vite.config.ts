@@ -39,20 +39,20 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
       proxy: {
         // http 请求代理
         '/api': {
-          target: 'http://192.168.1.193:10001',
+          target: 'http://api.alphal.cn:60001',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, '/api/rest'),
         },
         // graphql 的 subscription 代理( web socket )
         '/v1/graphql': {
-          target: 'ws://192.168.1.193:10001/',
+          target: 'ws://api.alphal.cn:60001/',
           changeOrigin: true,
           ws: true,
           // rewrite: (path) => path.replace(/^\/v1\/graphql/, ''),
         },
         // graphql 的 query 和 mutation 代理
         '/v1': {
-          target: 'http://192.168.1.193:10001/',
+          target: 'http://api.alphal.cn:60001/',
           changeOrigin: true,
           // rewrite: (path) => path.replace(/^\/v1\/graphql/, ''),
         },
