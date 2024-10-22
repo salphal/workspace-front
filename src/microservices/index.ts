@@ -16,6 +16,12 @@ const { setupApp, preloadApp, bus } = WujieReact;
  * 子应用
  *  - window.$wujie
  * https://wujie-micro.github.io/doc/api/wujie.html
+ *
+ ** 需要改造子应用入口: https://wujie-micro.github.io/doc/guide/start.html
+ *    主要用于控制子应用的生命周期
+ *    - window.__WUJIE_MOUNT
+ *    - window.__WUJIE_UNMOUNT
+ *    - window.__WUJIE.mount()
  */
 
 /**
