@@ -238,6 +238,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
         },
       },
       rollupOptions: {
+        external: ['workbox-window'], // Add workbox-window to external
         output: {
           /** 定义动态分块文件的命名格式 */
           chunkFileNames: 'js/[name]-[hash].js', //
