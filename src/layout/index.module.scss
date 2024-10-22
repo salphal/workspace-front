@@ -1,3 +1,71 @@
 .layout {
   height: 100%;
+
+  .header {
+    padding: 0;
+    background: #fff;
+    width: 100%;
+    border-bottom: 1px solid #eee;
+
+    &-content {
+      position: relative;
+
+      &-l {
+        padding-left: 24px;
+        cursor: pointer;
+
+        .logo {
+          margin-right: 8px;
+        }
+
+        .title {
+        }
+
+        .divider {
+          height: 28px;
+          margin: 0 24px;
+        }
+      }
+
+      &-m {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      &-r {
+        padding-right: 24px;
+
+        .avatar {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .body {
+
+    .aside {
+
+    }
+
+    .content {
+
+      .bread-crumbs {
+        padding: 16px;
+      }
+
+      .children {
+
+      }
+
+      .footer {
+
+      }
+
+    }
+
+  }
+
 }

@@ -1,11 +1,21 @@
 import React, { Suspense } from 'react';
-import { RedoOutlined, UploadOutlined } from '@ant-design/icons';
-import { ProLayout } from '@ant-design/pro-components';
-import { Button, Spin } from 'antd';
-import classNames from 'classnames';
+import { gray } from '@ant-design/colors';
+import {
+  GithubFilled,
+  HddFilled,
+  SearchOutlined,
+  UploadOutlined,
+  UserOutlined,
+  VideoCameraOutlined,
+} from '@ant-design/icons';
+import { Layout as AntdLayout, Avatar, Divider, Flex, Menu, Spin } from 'antd';
+import Input from 'antd/es/input/Input';
+import { t } from 'i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import styles from './index.module.scss';
+
+const { Header, Content, Footer, Sider } = AntdLayout;
 
 export interface LayoutProps {
   [key: string]: any;
@@ -15,63 +25,93 @@ const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
+  const [collapsed, setCollapsed] = useState(false);
+
+  const items1 = ['1', '2', '3'].map((key) => ({
+    key,
+    label: `nav ${key}`,
+  }));
+
+  const items = [UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].map(
+    (icon, index) => ({
+      key: String(index + 1),
+      icon: React.createElement(icon),
+      label: `nav ${index + 1}`,
+    }),
+  );
+
   return (
     <React.Fragment>
-      <ProLayout
-        className={classNames([styles.layout])}
-        splitMenus
-        title={'OpenAI Prompt Management Platform'}
-        logo={null}
-        location={{
-          pathname,
-        }}
-        // headerRender={() => <div>headerRender</div>}
-        // headerTitleRender={() => <div>headerTitleRender</div>}
-        headerContentRender={() => (
-          <div className={classNames(['flex', 'justify-end', 'w-full'])}>
-            <Button className={'mr-3'} icon={<UploadOutlined />}>
-              Export
-            </Button>
-            <Button className={classNames(['mr-10'])} icon={<RedoOutlined />}>
-              Reset
-            </Button>
-          </div>
-        )}
-        actionsRender={() => []}
-        // avatarProps={{
-        //   src: 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
-        //   size: 'small',
-        //   title: 'admin',
-        // }}
-        menuFooterRender={(props) => {
-          if (props?.collapsed) return undefined;
-          return (
-            <p
-              style={{
-                textAlign: 'center',
-                paddingBlockStart: 12,
-              }}
-            >
-              Power by Ant Design
-            </p>
-          );
-        }}
-        onMenuHeaderClick={(e) => {
-          navigate('/home');
-        }}
-        menuItemRender={(item, dom) => (
-          <a
-            onClick={() => {
-              console.log('=>(layout.tsx:80) onClick', item, dom);
-            }}
+      <AntdLayout className={styles.layout} hasSider={false}>
+        <Header className={styles.header}>
+          <Flex className={styles['header-content']} justify={'space-between'} align={'center'}>
+            <Flex className={styles['header-content-l']} align={'center'}>
+              <HddFilled className={styles.logo} />
+              <span className={styles.title}>{t('title')}</span>
+              <Divider className={styles.divider} type={'vertical'} />
+              <Input
+                placeholder={t('search')}
+                addonBefore={<SearchOutlined style={{ color: gray[2] }} />}
+                addonAfter={
+                  <div
+                    style={{
+                      padding: '4px 8px',
+                      color: '#ced4d9',
+                      backgroundColor: 'rgba(150, 150, 150, 0.06)',
+                      borderWidth: '1px',
+                      borderColor: 'rgba(100, 100, 100, 0.2)',
+                      borderRadius: '4px',
+                      fontSize: 14,
+                    }}
+                  >
+                    ⌘ K
+                  </div>
+                }
+                variant="borderless"
+                style={{ width: 280 }}
+              />
+            </Flex>
+            {/*<Flex className={styles['header-content-m']}></Flex>*/}
+            <Flex className={styles['header-content-r']} justify={'flex-end'} align={'center'}>
+              <Menu
+                theme="light"
+                mode="horizontal"
+                defaultSelectedKeys={['2']}
+                items={items1}
+                style={{ flex: 1, minWidth: 0 }}
+              />
+              <Flex style={{ padding: '0 24px' }}>
+                <GithubFilled style={{ fontSize: 20 }} />
+              </Flex>
+              <Avatar className={styles.avatar} size={32} icon={<UserOutlined />} />
+            </Flex>
+          </Flex>
+        </Header>
+        <AntdLayout className={styles.body}>
+          <Sider
+            className={styles.aside}
+            collapsible={false}
+            // collapsible={collapsed}
+            reverseArrow={true}
+            breakpoint={'xl'}
+            theme={'light'}
+            width={200}
           >
-            {dom}
-          </a>
-        )}
-        layout="top"
-      >
-        <Suspense fallback={<Spin size={'large'} />}>{props.children}</Suspense>
-      </ProLayout>
+            <Menu theme="light" mode="inline" defaultSelectedKeys={['4']} items={items} />
+          </Sider>
+          <AntdLayout className={styles.content}>
+            {/*<Breadcrumb className={styles['bread-crumbs']}>*/}
+            {/*  <Breadcrumb.Item>Home</Breadcrumb.Item>*/}
+            {/*  <Breadcrumb.Item>List</Breadcrumb.Item>*/}
+            {/*  <Breadcrumb.Item>App</Breadcrumb.Item>*/}
+            {/*</Breadcrumb>*/}
+            <Content content={styles.children}>
+              <Suspense fallback={<Spin size={'large'} />}>{props.children}</Suspense>
+            </Content>
+            {/*<Footer className={styles.footer}>footer</Footer>*/}
+          </AntdLayout>
+        </AntdLayout>
+      </AntdLayout>
     </React.Fragment>
   );
 };
