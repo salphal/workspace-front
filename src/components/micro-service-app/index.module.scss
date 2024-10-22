@@ -1,0 +1,10 @@
+.microService {
+  width: 100%;
+  height: 100%;
+}
+
+/* 解决降级 iframe 时候的样式 */
+iframe {
+  overflow: hidden;
+  border: none;
+}

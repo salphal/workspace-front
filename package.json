@@ -46,7 +46,9 @@
     "unplugin-auto-import": "^0.18.3",
     "vite-plugin-cdn-import": "^1.0.1",
     "vite-plugin-imagemin": "^0.6.1",
-    "vite-plugin-pwa": "^0.20.5"
+    "vite-plugin-pwa": "^0.20.5",
+    "wujie": "^1.0.22",
+    "wujie-react": "^1.0.22"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.3.0",
