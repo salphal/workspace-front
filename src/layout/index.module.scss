@@ -2,16 +2,15 @@
   height: 100%;
 
   .header {
+    overflow: hidden;
     padding: 0;
     background: #fff;
     width: 100%;
     border-bottom: 1px solid #eee;
 
     &-content {
-      position: relative;
 
       &-l {
-        padding-left: 24px;
         cursor: pointer;
 
         .logo {
@@ -27,15 +26,8 @@
         }
       }
 
-      &-m {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-      }
-
       &-r {
-        padding-right: 24px;
+        //padding-right: 24px;
 
         .avatar {
           cursor: pointer;
@@ -47,7 +39,20 @@
   .body {
 
     .aside {
+      position: relative;
+      cursor: pointer;
 
+      .collapsed {
+        position: absolute;
+        top: 50%;
+        right: -23px;
+        transform: translate(-50%, -50%);
+        background: #fff;
+        height: 32px;
+        line-height: 32px;
+        border-left: 1px solid #f4f4f4;
+        border-radius: 0 3px 3px 0;
+      }
     }
 
     .content {
@@ -67,5 +72,4 @@
     }
 
   }
-
 }

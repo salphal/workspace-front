@@ -8,8 +8,8 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from '@ant-design/icons';
-import { Layout as AntdLayout, Avatar, Divider, Flex, Menu, Spin } from 'antd';
-import Input from 'antd/es/input/Input';
+import { useBreakpoint } from '@ant-design/pro-components';
+import { Layout as AntdLayout, Avatar, Col, Divider, Flex, Input, Menu, Spin } from 'antd';
 import { t } from 'i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -24,6 +24,8 @@ export interface LayoutProps {
 const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+
+  const screens = useBreakpoint();
 
   const [collapsed, setCollapsed] = useState(false);
 
@@ -42,61 +44,90 @@ const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
 
   return (
     <React.Fragment>
-      <AntdLayout className={styles.layout} hasSider={false}>
+      <AntdLayout className={styles.layout} hasSider={screens === 'xs'}>
         <Header className={styles.header}>
-          <Flex className={styles['header-content']} justify={'space-between'} align={'center'}>
-            <Flex className={styles['header-content-l']} align={'center'}>
-              <HddFilled className={styles.logo} />
-              <span className={styles.title}>{t('title')}</span>
-              <Divider className={styles.divider} type={'vertical'} />
-              <Input
-                placeholder={t('search')}
-                addonBefore={<SearchOutlined style={{ color: gray[2] }} />}
-                addonAfter={
-                  <div
-                    style={{
-                      padding: '4px 8px',
-                      color: '#ced4d9',
-                      backgroundColor: 'rgba(150, 150, 150, 0.06)',
-                      borderWidth: '1px',
-                      borderColor: 'rgba(100, 100, 100, 0.2)',
-                      borderRadius: '4px',
-                      fontSize: 14,
-                    }}
-                  >
-                    ⌘ K
-                  </div>
-                }
-                variant="borderless"
-                style={{ width: 280 }}
-              />
-            </Flex>
-            {/*<Flex className={styles['header-content-m']}></Flex>*/}
-            <Flex className={styles['header-content-r']} justify={'flex-end'} align={'center'}>
-              <Menu
-                theme="light"
-                mode="horizontal"
-                defaultSelectedKeys={['2']}
-                items={items1}
-                style={{ flex: 1, minWidth: 0 }}
-              />
-              <Flex style={{ padding: '0 24px' }}>
-                <GithubFilled style={{ fontSize: 20 }} />
-              </Flex>
-              <Avatar className={styles.avatar} size={32} icon={<UserOutlined />} />
-            </Flex>
-          </Flex>
+          <Row
+            className={styles['header-content']}
+            justify={'space-between'}
+            align={'top'}
+            wrap={false}
+          >
+            <Col className={styles['header-content-l']} xs={0} md={10} xl={8}>
+              <Row justify="start" align={'middle'} wrap={true}>
+                <Col>
+                  <HddFilled className={styles.logo} style={{ padding: '0 0 0 24px' }} />
+                  <span className={styles.title}>{t('title')}</span>
+                </Col>
+                <Col>
+                  <Divider className={styles.divider} type={'vertical'} />
+                </Col>
+                <Col>
+                  <Flex justify={'center'} align={'center'}>
+                    <Input
+                      placeholder={t('search')}
+                      addonBefore={<SearchOutlined style={{ color: gray[2] }} />}
+                      addonAfter={
+                        <div
+                          style={{
+                            padding: '4px 8px',
+                            color: '#ced4d9',
+                            backgroundColor: 'rgba(150, 150, 150, 0.06)',
+                            borderWidth: '1px',
+                            borderColor: 'rgba(100, 100, 100, 0.2)',
+                            borderRadius: '4px',
+                            fontSize: 14,
+                          }}
+                        >
+                          ⌘ K
+                        </div>
+                      }
+                      variant="borderless"
+                      style={{ width: 280 }}
+                    />
+                  </Flex>
+                </Col>
+              </Row>
+            </Col>
+            <Col className={styles['header-content-r']} xs={0} md={14} xl={16}>
+              <Row justify={'end'} align={'middle'} wrap={false}>
+                <Col xs={0} md={8} xl={6}>
+                  <Menu
+                    theme="light"
+                    mode="horizontal"
+                    defaultSelectedKeys={['2']}
+                    items={items1}
+                    style={{ flex: 1, minWidth: 0 }}
+                  />
+                </Col>
+                <Col style={{ padding: '0 24px' }}>
+                  <Flex justify={'end'} align={'center'}>
+                    <GithubFilled style={{ fontSize: 20 }} />
+                  </Flex>
+                </Col>
+                <Col style={{ padding: '0 24px 0 0' }}>
+                  <Avatar size={32} icon={<UserOutlined />} />
+                </Col>
+              </Row>
+            </Col>
+          </Row>
         </Header>
         <AntdLayout className={styles.body}>
           <Sider
             className={styles.aside}
-            collapsible={false}
-            // collapsible={collapsed}
+            collapsible={collapsed}
             reverseArrow={true}
             breakpoint={'xl'}
             theme={'light'}
             width={200}
+            collapsedWidth={50}
           >
+            <div className={styles.collapsed}>
+              {collapsed ? (
+                <i className="bi-arrow-bar-left" />
+              ) : (
+                <i className="bi-caret-right-fill" style={{ color: '#ccc' }} />
+              )}
+            </div>
             <Menu theme="light" mode="inline" defaultSelectedKeys={['4']} items={items} />
           </Sider>
           <AntdLayout className={styles.content}>
