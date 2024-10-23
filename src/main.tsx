@@ -5,6 +5,8 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 
 import App from './App.tsx';
+// 引入 boostrap icon
+import 'bootstrap-icons/font/bootstrap-icons.min.css';
 // 清除元素默认样式
 import 'normalize.css';
 // 设置高度 100% 并继承
