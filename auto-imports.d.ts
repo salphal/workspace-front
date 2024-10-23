@@ -7,7 +7,11 @@
 export {}
 declare global {
   const Col: typeof import('antd')['Col']
+  const Divider: typeof import('antd')['Divider']
+  const Flex: typeof import('antd')['Flex']
+  const Input: typeof import('antd')['Input']
   const Link: typeof import('react-router-dom')['Link']
+  const Menu: typeof import('antd')['Menu']
   const NavLink: typeof import('react-router-dom')['NavLink']
   const Navigate: typeof import('react-router-dom')['Navigate']
   const Outlet: typeof import('react-router-dom')['Outlet']
