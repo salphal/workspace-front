@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import { gray } from '@ant-design/colors';
 import {
+  EllipsisOutlined,
   GithubFilled,
   HddFilled,
   SearchOutlined,
@@ -42,6 +43,26 @@ const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
     }),
   );
 
+  const NavigateMenu = () => (
+    <Menu
+      theme="light"
+      mode="horizontal"
+      defaultSelectedKeys={['4']}
+      overflowedIndicator={
+        screens === 'xs' ? (
+          <i className={'bi-text-indent-left'} style={{ fontSize: 28, color: gray[3] }} />
+        ) : (
+          <EllipsisOutlined />
+        )
+      }
+      items={items1}
+    />
+  );
+
+  const AsideMenu = () => (
+    <Menu theme="light" mode="inline" defaultSelectedKeys={['4']} items={items} />
+  );
+
   return (
     <React.Fragment>
       <AntdLayout className={styles.layout} hasSider={screens === 'xs'}>
@@ -52,6 +73,20 @@ const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
             align={'top'}
             wrap={false}
           >
+            <Col xs={3} sm={0}>
+              <NavigateMenu />
+            </Col>
+            <Col xs={18} sm={0} flex={'auto'}>
+              <Row justify={'center'}>
+                <span className={styles.logo}>
+                  <i className={'bi-tag-fill'}></i>
+                </span>
+                <span className={styles.title}>{t('title')}</span>
+              </Row>
+            </Col>
+            <Col xs={3} sm={0}>
+              <Avatar size={32} icon={<UserOutlined />} />
+            </Col>
             <Col className={styles['header-content-l']} xs={0} md={10} xl={8}>
               <Row justify="start" align={'middle'} wrap={true}>
                 <Col>
@@ -91,13 +126,7 @@ const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
             <Col className={styles['header-content-r']} xs={0} md={14} xl={16}>
               <Row justify={'end'} align={'middle'} wrap={false}>
                 <Col xs={0} md={8} xl={6}>
-                  <Menu
-                    theme="light"
-                    mode="horizontal"
-                    defaultSelectedKeys={['2']}
-                    items={items1}
-                    style={{ flex: 1, minWidth: 0 }}
-                  />
+                  <NavigateMenu />
                 </Col>
                 <Col style={{ padding: '0 24px' }}>
                   <Flex justify={'end'} align={'center'}>
@@ -114,23 +143,28 @@ const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
         <AntdLayout className={styles.body}>
           <Sider
             className={styles.aside}
-            collapsible={collapsed}
+            collapsed={collapsed}
             reverseArrow={true}
             breakpoint={'xl'}
             theme={'light'}
             width={200}
             collapsedWidth={50}
+            trigger={null}
+            collapsible
           >
-            <div className={styles.collapsed}>
-              {collapsed ? (
-                <i className="bi-arrow-bar-left" />
-              ) : (
-                <i className="bi-caret-right-fill" style={{ color: '#ccc' }} />
-              )}
-            </div>
-            <Menu theme="light" mode="inline" defaultSelectedKeys={['4']} items={items} />
+            {/*<Menu theme="light" mode="inline" defaultSelectedKeys={['4']} items={items} />*/}
+            <AsideMenu />
           </Sider>
           <AntdLayout className={styles.content}>
+            <div
+              className={styles.collapsed}
+              onClick={() => setCollapsed((collapsed) => !collapsed)}
+            >
+              <i
+                className={!collapsed ? 'bi-caret-left-fill' : 'bi-caret-right-fill'}
+                style={{ color: '#ccc' }}
+              />
+            </div>
             {/*<Breadcrumb className={styles['bread-crumbs']}>*/}
             {/*  <Breadcrumb.Item>Home</Breadcrumb.Item>*/}
             {/*  <Breadcrumb.Item>List</Breadcrumb.Item>*/}
