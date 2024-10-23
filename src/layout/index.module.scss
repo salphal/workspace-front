@@ -27,8 +27,6 @@
       }
 
       &-r {
-        //padding-right: 24px;
-
         .avatar {
           cursor: pointer;
         }
@@ -39,23 +37,38 @@
   .body {
 
     .aside {
-      position: relative;
+      overflow: hidden auto;
+
+      height: 100%;
       cursor: pointer;
+      scrollbar-width: thin; // 更窄的滚动条
+      scrollbar-gutter: stable; // 固定在外边距, 避免遮挡内容
+    }
+
+    .content {
+      position: relative;
 
       .collapsed {
         position: absolute;
         top: 50%;
-        right: -23px;
+        left: 8px;
         transform: translate(-50%, -50%);
         background: #fff;
         height: 32px;
         line-height: 32px;
         border-left: 1px solid #f4f4f4;
         border-radius: 0 3px 3px 0;
-      }
-    }
+        opacity: .7;
 
-    .content {
+        transition-duration: 0.1s;
+        transition-property: opacity;
+        transition-timing-function: linear;
+        transition-delay: 0s;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
 
       .bread-crumbs {
         padding: 16px;
@@ -68,8 +81,6 @@
       .footer {
 
       }
-
     }
-
   }
 }
