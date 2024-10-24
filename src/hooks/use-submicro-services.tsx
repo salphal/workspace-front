@@ -27,9 +27,9 @@ export const useSubMicroServices = (config: ISubMicroServices) => {
   const navigate = useNavigate();
   const { pathname = '', search = '', hash = '', state = {} } = useLocation();
 
-  const [app, setApp] = useState<any>({});
-  const [subApps, setSubApps] = useState<any>([]);
-  const [error, setError] = useState<string>('');
+  const [app, setApp] = useState<MicroApp>();
+  const [subApps, setSubApps] = useState<MicroApps>([]);
+  const [error, setError] = useState<any>();
 
   /**
    * 根据 prefix 筛选出 所有当前子服务 的配置
@@ -49,7 +49,7 @@ export const useSubMicroServices = (config: ISubMicroServices) => {
    * 根据 pathname 过滤出 单个当前的子服务 的配置
    */
   useEffect(() => {
-    setError('');
+    setError(null);
     if (new RegExp(`^/?${prefix}.*`).test(pathname)) {
       if (!pathname || !Array.isArray(subApps) || !subApps.length) return;
       const [app] = subApps.filter((v: any) => {
@@ -96,7 +96,7 @@ export const useSubMicroServices = (config: ISubMicroServices) => {
   );
 
   const loadError = (url: string, err: any) => {
-    setError(`fetch ${url} failed`);
+    setError(err);
     console.error(err);
   };
 
