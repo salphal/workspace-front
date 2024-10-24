@@ -1,3 +1,6 @@
-import { subMicroApps } from '@/pages/sub-micro-services/apps.ts';
+import { demoApps } from '@/pages/sub-micro-services/apps.ts';
 
-export const apps = [...subMicroApps];
+/**
+ * 全部子服务的集合
+ */
+export const apps = [...demoApps];

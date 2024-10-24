@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { prefix } from './apps';
+import { demoPrefix } from './apps';
 import { useSubMicroServices } from '@/hooks/use-submicro-services.tsx';
 import { apps } from '@/microservices/apps.ts';
 
@@ -16,8 +16,8 @@ export interface SubMicroServicesProps {
 const SubMicroServices: React.FC<SubMicroServicesProps> = (props: SubMicroServicesProps) => {
   const { error, microServiceApp } = useSubMicroServices({
     apps,
-    prefix,
-    props: { foo: 'bar' },
+    prefix: demoPrefix,
+    props: { foo: 'bar', ...props },
   });
 
   if (error) return <div style={wrapStyle}>load sub micro services error</div>;
