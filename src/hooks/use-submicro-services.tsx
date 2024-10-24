@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
 import MicroServiceApp from '@/components/micro-service-app/micro-service-app.tsx';
+import { wujieEventBus } from '@/microservices';
 
 type MicroApp = {
   /** 子服务名称( 唯一 ) */
@@ -25,11 +26,28 @@ export const useSubMicroServices = (config: ISubMicroServices) => {
   const { apps, prefix, props = {} } = config;
 
   const navigate = useNavigate();
-  const { pathname = '', search = '', hash = '', state = {} } = useLocation();
+  const location = useLocation();
+  const { pathname = '', search = '', hash = '', state = {} } = location;
 
   const [app, setApp] = useState<MicroApp>();
   const [subApps, setSubApps] = useState<MicroApps>([]);
   const [error, setError] = useState<any>();
+
+  /**
+   * 为子服务注入事件
+   *  - navigate: 主服务的路由事件
+   */
+  useEffect(() => {
+    /**
+     * 子服务调用
+     * import {bus} from 'wujie';
+     * bus.$emit('navigate', '/pathname');
+     */
+    wujieEventBus.$on('navigate', navigate);
+    return () => {
+      wujieEventBus.$off('navigate', navigate);
+    };
+  }, []);
 
   /**
    * 根据 prefix 筛选出 所有当前子服务 的配置
