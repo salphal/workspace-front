@@ -1,70 +1,108 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 
 import MicroServiceApp from '@/components/micro-service-app/micro-service-app.tsx';
 
-export const useSubMicroServices = (apps: Array<any>, prefix: string) => {
+type MicroApp = {
+  /** 子服务名称( 唯一 ) */
+  name: string;
+  /** 子服务地址 */
+  url: string;
+  /** 子服务元数据信息 */
+  meta?: { [key: string]: any };
+};
+export type MicroApps = Array<MicroApp>;
+
+export interface ISubMicroServices {
+  /** 所有子服务集合 */
+  apps: MicroApps;
+  /** 当前子服务集合的前缀 */
+  prefix: string;
+  /** 自定义需要传递给子服务的属性 */
+  props?: { [key: string]: any };
+}
+
+export const useSubMicroServices = (config: ISubMicroServices) => {
+  const { apps, prefix, props = {} } = config;
+
+  const navigate = useNavigate();
   const { pathname = '', search = '', hash = '', state = {} } = useLocation();
 
-  const [name, setName] = useState<string>('');
-  const [url, setUrl] = useState<string>('');
+  const [app, setApp] = useState<any>({});
   const [subApps, setSubApps] = useState<any>([]);
-
   const [error, setError] = useState<string>('');
 
+  /**
+   * 根据 prefix 筛选出 所有当前子服务 的配置
+   */
   useEffect(() => {
     if (Array.isArray(apps)) {
-      const appArr = apps.filter((app) => app.name.includes(prefix));
-      setSubApps(appArr);
+      const subApps = apps.filter((app) => new RegExp(`^/?${prefix}.*`).test(app.name));
+      if (Array.isArray(subApps) && subApps.length) {
+        setSubApps(subApps);
+      } else {
+        console.log('=> subApp is not array or array.length is zero.', subApps);
+      }
     }
   }, [apps]);
 
+  /**
+   * 根据 pathname 过滤出 单个当前的子服务 的配置
+   */
   useEffect(() => {
     setError('');
-    if (!pathname || !Array.isArray(subApps) || !subApps.length) return;
-    if (pathname.includes(prefix)) {
-      const [app] = subApps.filter((v: any) => pathname.includes(v.name));
+    if (new RegExp(`^/?${prefix}.*`).test(pathname)) {
+      if (!pathname || !Array.isArray(subApps) || !subApps.length) return;
+      const [app] = subApps.filter((v: any) => {
+        return pathname === v.name;
+      });
       if (app && app.name && app.url) {
-        setName(app.name);
-        setUrl(app.url);
+        setApp(app);
       }
     } else {
-      setName('');
-      setUrl('');
+      console.log('=> The current sub-service is not matched according to pathname');
+      console.log('=> pathname', pathname);
+      console.log('=> subApps', subApps);
     }
   }, [pathname, subApps]);
 
-  const loadError = (url: string, err: string) => {
-    setError(String(err));
-  };
-
+  /**
+   * 根据筛选出的 单个子服务配置 创建 wujie 微服务
+   */
   const microServiceApp = useMemo(
     () => () => {
-      const [app] = apps.filter((app) => name === app.name);
-      if (app) {
+      if (app && app.name && app.url) {
+        const appUrl = app.url + search + hash;
+        const appMeta = app.meta || {};
+        const appProps = {
+          /** 注入主服务的路由能力 */
+          navigate,
+          /** 路由数据 */
+          state,
+          /** 微服务定义时携带的 元数据 */
+          meta: appMeta,
+          /** 自定义属性 */
+          ...props,
+        };
         return (
-          <MicroServiceApp
-            name={app.name}
-            url={app.url + search + hash}
-            props={{
-              routerState: state || {},
-            }}
-            loadError={loadError}
-          />
+          <MicroServiceApp name={app.name} url={appUrl} props={appProps} loadError={loadError} />
         );
       } else {
+        console.log('The same sub-service configuration as path name was not matched');
+        console.log('=> app', app);
         return [];
       }
     },
-    [apps, name, state, search, hash],
+    [app, state, search, hash],
   );
 
+  const loadError = (url: string, err: any) => {
+    setError(`fetch ${url} failed`);
+    console.error(err);
+  };
+
   return {
-    name,
-    url,
-    state,
+    app,
     error,
-    loadError,
     microServiceApp,
   };
 };
