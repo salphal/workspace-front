@@ -1,6 +1,6 @@
 import WujieReact from 'wujie-react';
 
-import { apps } from './app.ts';
+import { apps } from './apps.ts';
 
 const { setupApp, preloadApp, bus } = WujieReact;
 
@@ -57,7 +57,7 @@ export const setupMicroServices = () => {
 };
 
 /**
- * 无界事件总线
+ * 无界事件总线( 用于 主应用和子应用之间的 事件通信 )
  * https://wujie-micro.github.io/doc/api/bus.html#on
  */
 export const wujieEventBus = bus;
