@@ -6,11 +6,20 @@ let subAppDomain = 'localhost';
 let subAppPort = 8080;
 
 /**
- * 根据不同环境更新子服务 端口 和 域名
+ * 打包时, 若不是开发环境
+ * 则使用环境变量中的配置更新子服务的 域名 和 端口
  */
-if (import.meta.env.MODE !== 'dev') {
+if (
+  import.meta.env.MODE !== 'dev' &&
+  import.meta.env.VITE_DEMO_SUB_DOMAIN &&
+  import.meta.env.VITE_DEMO_SUB_PORT
+) {
   subAppDomain = import.meta.env.VITE_DEMO_SUB_DOMAIN;
   subAppPort = import.meta.env.VITE_DEMO_SUB_PORT;
+} else {
+  console.error(
+    `Please checked VITE_DEMO_SUB_DOMAIN and VITE_DEMO_SUB_PORT in .env.${import.meta.env.MODE}. file`,
+  );
 }
 
 /**
