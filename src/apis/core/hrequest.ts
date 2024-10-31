@@ -88,9 +88,6 @@ export class HttpRequest {
     const newConfig: AxiosRequestConfig = {
       url,
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8',
-      },
       responseType: 'blob',
       params,
       ...config,
