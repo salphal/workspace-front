@@ -27,26 +27,26 @@ const LazyImportComponent: FC<LazyImportComponentProps> = ({
   meta = {},
   preload = null,
 }) => {
-  const [data, setData] = useState<any>(null);
+  const [preloadData, setPreloadData] = useState<any>(null);
 
   useEffect(() => {
-    fetchData();
+    fetchPreloadData();
   }, []);
 
   /**
    * 预加载数据
    */
-  const fetchData = async () => {
+  const fetchPreloadData = async () => {
     if (!(preload instanceof Promise)) return;
     const res = await preload();
     startTransition(() => {
-      if (res) setData(res);
+      if (res) setPreloadData(res);
     });
   };
 
   const props = {
     meta,
-    preLoadData: data,
+    preloadData,
   };
   return (
     <React.Suspense fallback={<Loading />}>
