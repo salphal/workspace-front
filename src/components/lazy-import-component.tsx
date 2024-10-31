@@ -21,6 +21,7 @@ interface LazyImportComponentProps {
   preload?: (...args: any[]) => Promise<any>;
 }
 
+// <LazyImportComponent lazyChildren={React.lazy(() => import('./component.tsx'))} />
 const LazyImportComponent: FC<LazyImportComponentProps> = ({
   lazyChildren: LazyChildren,
   meta = {},
