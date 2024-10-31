@@ -19,15 +19,6 @@ const routes: RouteObject[] = [
   {
     path: '/test',
     element: <Test />,
-    /**
-     * 未生效, 还需要研究
-     * https://reactrouter.com/en/main/route/lazy
-     */
-    // async lazy() {
-    //   const module = await import('@/pages/test.tsx');
-    //   console.log('=>(index.tsx:23) module', module);
-    //   return { Component: module.default };
-    // },
   },
 ];
 
