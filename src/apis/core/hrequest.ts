@@ -45,25 +45,27 @@ export class HttpRequest {
     });
   }
 
+  /** 查 */
   get<T = any>(config: AxiosRequestConfig = {}): Promise<T> {
     return this.request({ ...config, method: 'GET' });
   }
 
+  /** 增 */
   post<T = any>(config: AxiosRequestConfig = {}): Promise<T> {
     return this.request({ ...config, method: 'POST' });
   }
 
+  /** 改 */
   put<T = any>(config: AxiosRequestConfig = {}): Promise<T> {
     return this.request({ ...config, method: 'PUT' });
   }
 
+  /** 删 */
   delete<T = any>(config: AxiosRequestConfig = {}): Promise<T> {
     return this.request({ ...config, method: 'DELETE' });
   }
 
-  /**
-   * 上传文件
-   */
+  /** 上传 */
   upload<T = any>(url: string, data: any, config?: AxiosRequestConfig): Promise<T> {
     const formData = new FormData();
     Object.keys(data).forEach((key) => {
@@ -81,9 +83,7 @@ export class HttpRequest {
     return this.request(newConfig);
   }
 
-  /**
-   * 下载文件
-   */
+  /** 下载 */
   download<T = any>(url: string, params: any, config?: AxiosRequestConfig): Promise<T> {
     const newConfig: AxiosRequestConfig = {
       url,
@@ -116,14 +116,14 @@ export class HttpRequest {
       .filter((v) => Array.isArray(v))
       .reverse() // 更改执行顺序( 先定义的先执行 )
       .forEach((v) => {
-        this.instance.interceptors.request.use(...(v as any));
+        this.instance.interceptors.request.use(...(v as Interceptor));
       });
 
     // 响应拦截( 先定义的先执行 )
     responseInterceptors
       .filter((v) => Array.isArray(v))
       .forEach((v) => {
-        this.instance.interceptors.response.use(...(v as any));
+        this.instance.interceptors.response.use(...(v as Interceptor));
       });
   }
 }
