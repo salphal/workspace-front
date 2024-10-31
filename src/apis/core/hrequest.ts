@@ -98,6 +98,7 @@ export class HttpRequest {
     return this.request(newConfig);
   }
 
+  /** 装载拦截器 */
   setupInterceptor(): void {
     if (!Array.isArray(this.interceptors) || !this.interceptors.length) return;
 
