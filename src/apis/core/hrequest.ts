@@ -112,7 +112,7 @@ export class HttpRequest {
       Array.isArray(v) && v.length >= 2 ? v[1] : null,
     );
 
-    // 请求拦截( 先定义的后执行, 源码使用 unshift 添加 )
+    // 装载请求拦截( 先定义的后执行, 源码使用 unshift 添加 )
     requestInterceptors
       .filter((v) => Array.isArray(v))
       .reverse() // 更改执行顺序( 先定义的先执行 )
@@ -120,7 +120,7 @@ export class HttpRequest {
         this.instance.interceptors.request.use(...(v as Interceptor));
       });
 
-    // 响应拦截( 先定义的先执行 )
+    // 装载响应拦截( 先定义的先执行 )
     responseInterceptors
       .filter((v) => Array.isArray(v))
       .forEach((v) => {
