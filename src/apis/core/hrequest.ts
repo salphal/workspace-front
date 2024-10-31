@@ -61,19 +61,39 @@ export class HttpRequest {
     return this.request({ ...config, method: 'DELETE' });
   }
 
+  /**
+   * 上传文件
+   */
   upload<T = any>(url: string, data: any, config?: AxiosRequestConfig): Promise<T> {
     const formData = new FormData();
     Object.keys(data).forEach((key) => {
       formData.append(key, data[key]);
     });
     const newConfig: AxiosRequestConfig = {
-      ...config,
       url,
       method: 'POST',
       data: formData,
       headers: {
         'Content-Type': 'multipart/form-data',
       },
+      ...config,
+    };
+    return this.request(newConfig);
+  }
+
+  /**
+   * 下载文件
+   */
+  download<T = any>(url: string, params: any, config?: AxiosRequestConfig): Promise<T> {
+    const newConfig: AxiosRequestConfig = {
+      url,
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+      },
+      responseType: 'blob',
+      params,
+      ...config,
     };
     return this.request(newConfig);
   }
