@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
 
-export interface HResp<T> {
+export interface R<T> {
   [key: string]: any;
 
   /** 响应状态码 */
