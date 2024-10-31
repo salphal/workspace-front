@@ -10,6 +10,8 @@ export const hrequest = new HttpRequest({
       [
         // 请求拦截
         (config: AxiosRequestConfig) => {
+          /** 默认请求头类型 */
+          config!.headers!['Content-Type'] = 'application/json;charset=UTF-8';
           /**
            * 登陆成功后
            * 添加 Authorization 到请求头中
