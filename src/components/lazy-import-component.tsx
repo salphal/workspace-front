@@ -39,6 +39,10 @@ const LazyImportComponent: FC<LazyImportComponentProps> = ({
   const fetchPreloadData = async () => {
     if (!(preload instanceof Promise)) return;
     const res = await preload();
+    /**
+     * https://zh-hans.react.dev/reference/react/startTransition
+     * 在不阻塞 UI 的情况下更新 state
+     */
     startTransition(() => {
       if (res) setPreloadData(res);
     });
