@@ -52,6 +52,7 @@ const LazyImportComponent: FC<LazyImportComponentProps> = ({
     meta,
     preloadData,
   };
+
   return (
     <React.Suspense fallback={<Loading />}>
       <LazyChildren {...props} />
