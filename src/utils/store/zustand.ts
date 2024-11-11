@@ -98,7 +98,7 @@ export const zustandCookieStorage: StateStorage = {
 };
 
 /** custom zustand url hash save methods */
-export const hashStorage: StateStorage = {
+export const zustandUrlHashStorage: StateStorage = {
   getItem: (key): string => {
     const searchParams = new URLSearchParams(location.hash.slice(1));
     const storedValue = searchParams.get(key) ?? '';
