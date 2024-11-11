@@ -3,7 +3,6 @@ import Dexie from 'dexie';
 /**
  * https://dexie.org/
  */
-
 interface IndexDBConfig {
   /** 数据库名称 */
   dbName: string;
