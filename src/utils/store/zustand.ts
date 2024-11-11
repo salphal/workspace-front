@@ -56,6 +56,21 @@ export const setStoreProperties = (
   }
 };
 
+/** custom zustand cookie save methods */
+export const zustandCookieStorage: StateStorage = {
+  getItem: (key): string => {
+    const cookies = document.cookie.split('; ');
+    const cookie = cookies.find((c) => c.startsWith(`${key}=`));
+    return cookie ? JSON.parse(decodeURIComponent(cookie.split('=')[1])) : null;
+  },
+  setItem: (key, newValue): void => {
+    document.cookie = `${key}=${encodeURIComponent(JSON.stringify(newValue))}; path=/;`;
+  },
+  removeItem: (key): void => {
+    document.cookie = `${key}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+  },
+};
+
 /** custom zustand localStorage save methods */
 export const zustandLocalStorage: StateStorage = {
   getItem: (key): string => {
@@ -81,17 +96,3 @@ export const zustandSessionStorage: StateStorage = {
     sessionStorage.removeItem(key);
   },
 };
-
-// import { create } from 'zustand';
-// import { persist, createJSONStorage } from 'zustand/middleware';
-// export const useSessionStore = create(
-//   persist(
-//     (set, get) => ({
-//       foo: 'bar',
-//     }),
-//     {
-//       name: 'session-storage', // unique name
-//       storage: createJSONStorage(() => zustandSessionStorage),
-//     },
-//   ),
-// );
