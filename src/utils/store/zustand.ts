@@ -56,7 +56,7 @@ export const setStoreProperties = (
   }
 };
 
-/** custom zustand save methods */
+/** custom zustand localStorage save methods */
 export const zustandLocalStorage: StateStorage = {
   getItem: (key): string => {
     return JSON.parse(localStorage.getItem(key) as string);
@@ -68,3 +68,30 @@ export const zustandLocalStorage: StateStorage = {
     localStorage.removeItem(key);
   },
 };
+
+/** custom zustand sessionStorage save methods */
+export const zustandSessionStorage: StateStorage = {
+  getItem: (key): string => {
+    return JSON.parse(sessionStorage.getItem(key) as string);
+  },
+  setItem: (key, newValue): void => {
+    sessionStorage.setItem(key, JSON.stringify(newValue));
+  },
+  removeItem: (key): void => {
+    sessionStorage.removeItem(key);
+  },
+};
+
+// import { create } from 'zustand';
+// import { persist, createJSONStorage } from 'zustand/middleware';
+// export const useSessionStore = create(
+//   persist(
+//     (set, get) => ({
+//       foo: 'bar',
+//     }),
+//     {
+//       name: 'session-storage', // unique name
+//       storage: createJSONStorage(() => zustandSessionStorage),
+//     },
+//   ),
+// );
