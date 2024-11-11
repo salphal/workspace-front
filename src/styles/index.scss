@@ -1,7 +1,2 @@
-/*
- * https://sass-lang.com/documentation/breaking-changes/import/
- * @import 将被弃用
- * TODO: @import 改造
- */
-@import './reset/index';
-@import 'full-height';
+@use './reset/index' as *;
+@use './full-height' as *;
