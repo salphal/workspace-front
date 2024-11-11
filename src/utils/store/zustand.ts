@@ -56,21 +56,6 @@ export const setStoreProperties = (
   }
 };
 
-/** custom zustand cookie save methods */
-export const zustandCookieStorage: StateStorage = {
-  getItem: (key): string => {
-    const cookies = document.cookie.split('; ');
-    const cookie = cookies.find((c) => c.startsWith(`${key}=`));
-    return cookie ? JSON.parse(decodeURIComponent(cookie.split('=')[1])) : null;
-  },
-  setItem: (key, newValue): void => {
-    document.cookie = `${key}=${encodeURIComponent(JSON.stringify(newValue))}; path=/;`;
-  },
-  removeItem: (key): void => {
-    document.cookie = `${key}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
-  },
-};
-
 /** custom zustand localStorage save methods */
 export const zustandLocalStorage: StateStorage = {
   getItem: (key): string => {
@@ -94,5 +79,39 @@ export const zustandSessionStorage: StateStorage = {
   },
   removeItem: (key): void => {
     sessionStorage.removeItem(key);
+  },
+};
+
+/** custom zustand cookie save methods */
+export const zustandCookieStorage: StateStorage = {
+  getItem: (key): string => {
+    const cookies = document.cookie.split('; ');
+    const cookie = cookies.find((c) => c.startsWith(`${key}=`));
+    return cookie ? JSON.parse(decodeURIComponent(cookie.split('=')[1])) : null;
+  },
+  setItem: (key, newValue): void => {
+    document.cookie = `${key}=${encodeURIComponent(JSON.stringify(newValue))}; path=/;`;
+  },
+  removeItem: (key): void => {
+    document.cookie = `${key}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+  },
+};
+
+/** custom zustand url hash save methods */
+export const hashStorage: StateStorage = {
+  getItem: (key): string => {
+    const searchParams = new URLSearchParams(location.hash.slice(1));
+    const storedValue = searchParams.get(key) ?? '';
+    return JSON.parse(storedValue);
+  },
+  setItem: (key, newValue): void => {
+    const searchParams = new URLSearchParams(location.hash.slice(1));
+    searchParams.set(key, JSON.stringify(newValue));
+    location.hash = searchParams.toString();
+  },
+  removeItem: (key): void => {
+    const searchParams = new URLSearchParams(location.hash.slice(1));
+    searchParams.delete(key);
+    location.hash = searchParams.toString();
   },
 };
