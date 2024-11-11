@@ -47,6 +47,12 @@ importers:
       dayjs:
         specifier: ^1.11.13
         version: 1.11.13
+      dexie:
+        specifier: ^4.0.9
+        version: 4.0.9
+      dexie-react-hooks:
+        specifier: ^1.1.7
+        version: 1.1.7(@types/react@18.3.8)(dexie@4.0.9)(react@18.3.1)
       events:
         specifier: ^3.3.0
         version: 3.3.0
@@ -3006,6 +3012,16 @@ packages:
     resolution: {integrity: sha512-5tQykt+LqfJFBEYaDITx7S7cR7mJ/zQmLXZ2qt5w04ainYZw6tBf9dBunMjVeVOdYVRUzUOE4HkY5J7+uttb5Q==}
     engines: {node: '>= 4.2.1'}
     hasBin: true
+
+  dexie-react-hooks@1.1.7:
+    resolution: {integrity: sha512-Lwv5W0Hk+uOW3kGnsU9GZoR1er1B7WQ5DSdonoNG+focTNeJbHW6vi6nBoX534VKI3/uwHebYzSw1fwY6a7mTw==}
+    peerDependencies:
+      '@types/react': '>=16'
+      dexie: ^3.2 || ^4.0.1-alpha
+      react: '>=16'
+
+  dexie@4.0.9:
+    resolution: {integrity: sha512-VQG1huEVSAdDZssb9Bb9mFy+d3jAE0PT4d1nIRYlT46ip1fzbs1tXi0SlUayRDgV3tTbJG8ZRqAo2um49gtynA==}
 
   didyoumean@1.2.2:
     resolution: {integrity: sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==}
@@ -10549,6 +10565,14 @@ snapshots:
       debug: 2.6.9
     transitivePeerDependencies:
       - supports-color
+
+  dexie-react-hooks@1.1.7(@types/react@18.3.8)(dexie@4.0.9)(react@18.3.1):
+    dependencies:
+      '@types/react': 18.3.8
+      dexie: 4.0.9
+      react: 18.3.1
+
+  dexie@4.0.9: {}
 
   didyoumean@1.2.2: {}
 

@@ -32,6 +32,8 @@
     "copy-to-clipboard": "^3.3.3",
     "d3": "^7.9.0",
     "dayjs": "^1.11.13",
+    "dexie": "^4.0.9",
+    "dexie-react-hooks": "^1.1.7",
     "events": "^3.3.0",
     "file-saver": "^2.0.5",
     "i18next": "^23.16.0",
