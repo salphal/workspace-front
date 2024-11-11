@@ -18,7 +18,7 @@ const isZustandArray = (target: any) => Array.isArray(target);
  * @param value {any} - 数据值
  * @param merge {boolean} - 是否和之前的该值合并
  * @param insertBefore {boolean} - 如果该数据为数组, 是否从前面插入数据
- * @param isDeconstruct {boolean} - 是否使用结构数据合并值
+ * @param isDeconstruct {boolean} - 是否使用解构数据合并值
  *    - 会保证每次都是一个新的引用地址
  *    - 注意: 会失去解构对象上的私有成员
  */
