@@ -20,7 +20,7 @@ export class IndexdbExtra {
       dbName = 'IndexDB',
       version = 1,
       schema = {
-        table: '++id', // 必须有自增id, 其他的列动态创建
+        table: '++id', // 必须有自增id, 其他的列可以在 crud 的时候动态修改
         // table: '++id, name, age, gender',
       },
     } = config;
