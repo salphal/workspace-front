@@ -68,7 +68,7 @@ export const setStoreProperties = ({
     store.setState(loggerWrapper(updateFn, name));
   };
 
-  // 避免解构, 丢失私有成员等
+  // 直接使用 value 赋值, 避免解构, 丢失私有成员等
   if (!isDeconstruct) {
     updateState((prev: any) => ({
       ...prev,
