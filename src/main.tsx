@@ -9,8 +9,8 @@ import App from './App.tsx';
 import 'bootstrap-icons/font/bootstrap-icons.min.css';
 // 清除元素默认样式
 import 'normalize.css';
-// 设置高度 100% 并继承
-import '@/styles/full-height.scss';
+// 重置部分基础样式( eg: 设置高度 100% 并继承 )
+import '@/styles/reboot.scss';
 // 初始化 px 转换 rem( 根据媒体查询, 仅在指定大小下生效, 用于移动端 )
 import '@/utils/rem.ts';
 // 初始化 多语言
