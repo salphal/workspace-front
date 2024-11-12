@@ -99,6 +99,7 @@ const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
                 <Col>
                   <Flex justify={'center'} align={'center'}>
                     <Input
+                      className={styles.search}
                       placeholder={t('search')}
                       addonBefore={<SearchOutlined style={{ color: gray[2] }} />}
                       addonAfter={
