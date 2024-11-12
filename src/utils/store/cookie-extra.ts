@@ -9,7 +9,7 @@ export class CookieExtra {
    *
    * @param name - Cookie 名称
    * @param value - Cookie 值，支持任意类型，将会转换为字符串
-   * @param days - Cookie 的有效期（天数），默认为会话结束时过期
+   * @param days - Cookie 的有效期( 天数 )，默认为会话结束时过期
    */
   static set(name: string, value: any, days: number = 0): void {
     let expires = '';
