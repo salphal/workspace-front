@@ -148,10 +148,13 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
       visualizer({ open: true }),
       /**
        * 兼容低版本浏览器
+       * https://github.com/vitejs/vite/tree/main/packages/plugin-legacy
        */
       legacy({
-        targets: ['chrome 52', 'Android > 39', 'iOS >= 10.3', 'iOS >= 10.3'], // 需要兼容的目标列表，可以设置多个
-        additionalLegacyPolyfills: ['regenerator-runtime/runtime'], // 面向IE11时需要此插件
+        // 需要兼容的目标列表，可以设置多个
+        targets: ['chrome 52', 'Android > 39', 'iOS >= 10.3', 'iOS >= 10.3'],
+        // 面向 IE11 时需要此插件
+        additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
       }),
       /**
        * 开启 gzip 压缩
