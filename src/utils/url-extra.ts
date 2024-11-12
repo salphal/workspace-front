@@ -20,9 +20,8 @@ export class UrlExtra {
   }
 
   // 获取参数部分
-  __params(url: string): { [key: string]: any } {
-    const queryString = url.split('?')[1]?.split('#')[0] || ''; // 获取参数部分，不包含哈希
-    return queryString ? qs.parse(queryString) : {};
+  __params(url: string): string {
+    return url.split('?')[1]?.split('#')[0] || ''; // 获取参数部分，不包含哈希
   }
 
   // 获取哈希部分
