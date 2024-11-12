@@ -27,12 +27,19 @@
   setBodyFontSize(); // 初始调用设置 body 的字体大小
 
   /**
+   * 有切仅在移动端时添加 font-size
+   *
    * 设置 rem 基准单位：1rem 等于视口宽度的 1/10
    * 这样可以实现布局的自适应，使得布局随着视口宽度缩放
    */
   function setRemUnit(): void {
-    const rem = docEl.clientWidth / 10;
-    docEl.style.fontSize = `${rem}px`;
+    const baseWidth = 768; // 设置移动端的基准宽度
+    if (docEl.clientWidth <= baseWidth) {
+      const rem = docEl.clientWidth / 10;
+      docEl.style.fontSize = `${rem}px`;
+    } else {
+      docEl.style.fontSize = ''; // 清除 font-size 设置
+    }
   }
 
   setRemUnit(); // 初始调用设置 rem 单位
