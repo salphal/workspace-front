@@ -1,5 +1,22 @@
 import { StateStorage } from 'zustand/middleware';
 
+export interface ISetPropertiesConfig {
+  /** 状态库名称 */
+  name?: string;
+  /** 状态实例 */
+  store: ZustandStore;
+  /** 更新的键 */
+  key: string;
+  /** 更新的值 */
+  value: any;
+  /** 是否与之前的数据合并 */
+  merge: boolean;
+  /** 如果该数据为数组, 是否从前面插入数据 */
+  insertBefore: boolean;
+  /** 是否使用解构数据合并值 */
+  isDeconstruct: boolean;
+}
+
 export interface ZustandStore {
   setState: (...arg: any[]) => void;
 }
@@ -12,44 +29,67 @@ const isZustandFunc = (target: any) => typeof target === 'function';
 
 const isZustandArray = (target: any) => Array.isArray(target);
 
+const loggerWrapper =
+  (updateFn: (prev: any) => any, name: string = '') =>
+  (prevState: any) => {
+    const nextState = updateFn(prevState);
+    const stateName = name ? name : 'setState';
+    const size = name.length + 20 * 2 + 2;
+    const separator = (size: number) => Array(size).fill('-').join('');
+    console.log(`%c${separator(20)} ${stateName} ${separator(20)}`, 'color: gray;');
+    console.log('%c[ prev state ]:', 'color: gray;', prevState);
+    console.log('%c[ next state ]:', 'color: green;', nextState);
+    console.log(`%c${separator(size)}`, 'color: gray;');
+    return nextState;
+  };
+
 /**
- * @param store {ZustandStore} - ZustandStore 实例
- * @param key {string} - 数据名
- * @param value {any} - 数据值
- * @param merge {boolean} - 是否和之前的该值合并
- * @param insertBefore {boolean} - 如果该数据为数组, 是否从前面插入数据
- * @param isDeconstruct {boolean} - 是否使用解构数据合并值
+ * @param {string} [name=''] - 仓库名称
+ * @param {ZustandStore} store - ZustandStore 实例
+ * @param {string} key - 数据名
+ * @param {any} value - 数据值
+ * @param {boolean} [merge=true] - 是否和之前的该值合并
+ * @param {boolean} [insertBefore=false] - 如果该数据为数组, 是否从前面插入数据
+ * @param {boolean} [isDeconstruct=false] - 是否使用解构数据合并值
  *    - 会保证每次都是一个新的引用地址
  *    - 注意: 会失去解构对象上的私有成员
  */
-export const setStoreProperties = (
-  store: ZustandStore,
-  key: string,
-  value: any,
+export const setStoreProperties = ({
+  name = '',
+  store,
+  key,
+  value,
   merge = true,
   insertBefore = false,
-  isDeconstruct = false,
-) => {
-  /** 解决解构丢失私有成员 */
-  if (isDeconstruct) {
-    store.setState((prev: any) => ({
+  isDeconstruct = true,
+}: ISetPropertiesConfig) => {
+  // 提取一个更新状态的函数
+  const updateState = (updateFn: (prev: any) => any) => {
+    store.setState(loggerWrapper(updateFn, name));
+  };
+
+  // 避免解构, 丢失私有成员等
+  if (!isDeconstruct) {
+    updateState((prev: any) => ({
       ...prev,
       [key]: value,
     }));
     return;
   }
+
+  // 判断不同类型的 value，并更新状态
   if (isZustandObject(value)) {
-    store.setState((prev: any) => ({
+    updateState((prev: any) => ({
       ...prev,
       [key]: merge ? { ...prev[key], ...value } : { ...value },
     }));
   } else if (isZustandArray(value)) {
-    store.setState((prev: any) => ({
+    updateState((prev: any) => ({
       ...prev,
       [key]: merge ? (!insertBefore ? [...prev[key], ...value] : [...value, ...prev[key]]) : value,
     }));
   } else if (isZustandFunc(value)) {
-    store.setState((prev: any) => ({
+    updateState((prev: any) => ({
       ...prev,
       [key]: value(prev[key]),
     }));

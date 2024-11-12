@@ -3,13 +3,16 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 import styles from './index.module.scss';
+import { setData } from '@/store/global.ts';
 
 export interface OverviewProps {
   [key: string]: any;
 }
 
 const Overview: React.FC<OverviewProps> = (props: OverviewProps) => {
-  useEffect(() => {}, []);
+  useEffect(() => {
+    setData({ foo: 'bar' });
+  }, []);
   const { t, i18n } = useTranslation();
 
   return (

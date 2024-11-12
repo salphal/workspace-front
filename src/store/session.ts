@@ -39,8 +39,17 @@ export const setSessionProperty = (
   value: any,
   merge = false,
   insertBefore = false,
-  isDeconstruct = false,
-) => setStoreProperties(useSessionStore, key, value, merge, insertBefore, isDeconstruct);
+  isDeconstruct = true,
+) =>
+  setStoreProperties({
+    name: 'useSessionStore',
+    store: useSessionStore,
+    key,
+    value,
+    merge,
+    insertBefore,
+    isDeconstruct,
+  });
 
 export const setKey = (value: any, merge = false, insertBefore = false, isDeconstruct = false) =>
   setSessionProperty('key', value, merge, insertBefore, isDeconstruct);

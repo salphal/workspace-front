@@ -39,8 +39,17 @@ export const setLocalProperty = (
   value: any,
   merge = false,
   insertBefore = false,
-  isDeconstruct = false,
-) => setStoreProperties(useLocalStore, key, value, merge, insertBefore, isDeconstruct);
+  isDeconstruct = true,
+) =>
+  setStoreProperties({
+    name: 'useLocalStore',
+    store: useLocalStore,
+    key,
+    value,
+    merge,
+    insertBefore,
+    isDeconstruct,
+  });
 
 export const setKey = (value: any, merge = false, insertBefore = false, isDeconstruct = false) =>
   setLocalProperty('key', value, merge, insertBefore, isDeconstruct);

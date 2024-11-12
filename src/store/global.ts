@@ -30,8 +30,17 @@ export const setGlobalProperty = (
   value: any,
   merge = false,
   insertBefore = false,
-  isDeconstruct = false,
-) => setStoreProperties(useGlobalStore, key, value, merge, insertBefore, isDeconstruct);
+  isDeconstruct = true,
+) =>
+  setStoreProperties({
+    name: 'useGlobalStore',
+    store: useGlobalStore,
+    key,
+    value,
+    merge,
+    insertBefore,
+    isDeconstruct,
+  });
 
 export const setData = (value: any, merge = false, insertBefore = false, isDeconstruct = false) =>
   setGlobalProperty('data', value, merge, insertBefore, isDeconstruct);
