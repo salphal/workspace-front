@@ -49,7 +49,7 @@
 
   /**
    * 在页面尺寸改变时重新设置 rem 单位，确保自适应
-   * 页面从缓存恢复（通过 pageshow 事件）时也要重新设置 rem 单位
+   * 页面从缓存恢复( 通过 pageshow 事件 )时也要重新设置 rem 单位
    */
   window.addEventListener('resize', setRemUnit);
   window.addEventListener('pageshow', function (e: PageTransitionEvent) {
