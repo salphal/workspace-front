@@ -106,8 +106,8 @@ self.addEventListener('install', function (event) {
  * 4. 确保所有旧缓存删除完成后，新版本的缓存将生效
  */
 self.addEventListener('activate', function (event) {
-  let cacheWhitelist = [SW_VERSION]; // 1. 白名单包含当前缓存版本
-
+  // 1. 白名单包含当前缓存版本
+  let cacheWhitelist = [SW_VERSION];
   event.waitUntil(
     caches.keys().then(function (keyList) {
       // 2. 获取所有缓存的 key
