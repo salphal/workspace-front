@@ -44,4 +44,15 @@ export default {
     // require('@tailwindcss/aspect-ratio'),
     // require('@tailwindcss/container-queries'),
   ],
+  /**
+   * 控制 tailwind 生成哪些模块的预设样式
+   * https://tailwind.org.cn/docs/configuration
+   * @property {Array<string> | Object} corePlugins
+   *  - include 数组( 用于启用模块 ): 仅启用包含在数组中的模块
+   *  - exclude 对象( 用于排除模块 ): key 为模块, 值为 布尔, false 为关闭
+   */
+  // 生成预设时排除值为 false 的模块
+  corePlugins: {},
+  // 仅生成包含在其中的模块
+  // corePlugins: [],
 };
