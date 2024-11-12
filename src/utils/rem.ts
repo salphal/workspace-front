@@ -6,6 +6,9 @@
  */
 
 /**
+ * html.fontSize: 通过 <html> 控制 rem 基准 和 优化文本渲染
+ * body.fontSize: 通过 <body> 控制基础字体大小
+ *
  * https://github.com/amfe/lib-flexible/blob/2.0/index.js
  */
 (function flexible(window: Window, document: Document): void {
