@@ -278,22 +278,28 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
         // 添加浏览器兼容前缀
         plugins: [
           autoprefixer(),
+          /**
+           * https://github.com/cuth/postcss-pxtorem
+           * 使用的官方配置的默认值
+           */
           postCssPxToRem({
-            // 换算基数( 根元素字体大小 )
+            // 表示根元素字体大小
             rootValue: 16,
             // 允许REM单位增长到的十进制数字, 小数点后保留的位数
             unitPrecision: 5,
-            // 可以从 px 变为 rem 的属性
+            // 表示哪些属性的值, 可以从 px 变为 rem
             propList: ['*'], // 所有 属性值 都转 px
-            // 默认false，可以( reg )利用正则表达式排除某些文件夹的方法，例如 /(node_module)/
-            // 如果想把前端UI框架内的 px 也转换成 rem, 请把此属性设为默认值
-            exclude: /(node_module)/,
+            // 要忽略并保留为 px 的选择器
+            selectorBlackList: [''],
+            // 替换包含 rems 的规则, 而不是添加后备
+            replace: true,
             //( 布尔值 )允许在媒体查询中转换px
             mediaQuery: false,
-            // 要忽略并保留为 px 的选择器, 本项目我是用的 vant ui 框架，所以忽略他
-            selectorBlackList: [''],
             // 设置要替换的最小像素值
             minPixelValue: 1,
+            // 默认false，可以( reg )利用正则表达式排除某些文件夹的方法，例如 /(node_modules)/i
+            // 如果想把前端UI框架内的 px 也转换成 rem, 请把此属性设为默认值
+            exclude: /node_modules/i,
           }),
         ],
       },
