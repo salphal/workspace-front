@@ -13,7 +13,8 @@ import viteImagemin from 'vite-plugin-imagemin';
 import { VitePWA } from 'vite-plugin-pwa';
 
 /**
- * https://vitejs.dev/config/
+ * 配置文档: https://vitejs.dev/config/
+ * 插件列表: https://github.com/vitejs/awesome-vite#plugins
  *
  * @param command {string} - 执行的命令
  * @param mode {string} - 环境
