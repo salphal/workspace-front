@@ -14,16 +14,23 @@
 (function flexible(window: Window, document: Document): void {
   const docEl = document.documentElement; // 获取文档的根元素 <html>
   const dpr = window.devicePixelRatio || 1; // 获取设备的像素比，默认为 1
+  const baseWidth = 768; // 设置移动端的基准宽度
 
   /**
    * 设置 body 的字体大小，以适应不同的 dpr 值
    * 这样做是为了在高分辨率屏幕上文本渲染更清晰
    */
   function setBodyFontSize(): void {
-    if (document.body) {
-      document.body.style.fontSize = `${12 * dpr}px`;
+    if (document.documentElement.clientWidth <= baseWidth) {
+      if (document.body) {
+        document.body.style.fontSize = `${12 * dpr}px`;
+      } else {
+        document.addEventListener('DOMContentLoaded', setBodyFontSize); // 当 body 元素不存在时，等待 DOMContentLoaded 事件后执行
+      }
     } else {
-      document.addEventListener('DOMContentLoaded', setBodyFontSize); // 当 body 元素不存在时，等待 DOMContentLoaded 事件后执行
+      if (document.body) {
+        document.body.style.fontSize = ''; // 清除 font-size 设置
+      }
     }
   }
 
@@ -36,7 +43,6 @@
    * 这样可以实现布局的自适应，使得布局随着视口宽度缩放
    */
   function setRemUnit(): void {
-    const baseWidth = 768; // 设置移动端的基准宽度
     if (docEl.clientWidth <= baseWidth) {
       const rem = docEl.clientWidth / 10;
       docEl.style.fontSize = `${rem}px`;
