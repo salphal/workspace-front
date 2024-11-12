@@ -166,7 +166,17 @@ self.addEventListener('fetch', function (event) {
 
             // 6. 符合缓存条件，将响应存入缓存
             caches.open(SW_VERSION).then(function (cache) {
-              cache.put(event.request, responseClone);
+              // 检查请求的 URL 协议是否严格为 'http' 或 'https'
+              if (
+                event.request.url.startsWith('http://') ||
+                event.request.url.startsWith('https://')
+              ) {
+                cache.put(event.request, responseClone).catch(function (error) {
+                  console.error('Failed to cache request:', error);
+                });
+              } else {
+                console.warn('Skipped caching for unsupported scheme:', event.request.url);
+              }
             });
 
             // 返回网络请求的响应
