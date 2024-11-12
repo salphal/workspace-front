@@ -22,6 +22,7 @@ import React from 'react';
 
 import { registryCacheService } from '@/utils/cache.ts';
 
+// 启动 cache-service.js 用于自定义缓存
 registryCacheService();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
