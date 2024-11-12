@@ -13,18 +13,24 @@ export class UrlExtra {
     return qs.stringify(params);
   }
 
-  // 获取路径部分
+  /**
+   * 获取路径部分
+   */
   __path(url: string): string {
     // 分离出不含参数或哈希的路径
     return url.split(/[?#]/)[0];
   }
 
-  // 获取参数部分
+  /**
+   * 获取参数部分
+   */
   __params(url: string): string {
     return url.split('?')[1]?.split('#')[0] || ''; // 获取参数部分，不包含哈希
   }
 
-  // 获取哈希部分
+  /**
+   * 获取哈希部分
+   */
   __hash(url: string): string {
     // 提取哈希
     return url.split('#')[1] || '';
