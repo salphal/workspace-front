@@ -3,5 +3,8 @@
  * https://github.com/twbs/bootstrap/blob/main/scss/bootstrap.scss
  */
 
-@use './reset/index' as *;
-@use './full-height' as *;
+// Configuration
+@import "functions";
+@import "variables";
+@import "variables-dark";
+@import "mixins";
