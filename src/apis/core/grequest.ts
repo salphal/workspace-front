@@ -4,6 +4,17 @@ import { v4 as uuidv4 } from 'uuid';
 import { HttpRequest } from '@/apis/core/hrequest.ts';
 import { SocketRequest } from '@/apis/core/srequest.ts';
 
+/**
+ * 获取 graphql 语句中的名称
+ */
+export const extractQueryName = (graphqlQuery: string) => {
+  const match = graphqlQuery.match(/\b(query|mutation|subscription)\s+(\w+)\s?/);
+  if (match) {
+    return match[2]; // 返回语句的名字
+  }
+  return null; // 如果没有找到语句名，返回 null
+};
+
 export interface IGraphqlRequest {
   /** 查询 */
   query: (config: GraphqlConfig) => Promise<any>;
@@ -22,7 +33,7 @@ export interface GraphqlConfig {
 
 export type SubscriptionConfig = GraphqlConfig & {
   /** 订阅时必须传递 */
-  operationName: string;
+  operationName?: string;
   /** 数据订阅的回调*/
   onMessage: (data: GSResp<any>) => void | null;
 };
@@ -153,7 +164,7 @@ export class GraphqlRequest implements IGraphqlRequest {
             payload: {
               variables,
               extensions: {},
-              operationName, // 必须填写的和 query 的名称一致
+              operationName: extractQueryName(query), // 必须填写的和 query 的名称一致
               query,
             },
           });

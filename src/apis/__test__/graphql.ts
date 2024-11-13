@@ -38,7 +38,6 @@ export const testGraphqlSubscription = (config: any) => {
         id
       }
     }`,
-    operationName: 'subscriptionEnvs',
     variables,
     onMessage,
   });
