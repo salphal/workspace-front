@@ -1,5 +1,8 @@
 import { saveAs } from 'file-saver';
 
+/**
+ * https://github.com/eligrey/FileSaver.js
+ */
 export class FileExtra {
   /**
    * 文件存储
