@@ -76,8 +76,9 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
        */
       VitePWA({
         includeAssets: ['favicon.svg'],
-        manifest: false,
+        // 自动更新 Service Worker
         registerType: 'autoUpdate',
+        manifest: false,
         workbox: {
           runtimeCaching: [
             {
