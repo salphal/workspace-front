@@ -16,8 +16,8 @@ import { VitePWA } from 'vite-plugin-pwa';
  * 配置文档: https://vitejs.dev/config/
  * 插件列表: https://github.com/vitejs/awesome-vite#plugins
  *
- * @param command {string} - 执行的命令
- * @param mode {string} - 环境
+ * @param {string} command - 执行的命令
+ * @param {string} mode - 环境
  */
 export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
   console.log('=>(vite.config.ts) mode', mode);
@@ -26,9 +26,9 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
 
   const root = process.cwd(); // 根目录
   /**
-   * @param mode {string} - 环境
-   * @param root {string} - 目录
-   * @param prefix {string} - 仅读取该前缀的环境变量
+   * @param {string} mode - 环境
+   * @param {string} root - 目录
+   * @param {string} prefix - 仅读取该前缀的环境变量
    *
    * @return {[key: string]: string} - 返回的值类型都是字符串
    */
@@ -311,7 +311,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
         scss: {
           // 加入全局变量( 不要单独引入该文件样式，否则在最中产物中会重复出现 )
           // 引入多个文件以；分割
-          additionalData: "@use '@/styles/_variables.scss' as *;",
+          additionalData: "@use '@/styles/index.scss' as *;",
           javascriptEnabled: true,
         },
       },

@@ -24,6 +24,14 @@
           height: 28px;
           margin: 0 24px;
         }
+
+        .search {
+
+          /* 解决 tailwind 默认样式 */
+          &:active {
+            box-shadow: none !important;
+          }
+        }
       }
 
       &-r {
