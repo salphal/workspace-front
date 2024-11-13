@@ -20,7 +20,7 @@ export class FileExtra {
    * - audio/mpeg: MP3 音频文件
    * - video/mp4: MP4 视频文件
    *
-   * 如果未提供 `type`，默认值为 `application/octet-stream`，表示二进制流文件类型。
+   * 如果未提供 `type`，默认值为 `application/octet-stream`，表示二进制流文件类型
    */
   static saveAs(config: { name: string; content: BlobPart; type?: string }) {
     const { content, name, type = 'application/octet-stream' } = config;
