@@ -7,6 +7,7 @@
 export {}
 declare global {
   const Col: typeof import('antd')['Col']
+  const ConfigProvider: typeof import('antd')['ConfigProvider']
   const Divider: typeof import('antd')['Divider']
   const Flex: typeof import('antd')['Flex']
   const Input: typeof import('antd')['Input']
