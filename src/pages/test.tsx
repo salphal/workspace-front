@@ -3,6 +3,7 @@ import { Segmented, Typography } from 'antd';
 
 import styles from './test.module.scss';
 import { testGraphqlSubscription } from '@/apis/__test__/graphql.ts';
+import ThemeSwitcher from '@/components/theme-switcher';
 
 const { Title, Paragraph, Text, Link } = Typography;
 
@@ -71,6 +72,7 @@ const Test: React.FC<TestProps> = (props: TestProps) => {
         {segmented === 'testGraphqlQuery' && (
           <>
             <Paragraph>testGraphqlQuery</Paragraph>
+            <ThemeSwitcher />
           </>
         )}
         {segmented === 'testGraphqlMutation' && (
