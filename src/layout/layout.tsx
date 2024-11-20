@@ -15,6 +15,8 @@ import { t } from 'i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import styles from './index.module.scss';
+import LanguageSwitcher from '@/components/language-switcher';
+import ThemeSwitcher from '@/components/theme-switcher';
 
 const { Header, Content, Footer, Sider } = AntdLayout;
 
@@ -127,12 +129,16 @@ const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
             <Col className={styles['header-content-r']} xs={0} md={14} xl={16}>
               <Row justify={'end'} align={'middle'} wrap={false}>
                 <Col xs={0} md={8} xl={6}>
-                  <NavigateMenu />
+                  {/*<NavigateMenu />*/}
                 </Col>
                 <Col style={{ padding: '0 24px' }}>
-                  <Flex justify={'end'} align={'center'}>
-                    <GithubFilled style={{ fontSize: 20 }} />
-                  </Flex>
+                  {/*<Flex justify={'end'} align={'center'}>*/}
+                  <Space align={'center'} size={8} split={<Divider type="vertical" />}>
+                    <ThemeSwitcher />
+                    <LanguageSwitcher />
+                    <GithubFilled style={{ display: 'block', fontSize: 22 }} />
+                  </Space>
+                  {/*</Flex>*/}
                 </Col>
                 <Col style={{ padding: '0 24px 0 0' }}>
                   <Avatar size={32} icon={<UserOutlined />} />
