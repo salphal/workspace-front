@@ -10,7 +10,7 @@ import Test from '@/pages/test.tsx';
 const routes: RouteObject[] = [
   {
     path: '/',
-    element: <Navigate to="/overview" />,
+    element: <Navigate to="/test" />,
   },
   {
     path: '/overview/*',
