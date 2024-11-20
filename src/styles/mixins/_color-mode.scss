@@ -1,21 +1,52 @@
-// scss-docs-start color-mode-mixin
+@use "../variables/theme-mode" as *;
+
+// **Mixin: color-mode**
+// 用途: 根据不同的主题模式（如 light 或 dark）定义样式。
+// 支持三种模式:
+// 1. **media-query**: 使用媒体查询 `prefers-color-scheme` 检测用户偏好。
+// 2. **class-name**: 使用显式的主题类名（如 `.theme-light` 或 `.theme-dark`）。
+// 3. **data-attribute**: 使用 `data-bs-theme` 属性控制主题。
+// 参数说明:
+// - `$mode`: 指定模式，可选值为 `light` 或 `dark`，默认值为 `light`。
+// - `$root`: 是否将样式应用于 `:root`，默认值为 `false`。
+// 外部依赖:
+// - `$color-mode-type`: 全局变量，决定主题模式类型，需显式设置为 `"media-query"`, `"class-name"` 或 `"data-attribute"`。
+
 @mixin color-mode($mode: light, $root: false) {
+  // 1. 检测 $color-mode-type 是否为 "media-query"
   @if $color-mode-type == "media-query" {
     @if $root == true {
+      // 如果 $root 为 true，应用于 :root 且通过媒体查询控制
       @media (prefers-color-scheme: $mode) {
         :root {
           @content;
         }
       }
     } @else {
+      // 否则直接通过媒体查询控制 @content
       @media (prefers-color-scheme: $mode) {
         @content;
       }
     }
-  } @else {
+  }
+    // 2. 检测 $color-mode-type 是否为 "class-name"
+  @else if $color-mode-type == "class-name" {
+    .theme-#{$mode} {
+      @if $root == true {
+        // 如果 $root 为 true，应用于 :root
+        :root {
+          @content;
+        }
+      } @else {
+        // 否则直接在类名选择器下应用 @content
+        @content;
+      }
+    }
+  }
+    // 3. 检测 $color-mode-type 是否为 "data-attribute"
+  @else {
     [data-bs-theme="#{$mode}"] {
       @content;
     }
   }
 }
-// scss-docs-end color-mode-mixin

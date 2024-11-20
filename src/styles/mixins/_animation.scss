@@ -1,0 +1,89 @@
+// 1. 定义所有 CSS 动画属性的名称列表
+$animation-all-property-name-list: (
+  'animation-name', // 动画名称
+  'animation-duration', // 动画持续时间
+  'animation-direction', // 动画方向
+  'animation-delay', // 动画延迟
+  'animation-iteration-count', // 动画循环次数
+  'animation-fill-mode', // 动画填充模式
+  'animation-play-state', // 动画播放状态
+  'animation-timing-function', // 动画时序函数
+);
+
+// 2. 定义默认的动画关键帧
+@keyframes animation-default-keyframe {
+  0% {
+    opacity: 0; // 动画初始状态：完全透明
+  }
+  50% {
+    opacity: .5; // 动画中间状态：半透明
+  }
+  100% {
+    opacity: 1; // 动画结束状态：完全不透明
+  }
+}
+
+// 3. 定义动画的默认参数
+$animation-default-name: animation-default-keyframe !default; // 默认动画名称
+$animation-default-duration: 1s !default; // 默认动画持续时间
+$animation-default-delay: 0s !default; // 默认动画延迟时间
+$animation-default-direction: normal !default; // 默认动画方向
+$animation-default-cycle-count: infinite !default; // 默认动画循环次数
+$animation-default-fill-mode: none !default; // 默认动画填充模式
+$animation-default-play-state: running !default; // 默认动画播放状态
+$animation-default-timing-function: ease-in-out !default; // 默认动画时序函数
+
+// 4. 组合动画的默认参数为一个 map
+$animation-default-params: (
+  "keyframe": $animation-default-name, // 动画名称
+  "duration": $animation-default-duration, // 动画持续时间
+  "direction": $animation-default-direction, // 动画方向
+  "delay": $animation-default-delay, // 动画延迟
+  "count": $animation-default-cycle-count, // 动画循环次数
+  "mode": $animation-default-fill-mode, // 动画填充模式
+  "state": $animation-default-play-state, // 动画播放状态
+  "bezier-curve": $animation-default-timing-function, // 动画时序函数
+);
+
+// 5. 定义动画参数的关键映射
+$animation-default-params-key-map: (
+  "keyframe": "name", // keyframe -> name
+  "count": "iteration-count", // count -> iteration-count
+  "mode": "fill-mode", // mode -> fill-mode
+  "state": "play-state", // state -> play-state
+  "bezier-curve": "timing-function", // bezier-curve -> timing-function
+);
+
+// 6. 根据后缀获取对应的动画属性名称
+@function getAnimationPropertyName($suffix, $prefix: 'animation',  $key-map: $animation-default-params-key-map) {
+  $property-name: #{$prefix}-#{$suffix}; // 默认动画属性名称
+  @if (map-has-key($key-map, $suffix)) { // 如果映射表中有对应的 key
+    $property-name: #{$prefix}-#{map-get($key-map, $suffix)}; // 使用映射表中的值作为属性名称
+  }
+  @return $property-name; // 返回属性名称
+}
+
+// 7. 定义动画 mixin，接收动画参数并设置对应的 CSS 样式
+@mixin animation($animation-params: $animation-default-params) {
+  @if (type-of($animation-params) == string) { // 如果参数是字符串类型
+    @each $key, $val in $animation-default-params { // 遍历默认参数
+      $property-name: getAnimationPropertyName($key); // 获取属性名称
+      @if (index($animation-all-property-name-list, $property-name) != null and $property-name != 'animation-name') {
+        #{$property-name}: map-get($animation-default-params, $key); // 如果是有效的动画属性，设置其值
+      } @else {
+        animation-name: $animation-params; // 否则设置动画名称
+      }
+    }
+  } @else if (type-of($animation-params) == map and length($animation-params) > 0) { // 如果参数是 map 类型
+    @each $key, $val in $animation-default-params { // 遍历默认参数
+      $property-name: getAnimationPropertyName($key); // 获取属性名称
+      @if (index($animation-all-property-name-list, $property-name) != null) { // 如果是有效的动画属性
+        @if (map-has-key($animation-params, $key)) { // 如果 map 中有该属性
+          #{$property-name}: map-get($animation-params, $key); // 设置属性值
+        } @else {
+          #{$property-name}: map-get($animation-default-params, $key); // 否则使用默认值
+        }
+      }
+    }
+  }
+}

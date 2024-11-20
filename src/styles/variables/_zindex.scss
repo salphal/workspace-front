@@ -1,0 +1,27 @@
+// Z-index master list
+//
+// Warning: Avoid customizing these values. They're used for a bird's eye view
+// of components dependent on the z-axis and are designed to all work together.
+
+// scss-docs-start zindex-stack
+$zindex-dropdown: 1000 !default; // 下拉菜单的层级，通常在页面的其他元素之上，但低于模态框和工具提示
+$zindex-sticky: 1020 !default; // 粘性定位元素的层级，通常用于粘性导航条，固定在页面的一部分
+$zindex-fixed: 1030 !default; // 固定定位元素的层级，通常用于顶部、底部固定的导航栏或元素
+$zindex-offcanvas-backdrop: 1040 !default; // 背景遮罩层的层级，通常用于侧边栏弹出时的背景遮罩，确保它位于其他元素下方
+$zindex-offcanvas: 1045 !default; // 侧边栏弹出的层级，通常侧边栏位于遮罩层之上
+$zindex-modal-backdrop: 1050 !default; // 模态框背景遮罩层的层级，模态框弹出时的背景遮罩，通常位于其他所有元素之下
+$zindex-modal: 1055 !default; // 模态框的层级，通常用于弹出窗口，确保它位于背景遮罩层和其他元素之上
+$zindex-popover: 1070 !default; // 弹出层的层级，通常用于显示小型提示框或内容提示，位于页面中的其他元素之上
+$zindex-tooltip: 1080 !default; // 工具提示的层级，通常用于显示悬浮的提示文本或图标，位于其他内容之上
+$zindex-toast: 1090 !default; // 消息通知的层级，通常用于显示短暂的通知消息，位于页面内容的最上层
+// scss-docs-end zindex-stack
+
+// scss-docs-start zindex-levels-map
+$zindex-levels: (
+  n1: -1,
+  0: 0,
+  1: 1,
+  2: 2,
+  3: 3
+) !default;
+// scss-docs-end zindex-levels-map

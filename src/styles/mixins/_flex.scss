@@ -1,0 +1,64 @@
+$flex-default-direction: row;
+$flex-default-wrap: wrap;
+$flex-default-spindle: flex-start;
+$flex-default-secondary: flex-start;
+
+@mixin flex(
+  $direction: $flex-default-direction,
+  $wrap: $flex-default-wrap,
+  $spindle: $flex-default-spindle,
+  $secondary: $flex-default-secondary
+) {
+  display: flex;
+  flex-flow: $direction $wrap;
+  justify-content: $spindle;
+  align-items: $secondary;
+}
+
+@mixin flex-row(
+  $spindle: $flex-default-spindle,
+  $secondary: $flex-default-secondary,
+  $wrap: $flex-default-wrap
+) {
+  @include flex(row, $wrap, $spindle, $secondary);
+}
+
+@mixin flex-row-nowrap(
+  $spindle: $flex-default-spindle,
+  $secondary: $flex-default-secondary
+) {
+  @include flex(row, nowrap, $spindle, $secondary);
+}
+
+@mixin flex-row-center(
+  $spindle: $flex-default-spindle,
+  $secondary: center
+) {
+  @include flex(row, nowrap, $spindle, $secondary);
+}
+
+@mixin flex-column(
+  $spindle: $flex-default-spindle,
+  $secondary: $flex-default-secondary,
+  $wrap: $flex-default-wrap
+) {
+  @include flex(column, $wrap, $spindle, $secondary);
+}
+
+@mixin flex-column-nowrap(
+  $spindle: $flex-default-spindle,
+  $secondary: $flex-default-secondary
+) {
+  @include flex(column, nowrap, $spindle, $secondary);
+}
+
+@mixin flex-column-center(
+  $spindle: $flex-default-spindle,
+  $secondary: center
+) {
+  @include flex(column, nowrap, $spindle, $secondary);
+}
+
+@mixin flex-center() {
+  @include flex(row, nowrap, center, center);
+}

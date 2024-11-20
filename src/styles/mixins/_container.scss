@@ -1,11 +1,21 @@
-// Container mixins
+$container-default-margin: 0;
+$container-default-padding: 0;
+$container-default-height: 100%;
 
-@mixin make-container($gutter: $container-padding-x) {
-  --#{$prefix}gutter-x: #{$gutter};
-  --#{$prefix}gutter-y: 0;
+/**
+ * 用于设置容器层样式
+ */
+
+@mixin make-container(
+  $overflow: hidden,
+  $margin: $container-default-margin,
+  $padding: $container-default-padding,
+  $height: $container-default-height,
+) {
+  overflow: $overflow;
+  margin: $margin;
+  padding: $padding;
+  height: $height;
   width: 100%;
-  padding-right: calc(var(--#{$prefix}gutter-x) * .5); // stylelint-disable-line function-disallowed-list
-  padding-left: calc(var(--#{$prefix}gutter-x) * .5); // stylelint-disable-line function-disallowed-list
-  margin-right: auto;
-  margin-left: auto;
+  background: transparent;
 }

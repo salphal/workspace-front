@@ -1,0 +1,80 @@
+// 默认的形状颜色、边框颜色、边框宽度和大小
+$shape-default-color: #333;
+$shape-default-border-color: #eee;
+$shape-default-border-width: 1px;
+$shape-default-size: 100px;
+
+// 边框样式 mixin
+// 用于设置元素的边框宽度、颜色和样式（默认值：solid）
+@mixin border($width: $shape-default-border-width, $color: $shape-default-color, $style: solid) {
+  border-width: $width; // 边框宽度
+  border-color: $color; // 边框颜色
+  border-style: $style; // 边框样式（默认 solid）
+}
+
+// 矩形形状 mixin
+// 用于设置矩形的宽度和高度（默认大小：100px）
+@mixin shape-rect($width: $shape-default-size, $height: $shape-default-size) {
+  width: $width; // 矩形宽度
+  height: $height; // 矩形高度
+}
+
+// 填充矩形形状 mixin
+// 继承 shape-rect，用于填充矩形背景颜色
+@mixin shape-fill-rect($width, $height, $color: $shape-default-color) {
+  @include shape-rect($width, $height); // 包含矩形形状的宽高设置
+  background-color: $color; // 设置背景颜色（默认颜色：#333）
+}
+
+// 带边框的矩形形状 mixin
+// 继承 shape-rect 和 border，用于创建带有边框的矩形
+@mixin shape-border-rect($width, $height, $color: $shape-default-color, $border-width: $shape-default-border-width) {
+  @include shape-rect($width, $height); // 包含矩形形状的宽高设置
+  @include border($border-width, $color); // 包含边框的设置
+}
+
+// 圆形形状 mixin
+// 用于创建圆形，默认大小为 100px 的圆
+@mixin shape-circle($radius: $shape-default-size) {
+  width: $radius; // 圆形宽度（半径）
+  height: $radius; // 圆形高度（半径）
+  border-radius: 50%; // 圆形的边框半径
+}
+
+// 填充圆形形状 mixin
+// 继承 shape-circle，用于填充圆形背景颜色
+@mixin shape-fill-circle($radius, $color: $shape-default-color) {
+  @include shape-circle($radius); // 包含圆形的半径设置
+  background-color: $color; // 设置圆形背景颜色（默认颜色：#333）
+}
+
+// 带边框的圆形形状 mixin
+// 继承 shape-circle 和 border，用于创建带有边框的圆形
+@mixin shape-border-circle($radius, $color: $shape-default-color, $border-width: $shape-default-border-width) {
+  @include shape-circle($radius); // 包含圆形的半径设置
+  @include border($border-width, $color); // 包含边框的设置
+}
+
+// 等腰三角形形状 mixin
+// 用于创建一个等腰三角形，$angle 参数用于旋转三角形
+@mixin shape-isosceles-triangle($width: $shape-default-size, $color: $shape-default-color, $angle: 0) {
+  width: 0; // 三角形的宽度
+  height: 0; // 三角形的高度
+  border-top: $width solid $color; // 设置顶部边框（实线，指定宽度和颜色）
+  border-right: $width solid transparent; // 设置右边边框（透明）
+  border-bottom: $width solid transparent; // 设置底边边框（透明）
+  border-left: $width solid transparent; // 设置左边边框（透明）
+  transform: rotate(#{$angle}deg); // 使用 transform 旋转三角形，$angle 是旋转的角度
+}
+
+// 直角三角形形状 mixin
+// 用于创建一个直角三角形，$angle 参数用于旋转三角形
+@mixin shape-right-triangle($width: $shape-default-size, $color: $shape-default-color, $angle: 0) {
+  width: 0; // 三角形的宽度
+  height: 0; // 三角形的高度
+  border-top: $width solid $color; // 设置顶部边框（实线，指定宽度和颜色）
+  border-right: $width solid $color; // 设置右边边框（实线，指定宽度和颜色）
+  border-bottom: $width solid transparent; // 设置底边边框（透明）
+  border-left: $width solid transparent; // 设置左边边框（透明）
+  transform: rotate(#{$angle}deg); // 使用 transform 旋转三角形，$angle 是旋转的角度
+}

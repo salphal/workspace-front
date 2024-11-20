@@ -3,12 +3,12 @@
 // Used in conjunction with global variables to enable certain theme features.
 
 // Skins
-@import "mixins/border-radius";
-@import "mixins/box-shadow";
-@import "mixins/gradients";
-@import "mixins/transition";
+//@forward "mixins/border-radius";
+//@forward "mixins/box-shadow";
+//@forward "mixins/gradients";
+//@forward "mixins/transition";
 
 // Layout
-@import "mixins/clearfix";
-@import "mixins/container";
-@import "mixins/grid";
+@forward "mixins/clearfix";
+//@forward "mixins/container";
+//@forward "mixins/grid";

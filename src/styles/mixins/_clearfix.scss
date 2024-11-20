@@ -1,4 +1,6 @@
-// scss-docs-start clearfix
+/**
+ * 清理 float 对元素的布局影响
+ */
 @mixin clearfix() {
   &::after {
     display: block;
@@ -6,4 +8,3 @@
     content: "";
   }
 }
-// scss-docs-end clearfix
