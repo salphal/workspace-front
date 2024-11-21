@@ -30,8 +30,14 @@ const ThemeSwitcher: ForwardRefRenderFunction<ThemeSwitcherRef, ThemeSwitcherPro
   ref: Ref<ThemeSwitcherRef | HTMLDivElement>,
 ) => {
   const { value, onChange, ...restProps } = props;
-  const [checked, setChecked] = useState<boolean>(true);
+  const [checked, setChecked] = useState<boolean>();
   const [styles, setStyles] = useState<any>(switchLightStyles);
+
+  /**
+   * 媒体查询 系统的主题 是否匹配 light
+   *  prefers-color-scheme: light | dark
+   */
+  const mediaLightTheme = window.matchMedia('(prefers-color-scheme: light)');
 
   useImperativeHandle(ref, () => ({
     checked: switchOnChecked,
@@ -39,10 +45,30 @@ const ThemeSwitcher: ForwardRefRenderFunction<ThemeSwitcherRef, ThemeSwitcherPro
   }));
 
   useEffect(() => {
+    mediaLightTheme.addEventListener('change', followSystemSwitchMode);
+    return () => {
+      mediaLightTheme.removeEventListener('change', followSystemSwitchMode);
+    };
+  }, [mediaLightTheme]);
+
+  useEffect(() => {
     setStyles(checked ? switchLightStyles : switchDarkStyles);
     toggleTheme(checked ? themeKeys.light : themeKeys.dark);
     typeof onChange === 'function' && onChange(checked ? themeKeys.light : themeKeys.dark);
   }, [checked]);
+
+  /**
+   * 跟随系统切换 light 和 dark
+   */
+  const followSystemSwitchMode = () => {
+    if (mediaLightTheme.matches) {
+      // light
+      setChecked(true);
+    } else {
+      // dark
+      setChecked(false);
+    }
+  };
 
   const switchOnChecked = () => {
     setChecked(true);
