@@ -5,26 +5,27 @@ import classNames from 'classnames';
 import styles from './index.module.scss';
 
 export interface LanguageSwitcherProps {
-  children?: any;
+  value?: any;
+  onChange?: (language: string) => void;
 }
-
-export interface LanguageSwitcherMethods {}
 
 interface LanguageSwitcherRef {
   [key: string]: any;
 }
 
-const LanguageSwitcher: ForwardRefRenderFunction<
-  LanguageSwitcherRef,
-  LanguageSwitcherProps & LanguageSwitcherMethods
-> = (props: LanguageSwitcherProps, ref: Ref<LanguageSwitcherRef | HTMLDivElement>) => {
-  const { ...restProps } = props;
+const LanguageSwitcher: ForwardRefRenderFunction<LanguageSwitcherRef, LanguageSwitcherProps> = (
+  props: LanguageSwitcherProps,
+  ref: Ref<LanguageSwitcherRef | HTMLDivElement>,
+) => {
+  const { value, onChange, ...restProps } = props;
 
   const [checked, setChecked] = useState<boolean>(true);
 
-  useImperativeHandle(ref, () => ({}));
+  useImperativeHandle(ref, () => ({ checked }));
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    typeof onChange === 'function' && onChange(checked ? 'zh' : 'en');
+  }, [checked]);
 
   const switchOnChange = () => {
     setChecked((p) => !p);

@@ -12,19 +12,24 @@ const switchDarkStyles = {
   backgroundColor: '#b6b6b6',
 };
 
-export interface ThemeSwitcherProps {}
+export type IThemeName = 'light' | 'dark' | 'auto';
 
-export interface ThemeSwitcherMethods {}
+export interface ThemeSwitcherProps {
+  /** 主题名称 */
+  value?: IThemeName;
+  /** 主题切换时触发的事件 */
+  onChange?: (name: IThemeName) => void;
+}
 
 interface ThemeSwitcherRef {
   [key: string]: any;
 }
 
-const ThemeSwitcher: ForwardRefRenderFunction<
-  ThemeSwitcherRef,
-  ThemeSwitcherProps & ThemeSwitcherMethods
-> = (props: ThemeSwitcherProps, ref: Ref<ThemeSwitcherRef | HTMLDivElement>) => {
-  const { ...restProps } = props;
+const ThemeSwitcher: ForwardRefRenderFunction<ThemeSwitcherRef, ThemeSwitcherProps> = (
+  props: ThemeSwitcherProps,
+  ref: Ref<ThemeSwitcherRef | HTMLDivElement>,
+) => {
+  const { value, onChange, ...restProps } = props;
   const [checked, setChecked] = useState<boolean>(true);
   const [styles, setStyles] = useState<any>(switchLightStyles);
 
@@ -36,6 +41,7 @@ const ThemeSwitcher: ForwardRefRenderFunction<
   useEffect(() => {
     setStyles(checked ? switchLightStyles : switchDarkStyles);
     toggleTheme(checked ? themeKeys.light : themeKeys.dark);
+    typeof onChange === 'function' && onChange(checked ? themeKeys.light : themeKeys.dark);
   }, [checked]);
 
   const switchOnChecked = () => {
