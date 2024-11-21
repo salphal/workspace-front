@@ -155,5 +155,16 @@ export default {
    *  - exclude 对象( 用于排除模块 ): key 为模块, 值为 布尔, false 为关闭
    */
   // corePlugins: {},
-  corePlugins: [],
+  corePlugins: [
+    'accessibility',
+    'height',
+    'lineHeight',
+    'minHeight',
+    'maxHeight',
+    // flex
+    'flex',
+    'alignContent',
+    'alignItems',
+    'alignSelf',
+  ],
 };
