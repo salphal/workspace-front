@@ -19,6 +19,8 @@ export interface ThemeSwitcherProps {
   value?: IThemeName;
   /** 主题切换时触发的事件 */
   onChange?: (name: IThemeName) => void;
+  /** 是否自动跟随系统*/
+  auto?: boolean;
 }
 
 interface ThemeSwitcherRef {
@@ -29,7 +31,7 @@ const ThemeSwitcher: ForwardRefRenderFunction<ThemeSwitcherRef, ThemeSwitcherPro
   props: ThemeSwitcherProps,
   ref: Ref<ThemeSwitcherRef | HTMLDivElement>,
 ) => {
-  const { value, onChange, ...restProps } = props;
+  const { value, onChange, auto = true, ...restProps } = props;
   const [checked, setChecked] = useState<boolean>();
   const [styles, setStyles] = useState<any>(switchLightStyles);
 
@@ -45,6 +47,7 @@ const ThemeSwitcher: ForwardRefRenderFunction<ThemeSwitcherRef, ThemeSwitcherPro
   }));
 
   useEffect(() => {
+    if (!auto) return;
     mediaLightTheme.addEventListener('change', followSystemSwitchMode);
     return () => {
       mediaLightTheme.removeEventListener('change', followSystemSwitchMode);
