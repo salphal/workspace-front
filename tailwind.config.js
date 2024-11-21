@@ -154,6 +154,6 @@ export default {
    *  - include 数组( 用于启用模块 ): 仅启用包含在数组中的模块
    *  - exclude 对象( 用于排除模块 ): key 为模块, 值为 布尔, false 为关闭
    */
-  corePlugins: {},
-  // corePlugins: [],
+  // corePlugins: {},
+  corePlugins: [],
 };
