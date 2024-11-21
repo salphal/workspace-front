@@ -1,53 +1,41 @@
-
 .language-switcher {
-  position: relative;
-  //padding: 4px;
+  display: block !important;
 
   .inner {
-    //.active {
-    //  left: 0;
-    //  top: 0;
-    //  width: 80px;
-    //  height: 80px;
-    //  background-color: #333;
-    //}
+    //overflow: hidden;
+    position: relative;
+    display: block;
+    width: 20px;
+    height: 20px;
+    box-sizing: border-box;
 
     .text {
       position: absolute;
-
-      &:active {
-        top: 4.5px;
-        left: 4.5px;
-        color: #fff;
-        font-size: 14px;
-        background-color: #333;
-        z-index: 100;
-      }
-
-      &:disabled {
-        right: 5px;
-        bottom: 5px;
-        color: #333;
-        font-size: 10px;
-        border: 1px solid #999;
-      }
     }
 
-    .zh {
-      top: 4.5px;
-      left: 4.5px;
+    .active {
+      top: 1px;
+      left: 0;
       color: #fff;
-      font-size: 14px;
       background-color: #333;
+      font-size: 14px;
       z-index: 100;
     }
 
-    .en {
-      right: 5px;
-      bottom: 5px;
-      color: #333;
-      font-size: 10px;
+    .disabled {
+      right: 0px;
+      bottom: -1px;
+      color: #999;
+      //background-color: black;
       border: 1px solid #999;
+      font-size: 10px;
+      z-index: 99;
+    }
+
+    .zh {
+    }
+
+    .en {
     }
   }
 }

@@ -20,7 +20,7 @@ const LanguageSwitcher: ForwardRefRenderFunction<
 > = (props: LanguageSwitcherProps, ref: Ref<LanguageSwitcherRef | HTMLDivElement>) => {
   const { ...restProps } = props;
 
-  const [checked, setChecked] = useState<boolean>(false);
+  const [checked, setChecked] = useState<boolean>(true);
 
   useImperativeHandle(ref, () => ({}));
 
@@ -34,7 +34,8 @@ const LanguageSwitcher: ForwardRefRenderFunction<
     <React.Fragment>
       <Button
         className={styles['language-switcher']}
-        // type="text"
+        type="text"
+        onClick={switchOnChange}
         icon={
           <div className={styles.inner}>
             <span
@@ -42,8 +43,8 @@ const LanguageSwitcher: ForwardRefRenderFunction<
                 [styles.text]: true,
                 [styles.zh]: true,
                 [styles.active]: checked,
+                [styles.disabled]: !checked,
               })}
-              onClick={switchOnChange}
             >
               中
             </span>
@@ -51,9 +52,9 @@ const LanguageSwitcher: ForwardRefRenderFunction<
               className={classNames({
                 [styles.text]: true,
                 [styles.en]: true,
-                [styles.active]: checked,
+                [styles.active]: !checked,
+                [styles.disabled]: checked,
               })}
-              onClick={switchOnChange}
             >
               En
             </span>
