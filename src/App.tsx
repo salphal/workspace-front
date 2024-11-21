@@ -6,7 +6,15 @@ import routes from '@/routes';
 
 import './App.scss';
 
+import { StyleProvider } from '@ant-design/cssinjs';
+import { ThemeProvider } from 'antd-style';
+import zhCN from 'antd/locale/zh_CN';
+import { useShallow } from 'zustand/react/shallow';
+
+import useThemeStore from '@/store/theme.ts';
+
 function App() {
+  const { mode } = useThemeStore(useShallow((state: any) => state));
   const { pathname } = useLocation();
 
   const page = useRoutes(routes);
@@ -15,7 +23,36 @@ function App() {
 
   return (
     <React.Fragment>
-      <Layout>{page}</Layout>
+      {/* 解决 antd 样式兼容性 */}
+      <StyleProvider hashPriority="high">
+        {/*
+         * antd 主题模式
+         * https://ant-design.antgroup.com/docs/react/customize-theme-cn
+         */}
+        <ThemeProvider
+          appearance={mode}
+          theme={{
+            /**
+             * css-in-js
+             * https://ant-design.antgroup.com/docs/react/css-variables-cn
+             */
+            cssVar: true,
+            hashed: false,
+            /** 重置样式 */
+            components: {
+              Layout: {
+                headerBg: mode === 'light' ? '#fff' : '#000',
+                /* 这里是你的组件 token */
+              },
+            },
+          }}
+        >
+          {/* antd 语言设置*/}
+          <ConfigProvider locale={zhCN}>
+            <Layout>{page}</Layout>
+          </ConfigProvider>
+        </ThemeProvider>
+      </StyleProvider>
     </React.Fragment>
   );
 }
