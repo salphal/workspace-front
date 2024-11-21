@@ -1,8 +1,8 @@
 .language-switcher {
   display: block !important;
+  overflow: hidden;
 
   .inner {
-    //overflow: hidden;
     position: relative;
     display: block;
     width: 20px;
@@ -23,10 +23,9 @@
     }
 
     .disabled {
-      right: 0px;
+      right: 0;
       bottom: -1px;
       color: #999;
-      //background-color: black;
       border: 1px solid #999;
       font-size: 10px;
       z-index: 99;
