@@ -25,7 +25,7 @@ const ThemeSwitcher: ForwardRefRenderFunction<
   ThemeSwitcherProps & ThemeSwitcherMethods
 > = (props: ThemeSwitcherProps, ref: Ref<ThemeSwitcherRef | HTMLDivElement>) => {
   const { ...restProps } = props;
-  const [checked, setChecked] = useState<boolean>(false);
+  const [checked, setChecked] = useState<boolean>(true);
   const [styles, setStyles] = useState<any>(switchLightStyles);
 
   useImperativeHandle(ref, () => ({
