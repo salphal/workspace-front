@@ -10,13 +10,14 @@ import {
   VideoCameraOutlined,
 } from '@ant-design/icons';
 import { useBreakpoint } from '@ant-design/pro-components';
-import { Layout as AntdLayout, Avatar, Col, Divider, Flex, Input, Menu, Spin } from 'antd';
+import { Layout as AntdLayout, Avatar, Button, Col, Divider, Flex, Input, Menu, Spin } from 'antd';
 import { t } from 'i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import styles from './index.module.scss';
 import LanguageSwitcher from '@/components/language-switcher';
 import ThemeSwitcher from '@/components/theme-switcher';
+import { setMode } from '@/store/theme.ts';
 
 const { Header, Content, Footer, Sider } = AntdLayout;
 
@@ -64,6 +65,12 @@ const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
   const AsideMenu = () => (
     <Menu theme="light" mode="inline" defaultSelectedKeys={['4']} items={items} />
   );
+
+  const languageOnChange = () => {};
+
+  const themeOnChange = (mode: any) => {
+    setMode(mode);
+  };
 
   return (
     <React.Fragment>
@@ -128,17 +135,19 @@ const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
             </Col>
             <Col className={styles['header-content-r']} xs={0} md={14} xl={16}>
               <Row justify={'end'} align={'middle'} wrap={false}>
-                <Col xs={0} md={8} xl={6}>
-                  {/*<NavigateMenu />*/}
-                </Col>
+                {/*<Col xs={0} md={8} xl={6}>*/}
+                {/*  <NavigateMenu />*/}
+                {/*</Col>*/}
                 <Col style={{ padding: '0 24px' }}>
-                  {/*<Flex justify={'end'} align={'center'}>*/}
                   <Space align={'center'} size={8} split={<Divider type="vertical" />}>
-                    <ThemeSwitcher />
-                    <LanguageSwitcher />
-                    <GithubFilled style={{ display: 'block', fontSize: 22 }} />
+                    <ThemeSwitcher onChange={themeOnChange} />
+                    <LanguageSwitcher onChange={languageOnChange} />
+                    <Button
+                      type={'text'}
+                      icon={<GithubFilled style={{ display: 'block', fontSize: 22 }} />}
+                      style={{ display: 'block' }}
+                    />
                   </Space>
-                  {/*</Flex>*/}
                 </Col>
                 <Col style={{ padding: '0 24px 0 0' }}>
                   <Avatar size={32} icon={<UserOutlined />} />
