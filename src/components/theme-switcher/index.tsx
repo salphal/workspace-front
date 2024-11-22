@@ -5,9 +5,9 @@ import { Select, Switch } from 'antd';
 import styles from './index.module.scss';
 import { themeKeys, toggleTheme } from '@/components/theme-switcher/utils.ts';
 
-// export const defaultModeList = ['light', 'dark'] as const;
-
-export const defaultModeList = ['light', 'dark', 'auto'] as const;
+export const defaultModeList = ['light', 'dark'] as const;
+//
+// export const defaultModeList = ['light', 'dark', 'auto'] as const;
 
 export interface ThemeSwitcherProps {
   /** 主题列表 */
