@@ -63,7 +63,13 @@ const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
   );
 
   const AsideMenu = () => (
-    <Menu theme="light" mode="inline" defaultSelectedKeys={['4']} items={items} />
+    <Menu
+      theme="light"
+      mode="inline"
+      defaultSelectedKeys={['4']}
+      items={items}
+      style={{ height: '100%' }}
+    />
   );
 
   const languageOnChange = () => {};
