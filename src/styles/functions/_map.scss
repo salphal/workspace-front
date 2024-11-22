@@ -1,0 +1,62 @@
+/**
+ * 遍历传入的 Sass 映射，并将每个键值对传递给指定的函数进行处理。可以在处理过程中传递额外的参数，甚至使用键和值作为函数参数。该函数返回一个经过处理后的新映射。
+ *
+ * @param {Map} $map - 需要遍历的 Sass 映射。
+ * @param {String} $func - 需要调用的函数名。
+ * @param {...} $args - 传递给函数的额外参数。键和值将根据条件传入函数。
+ * @return {Map} 返回处理后的新映射，包含每个键对应的处理结果。
+ */
+@function map-loop($map, $func, $args...) {
+  $_map: (); // 存储处理后的新映射
+
+  // 遍历传入的 Sass 映射
+  @each $key, $value in $map {
+    $_args: (); // 存储处理函数的参数
+
+    // 遍历传入的额外参数
+    @each $arg in $args {
+      // 判断是传递键、值，还是原始参数
+      $_args: append($_args, if($arg == "$key", $key, if($arg == "$value", $value, $arg)));
+    }
+
+    // 调用函数处理键值对，并将结果合并到新映射中
+    $_map: map-merge($_map, ($key: call(get-function($func), $_args...)));
+  }
+
+  @return $_map; // 返回新映射
+}
+
+/**
+ * 从给定的 Sass 映射中提取多个指定的键及其对应的值，构建一个新的映射。
+ *
+ * @param {Map} $map - 输入的 Sass 映射。
+ * @param {List} $values - 包含需要提取的键的列表。
+ * @return {Map} 返回一个新的映射，其中仅包含在 $values 中列出的键及其对应的值。
+ */
+@function map-get-multiple($map, $values) {
+  $result: (); // 初始化结果映射为空
+  @each $key, $value in $map {
+    @if (index($values, $key) != null) { // 检查 $key 是否存在于 $values 列表中
+      // 将匹配的键值对添加到结果映射中
+      $result: map-merge($result, ($key: $value));
+    }
+  }
+  @return $result; // 返回包含指定键的映射
+}
+
+/**
+ * 将多个 Sass 映射合并为一个新的映射。如果有重复的键，则后面的映射的值会覆盖前面的值。
+ *
+ * @param {List} $maps... - 一个包含多个 Sass 映射的参数列表。
+ * @return {Map} 返回合并后的映射。
+ */
+@function map-merge-multiple($maps...) {
+  $merged-maps: (); // 初始化合并结果为空映射
+
+  @each $map in $maps {
+    // 将当前映射合并到结果映射中
+    $merged-maps: map-merge($merged-maps, $map);
+  }
+
+  @return $merged-maps; // 返回最终合并的映射
+}

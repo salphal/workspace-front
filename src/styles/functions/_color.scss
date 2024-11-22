@@ -1,0 +1,164 @@
+/**
+ * 该函数提取给定颜色的 RGB 组成部分，并返回红色、绿色和蓝色的分量。
+ *
+ * @param {Color} $value - 输入的颜色，任何有效的 CSS 颜色值。
+ *
+ * @return {List} 返回包含三个值（红色、绿色、蓝色）的列表。
+ */
+@function to-rgb($value) {
+  // 提取并返回红色、绿色和蓝色分量
+  @return red($value), green($value), blue($value);
+}
+
+/**
+ * 将指定颜色与白色混合以生成较浅的颜色。
+ * 该函数使用 Sass 的 `mix` 函数，将指定颜色与白色按指定比例混合，从而产生浅色效果。
+ *
+ * @param {Color} $color - 需要调亮的颜色。
+ * @param {Number} $weight - 白色的混合比例，取值范围是 0 到 100。0 表示不混合白色，100 表示完全混合白色。
+ * @return {Color} 返回混合后的较浅颜色。
+ */
+@function tint-color($color, $weight) {
+  @return mix(white, $color, $weight);
+}
+
+/**
+ * 将指定颜色与黑色混合以生成较暗的颜色。
+ * 该函数使用 Sass 的 `mix` 函数，将指定颜色与黑色按指定比例混合，从而产生深色效果。
+ *
+ * @param {Color} $color - 需要调暗的颜色。
+ * @param {Number} $weight - 黑色的混合比例，取值范围是 0 到 100。0 表示不混合黑色，100 表示完全混合黑色。
+ * @return {Color} 返回混合后的较暗颜色。
+ */
+@function shade-color($color, $weight) {
+  @return mix(black, $color, $weight);
+}
+
+/**
+ * 根据给定的权重值对颜色进行明暗调节。权重大于 0 时，会使用 `shade-color` 函数将颜色变暗，
+ * 权重小于 0 时，使用 `tint-color` 函数将颜色变亮。
+ *
+ * @param {Color} $color - 需要调整的颜色。
+ * @param {Number} $weight - 调整的权重，正值表示使颜色变暗，负值表示使颜色变亮。
+ * @return {Color} 返回调节后的颜色。
+ */
+@function shift-color($color, $weight) {
+  @return if($weight > 0, shade-color($color, $weight), tint-color($color, -$weight));
+}
+
+/**
+ * 该函数用于混合背景色和前景色，基于前景色的透明度值来调整混合比例，使得前景色更具透明感。
+ *
+ * @param {Color} $background - 背景色，任何有效的 CSS 颜色值。
+ * @param {Color} $foreground - 前景色，任何有效的 CSS 颜色值，要求含有透明度。
+ *
+ * @return {Color} 返回混合后的颜色。
+ */
+@function opaque($background, $foreground) {
+  // 使用前景色的不透明度与背景色混合，调整前景色的透明度
+  @return mix(rgba($foreground, 1), $background, opacity($foreground) * 100%);
+}
+
+/**
+ * 该函数计算给定颜色的相对亮度（luminance）。亮度是根据RGB通道的加权平均来计算的，它考虑了不同颜色通道对视觉感知的不同影响。
+ *
+ * @param {Color} $color - 输入的颜色，任何有效的 CSS 颜色值。
+ *
+ * @return {Number} 返回颜色的相对亮度值，范围通常为 0 到 1。
+ */
+@function luminance($color) {
+  // 获取颜色的 RGB 值
+  $rgb: (
+    "r": red($color),
+    "g": green($color),
+    "b": blue($color)
+  );
+
+  // 对每个颜色通道进行调整，以符合相对亮度计算公式
+  @each $name, $value in $rgb {
+    // 将颜色值标准化为 0 到 1 的范围，并应用对应的转换规则
+    $value: if(divide($value, 255) < .04045, divide(divide($value, 255), 12.92), nth($_luminance-list, $value + 1));
+    $rgb: map-merge($rgb, ($name: $value));
+  }
+
+  // 使用相对亮度加权公式计算最终的亮度值
+  @return (map-get($rgb, "r") * .2126) + (map-get($rgb, "g") * .7152) + (map-get($rgb, "b") * .0722);
+}
+
+/**
+ * 该函数用于执行除法操作，支持数字除法并保留指定的精度。还可以根据传入的单位进行单位转换。
+ *
+ * @param {Number} $dividend - 被除数。
+ * @param {Number} $divisor - 除数。
+ * @param {Number} $precision - 保留的精度，默认值为 `10`。
+ *
+ * @return {Number} 返回除法结果，如果指定了单位，会将结果与单位一起返回。
+ *
+ * @throws {Error} 如果除数为 0，抛出错误。
+ */
+@function divide($dividend, $divisor, $precision: 10) {
+  // 确定符号
+  $sign: if($dividend > 0 and $divisor > 0 or $dividend < 0 and $divisor < 0, 1, -1);
+
+  // 将被除数和除数都转为正数
+  $dividend: abs($dividend);
+  $divisor: abs($divisor);
+
+  // 如果被除数为0，返回0
+  @if $dividend == 0 {
+    @return 0;
+  }
+
+  // 如果除数为0，抛出错误
+  @if $divisor == 0 {
+    @error "Cannot divide by 0";
+  }
+
+  // 初始化余数、结果、精度相关变量
+  $remainder: $dividend;
+  $result: 0;
+  $factor: 10;
+
+  // 执行除法运算，精确到指定的精度
+  @while ($remainder > 0 and $precision >= 0) {
+    $quotient: 0;
+    @while ($remainder >= $divisor) {
+      $remainder: $remainder - $divisor;
+      $quotient: $quotient + 1;
+    }
+
+    // 将商乘以 10，并继续计算
+    $result: $result * 10 + $quotient;
+    $factor: $factor * .1;
+    $remainder: $remainder * 10;
+    $precision: $precision - 1;
+
+    // 如果精度小于0且余数大于等于5倍除数，进行四舍五入
+    @if ($precision < 0 and $remainder >= $divisor * 5) {
+      $result: $result + 1;
+    }
+  }
+
+  // 根据符号调整最终结果
+  $result: $result * $factor * $sign;
+
+  // 获取单位
+  $dividend-unit: unit($dividend);
+  $divisor-unit: unit($divisor);
+
+  // 支持的单位映射
+  $unit-map: (
+    "px": 1px,
+    "rem": 1rem,
+    "em": 1em,
+    "%": 1%
+  );
+
+  // 如果被除数和除数的单位不一致，则按单位映射调整结果
+  @if ($dividend-unit != $divisor-unit and map-has-key($unit-map, $dividend-unit)) {
+    $result: $result * map-get($unit-map, $dividend-unit);
+  }
+
+  // 返回最终结果
+  @return $result;
+}

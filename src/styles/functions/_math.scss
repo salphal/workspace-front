@@ -1,0 +1,58 @@
+/**
+ * 该函数用于将两个值相加。它会首先检查值的类型和兼容性，然后根据传入的参数决定是否返回计算结果的 `calc()` 表达式。
+ *
+ * @param {Number | String} $value1 - 第一个值，可以是数字或字符串。
+ * @param {Number | String} $value2 - 第二个值，可以是数字或字符串。
+ * @param {Boolean} $return-calc - 是否返回计算结果的 `calc()` 表达式，默认值为 `true`。
+ *
+ * @return {Number | String} 返回相加的结果。如果两个值兼容且为数字，则直接相加；如果不是数字，则返回计算表达式。
+ */
+@function add($value1, $value2, $return-calc: true) {
+  @if $value1 == null {
+    @return $value2;
+  }
+
+  @if $value2 == null {
+    @return $value1;
+  }
+
+  @if type-of($value1) == number and type-of($value2) == number and comparable($value1, $value2) {
+    @return $value1 + $value2;
+  }
+
+  @return if($return-calc == true, calc(#{$value1} + #{$value2}), $value1 + unquote(" + ") + $value2);
+}
+
+/**
+ * 该函数用于从第一个值中减去第二个值。它会根据值的类型和兼容性进行处理，并决定是否返回 `calc()` 表达式。
+ *
+ * @param {Number | String} $value1 - 第一个值，可以是数字或字符串。
+ * @param {Number | String} $value2 - 第二个值，可以是数字或字符串。
+ * @param {Boolean} $return-calc - 是否返回计算结果的 `calc()` 表达式，默认值为 `true`。
+ *
+ * @return {Number | String} 返回相减的结果。如果两个值兼容且为数字，则直接相减；否则返回计算表达式。
+ */
+@function subtract($value1, $value2, $return-calc: true) {
+  @if $value1 == null and $value2 == null {
+    @return null;
+  }
+
+  @if $value1 == null {
+    @return -$value2;
+  }
+
+  @if $value2 == null {
+    @return $value1;
+  }
+
+  @if type-of($value1) == number and type-of($value2) == number and comparable($value1, $value2) {
+    @return $value1 - $value2;
+  }
+
+  @if type-of($value2) != number {
+    $value2: unquote("(") + $value2 + unquote(")");
+  }
+
+  @return if($return-calc == true, calc(#{$value1} - #{$value2}), $value1 + unquote(" - ") + $value2);
+}
+

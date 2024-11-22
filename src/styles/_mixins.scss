@@ -1,14 +1,11 @@
-// Toggles
-//
-// Used in conjunction with global variables to enable certain theme features.
-
-// Skins
-//@forward "mixins/border-radius";
-//@forward "mixins/box-shadow";
-//@forward "mixins/gradients";
-//@forward "mixins/transition";
-
-// Layout
-@forward "mixins/clearfix";
-//@forward "mixins/container";
-//@forward "mixins/grid";
+@forward "./mixins/animation";
+@forward "./mixins/background";
+@forward "./mixins/box-shadow";
+@forward "./mixins/clearfix";
+@forward "./mixins/container";
+@forward "./mixins/flex";
+@forward "./mixins/gradients";
+@forward "./mixins/reset-text";
+@forward "./mixins/shape";
+@forward "./mixins/transition";
+@forward "./mixins/text";

@@ -1,0 +1,20 @@
+/**
+ * 多行省略号
+ */
+@mixin ellipsis($row: 1) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $row;
+  line-clamp: $row;
+  -webkit-box-orient: vertical;
+}
+
+/*
+ * 单行省略号
+ */
+@mixin uniline {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

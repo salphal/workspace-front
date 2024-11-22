@@ -1,0 +1,16 @@
+/**
+ * 将传入的列表转换为一组基于 CSS 自定义属性（CSS 变量）的值，并在每个变量前自动添加可选的前缀。
+ *
+ * @param {List} $list - 包含需要转换为 CSS 变量的名称的列表。
+ * @param {String} $prefix (可选) - 为 CSS 变量名称添加的前缀，默认为空字符串。
+ * @return {List} 返回由 CSS 自定义属性组成的列表，值以空格分隔。
+ */
+@function varify($list, $prefix: '') {
+  $result: null; // 初始化结果为空
+  @each $entry in $list {
+    // 将每个列表项转换为 CSS 自定义属性，并追加到结果中
+    $result: append($result, var(--#{$prefix}#{$entry}), space);
+  }
+  @return $result; // 返回最终的变量列表
+}
+
