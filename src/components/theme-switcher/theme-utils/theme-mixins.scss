@@ -1,0 +1,146 @@
+$default-theme: light; // 默认主题
+$theme-selector: data-theme; // 控制主题选择器类型( 用于属性选择器 [data-theme="mode"] )
+
+/**
+ * 全局主题集合
+ */
+$theme-map: (
+  light: (
+    bg-color: #007bff,
+    text-color: #f9d83c,
+    primary-color: #007bff
+  ),
+  dark: (
+    bg-color: #999,
+    text-color: #f9d83c,
+    primary-color: #ff5722
+  )
+);
+
+/**
+ * Mixin: 根据主题集合, 生成 CSS 变量
+ */
+@mixin generateThemeVars($theme) {
+  @each $key, $value in $theme {
+    --#{$key}: #{$value}; // 转化为 CSS 变量
+  }
+}
+
+/**
+ * Mixin: 一次性生成所有主题的 CSS 变量( 仅在初始化时使用 )
+ */
+@mixin initAllThemeVars($themes) {
+  @each $name, $theme in $themes {
+    :root[data-theme="#{$name}"] {
+      @include generateThemeVars($theme);
+    }
+  }
+}
+
+/**
+ * 初始化: 在文件顶部生成所有主题变量
+ */
+@include initAllThemeVars($theme-map);
+
+/**
+ * 获取 当前主题 中的 变量
+ */
+@function getThemeVar($key) {
+  @return var(--#{$key}); // 使用 CSS 自定义属性
+}
+
+/**
+ * 获取主题变量，支持默认值
+ */
+@function getThemeVarWithFallback($theme-name, $key, $default-values: null) {
+  $theme: map-get($theme-map, $theme-name);
+
+  // 优先检查是否在当前主题内存在
+  @if map-has-key($theme, $key) {
+    @return getThemeVar($key);
+  }
+
+  // 再检查是否有默认值提供
+  @if $default-values != null and map-has-key($default-values, $key) {
+    @return getThemeVar(map-get($default-values, $key));
+  }
+
+  // 不存在则返回 `null` 并发出警告
+  @warn "Theme variable `#{$key}` not found in theme `#{$theme-name}`.";
+  @return null;
+}
+
+/**
+ * Mixin: 应用指定主题
+ * @param $name - 主题名称
+ * @param $default - 使用提升变量至于 :root
+ */
+@mixin useTheme($name, $default: false) {
+
+  // 检查传入的主题名称是否存在于 `$theme-map` 中
+  @if map-has-key($theme-map, $name) {
+
+    // 获取 指定主题 对应的映射( 键值对 )
+    $theme: map-get($theme-map, $name);
+
+    @if $default {
+      // 生成 默认主题样式
+      :root {
+        @include generateThemeVars($theme);
+      }
+    } @else {
+      // 为 指定主题 生成 样式作用域，基于 `[data-theme="#{$name}"]` 属性选择器
+      [#{$theme-selector}="#{$name}"] & {
+        @include generateThemeVars($theme);
+        @content;
+      }
+    }
+  } @else {
+
+    @error "Theme `#{$name}` not found in $theme-map! (Called in `useTheme`)";
+  }
+}
+
+/**
+ * Mixin: 根据主题动态生成样式( 将变量挂载到 body 上后, 通过该方法可以自动切换不同 属性选择器对应的 主题变量 )
+ * @param [$selector=&] - 指定的选择器( 默认: `&` 表示当前选择器 )
+ * @param $styles   - 样式映射，其中键为 CSS 属性，值为对应的主题变量名
+ */
+@mixin applyThemes($selector: '&', $styles, $default-values: null) {
+  // 遍历主题映射中的所有主题名称
+  @each $name in map-keys($theme-map) {
+    // 基于 [data-theme="theme-name"] 属性选择器生成样式规则
+    [#{$theme-selector}="#{$name}"] #{$selector} {
+      // 遍历传入的样式映射
+      @each $property, $key in $styles {
+        // 尝试从主题中获取变量值，若不存在则检查默认值
+        $value: getThemeVarWithFallback($name, $key, $default-values);
+        @if $value != null {
+          // 如果变量值存在，生成 CSS 样式规则
+          #{$property}: $value;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * 简化版 Mixin：快速应用主题
+ * @param $theme-name - 主题名称( 默认: `$default-theme` )
+ * @param $styles - CSS 样式，直接按 `$key: value` 对应变量写入
+ * 不需要动态生成多主题的场景下，快速应用特定主题变量
+ */
+@mixin quickApplyTheme($theme-name: $default-theme, $styles) {
+  // 遍历传入的样式映射
+  @each $property, $key in $styles {
+    // 从指定主题中获取对应变量的值
+    $value: getThemeVarWithFallback($theme-name, $key);
+    @if $value != null {
+      // 如果变量值存在，则生成对应的 CSS 属性和值
+      #{$property}: $value;
+    }
+  }
+}
+
+// 应用默认主题( 通常使用 js 控制 )
+//@include useTheme($default-theme, $default: true);

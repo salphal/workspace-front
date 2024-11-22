@@ -2,6 +2,7 @@ import React, { ForwardRefRenderFunction, Ref, useEffect, useImperativeHandle } 
 import { MoonFilled, SunFilled } from '@ant-design/icons';
 import { Switch } from 'antd';
 
+import styles from './index.module.scss';
 import { themeKeys, toggleTheme } from '@/components/theme-switcher/utils.ts';
 
 const switchLightStyles = {
@@ -33,7 +34,7 @@ const ThemeSwitcher: ForwardRefRenderFunction<ThemeSwitcherRef, ThemeSwitcherPro
 ) => {
   const { value, onChange, auto = true, ...restProps } = props;
   const [checked, setChecked] = useState<boolean>();
-  const [styles, setStyles] = useState<any>(switchLightStyles);
+  // const [styles, setStyles] = useState<any>(switchLightStyles);
 
   /**
    * 媒体查询 系统的主题 是否匹配 light
@@ -55,7 +56,7 @@ const ThemeSwitcher: ForwardRefRenderFunction<ThemeSwitcherRef, ThemeSwitcherPro
   }, [mediaLightTheme]);
 
   useEffect(() => {
-    setStyles(checked ? switchLightStyles : switchDarkStyles);
+    // setStyles(checked ? switchLightStyles : switchDarkStyles);
     toggleTheme(checked ? themeKeys.light : themeKeys.dark);
     typeof onChange === 'function' && onChange(checked ? themeKeys.light : themeKeys.dark);
   }, [checked]);
@@ -88,10 +89,11 @@ const ThemeSwitcher: ForwardRefRenderFunction<ThemeSwitcherRef, ThemeSwitcherPro
   return (
     <React.Fragment>
       <Switch
+        className={styles['theme-switcher']}
         value={checked}
         onChange={switchOnChange}
-        checkedChildren={<SunFilled />}
-        unCheckedChildren={<MoonFilled />}
+        checkedChildren={<SunFilled className={styles.sum} />}
+        unCheckedChildren={<MoonFilled className={styles.moon} />}
         style={styles}
         {...restProps}
       />

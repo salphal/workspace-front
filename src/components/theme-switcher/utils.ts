@@ -36,6 +36,8 @@ export const toggleTheme = (name: ThemeName) => {
   });
   // 添加新的主题类
   root.classList.add(themeName);
+  // 单独添加类名 theme
+  root.classList.add('theme');
   // 将主题名称同步到 data-theme 属性
   root.setAttribute('data-theme', name);
 };

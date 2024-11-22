@@ -1,0 +1,21 @@
+@use "./theme-utils/theme-mixins" as *;
+
+
+.theme-switcher {
+
+  @include applyThemes($styles: (
+    background: bg-color,
+  ));
+
+  .sum {
+    @include applyThemes($styles: (
+      color: text-color
+    ));
+  }
+
+  .moon {
+    @include applyThemes($styles: (
+      color: text-color
+    ));
+  }
+}
