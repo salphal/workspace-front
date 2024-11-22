@@ -11,7 +11,7 @@ export const defaultModeList = ['light', 'dark', 'auto'] as const;
 
 export interface ThemeSwitcherProps {
   /** 主题列表 */
-  modeList?: Array<any>;
+  modeList?: Array<string> | Array<{ [key: string]: any; label: string; value: string }>;
   /** 主题名称 */
   value?: string;
   /** 主题切换时触发的事件 */
