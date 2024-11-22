@@ -4,9 +4,10 @@
 export const themeKeys = {
   dark: 'dark',
   light: 'light',
+  auto: 'auto',
 } as const;
 
-type ThemeName = keyof typeof themeKeys;
+type ThemeName = keyof typeof themeKeys | string;
 
 /**
  * 主题名称列表
