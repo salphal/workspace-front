@@ -37,7 +37,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
 
   return {
     server: {
-      port: 3000,
+      port: 8182,
       open: true,
       proxy: {
         // http 请求代理
