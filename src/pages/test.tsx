@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button } from 'antd';
 
 import CodeEditor from '@/components/code-editor';
 
@@ -19,14 +18,7 @@ function    test()    {
 
   return (
     <React.Fragment>
-      <Button
-        onClick={() => {
-          codeEditorRef.current.formatCode();
-        }}
-      >
-        format
-      </Button>
-      <CodeEditor ref={codeEditorRef} value={value} onChange={() => {}} language={'javascript'} />
+      <CodeEditor />
     </React.Fragment>
   );
 };
