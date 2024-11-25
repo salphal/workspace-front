@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'antd';
 
 import CodeEditor from '@/components/code-editor';
 
@@ -9,15 +10,23 @@ export interface TestProps {
 const Test: React.FC<TestProps> = (props: TestProps) => {
   useEffect(() => {}, []);
 
+  const codeEditorRef = useRef<any>(null);
+
   const value = `
-    <React.Fragment>
-      <CodeEditor value={value} onChange={() => {}} language={'javascript'} />
-    </React.Fragment>;
-  `;
+function    test()    {
+      const foo = 'bar';
+    }`;
 
   return (
     <React.Fragment>
-      <CodeEditor value={value} onChange={() => {}} language={'javascript'} />
+      <Button
+        onClick={() => {
+          codeEditorRef.current.formatCode();
+        }}
+      >
+        format
+      </Button>
+      <CodeEditor ref={codeEditorRef} value={value} onChange={() => {}} language={'javascript'} />
     </React.Fragment>
   );
 };
