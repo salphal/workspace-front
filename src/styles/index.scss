@@ -1,3 +1,6 @@
 @forward "functions";
 @forward "mixins";
 @forward "variables";
+
+/* 公共变量 */
+@forward "./theme/variables";
