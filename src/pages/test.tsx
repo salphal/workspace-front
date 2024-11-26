@@ -9,13 +9,6 @@ export interface TestProps {
 const Test: React.FC<TestProps> = (props: TestProps) => {
   useEffect(() => {}, []);
 
-  const codeEditorRef = useRef<any>(null);
-
-  const value = `
-function    test()    {
-      const foo = 'bar';
-    }`;
-
   return (
     <React.Fragment>
       <CodeEditor />
