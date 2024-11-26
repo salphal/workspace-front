@@ -1,25 +1,23 @@
-import React, { Ref, useEffect, useImperativeHandle, useState } from 'react';
-import { Form } from 'antd';
+import React, { Ref, useImperativeHandle, useState } from 'react';
+import { LanguageName } from '@uiw/codemirror-extensions-langs/src';
+import { Form, Input, Select } from 'antd';
 import classNames from 'classnames';
 
 import styles from './index.module.scss';
+import { CE_FORM_KEYS } from '@/components/code-editor/components/editor-controller/constant.tsx';
 
-const defaultPagination = {
-  currentPage: 1,
-  pageSize: 20,
-  total: 0,
-};
+const { Item } = Form;
 
-interface IPagination {
-  currentPage: number;
-  pageSize: number;
-  total: number;
+export interface IFormData {
+  name?: string;
+  language?: LanguageName;
+  theme?: string;
 }
 
-interface IFormData {}
-
 export interface EditorControllerProps {
-  children?: any;
+  value?: IFormData;
+  onChange?: (value: IFormData) => void;
+  languageOptions?: Array<{ label: string; value: any }>;
 }
 
 export interface EditorControllerMethods {}
@@ -33,74 +31,50 @@ const EditorController: React.ForwardRefRenderFunction<
   props: EditorControllerProps & EditorControllerMethods,
   ref: Ref<EditorControllerRef | HTMLDivElement>,
 ) => {
-  const {} = props;
+  const { value, onChange, languageOptions = [], ...restProps } = props;
 
   const [form] = Form.useForm();
 
   const [formData, setFormData] = useState<IFormData>({});
-  const [loading, setLoading] = useState<boolean>(false);
-  const [dataSource, setDataSource] = useState<any[]>([]);
-  const [refreshTableCount, setRefreshTableCount] = useState<number>(0);
-  const [pagination, setPagination] = useState<IPagination>(defaultPagination);
 
   useImperativeHandle(ref, () => ({}));
 
   useEffect(() => {
-    const { currentPage, pageSize } = pagination;
-    const params = {
-      currentPage,
-      pageSize,
-    };
-    fetchDataSource(params);
-  }, [pagination.currentPage, pagination.pageSize, refreshTableCount]);
-
-  const fetchDataSource = async (params: any) => {
-    try {
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const refreshTable = () => {
-    setRefreshTableCount((count) => ++count);
-  };
+    form.setFieldsValue(value);
+  }, [value]);
 
   const formOnValueChange = (changedValues: any, allChangedValues: any) => {
     setFormData(allChangedValues);
+    typeof onChange === 'function' && onChange(allChangedValues);
   };
 
-  const paginationOnChange = (currentPage: number, pageSize: number) => {
-    setPagination((pagination) => ({ ...pagination, currentPage, pageSize }));
-  };
-
-  const handleEditorControllerEventAspect = (type: string, kwargs: any = {}, ...args: any[]) => {
-    const handles: any = {
-      confirm: handleEditorControllerOnConfirm,
-      cancel: handleEditorControllerOnCancel,
-      reset: handleEditorControllerOnReset,
-    };
-    args = Object.keys(kwargs).length || typeof kwargs !== 'object' ? [kwargs, ...args] : args;
-    handles[type] && handles?.[type](...args);
-  };
-
-  const handleEditorControllerOnConfirm = () => {};
-
-  const handleEditorControllerOnCancel = () => {};
-
-  const handleEditorControllerOnReset = () => {
-    form.resetFields();
-    setFormData({});
-    setLoading(false);
-    setDataSource([]);
-    setPagination(defaultPagination);
+  const autoCompleteOnSearch = (query: string) => {
+    return languageOptions.filter((v) => v.label.indexOf(query) !== -1);
   };
 
   return (
     <React.Fragment>
       <div className={classNames([styles['editor-controller']])}>
-        {props.children}
-        props: {JSON.stringify(props)}
-        <br />
+        <Form form={form} onValuesChange={formOnValueChange} layout={'inline'} size={'small'}>
+          <Item name={CE_FORM_KEYS.name}>
+            <Input placeholder={'name'} />
+          </Item>
+          <Item name={CE_FORM_KEYS.language}>
+            <Select
+              options={languageOptions}
+              style={{ width: 120 }}
+              onSearch={autoCompleteOnSearch}
+              optionFilterProp="label"
+              placeholder={'language'}
+              autoFocus
+              allowClear
+              showSearch
+            />
+          </Item>
+          <Item name={CE_FORM_KEYS.theme}>
+            <Select style={{ width: 100 }} />
+          </Item>
+        </Form>
       </div>
     </React.Fragment>
   );

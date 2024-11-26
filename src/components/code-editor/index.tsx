@@ -1,13 +1,14 @@
 import React, { Ref, useImperativeHandle } from 'react';
 import { BasicSetupOptions } from '@uiw/codemirror-extensions-basic-setup';
+import { langNames, loadLanguage } from '@uiw/codemirror-extensions-langs';
 import CodeMirror, { Extension, ViewUpdate } from '@uiw/react-codemirror';
 import classNames from 'classnames';
 
-import EditorController from './components/editor-controller';
+import EditorController, { IFormData } from './components/editor-controller';
 import EditorStatusBar from './components/editor-status-bar';
-import { defaultEditorExtensions } from './constants/extensions.ts';
 import { defaultEditorOptions } from './constants/options.ts';
 import styles from './index.module.scss';
+import { languageOptions } from '@/components/code-editor/constants/language.ts';
 
 /**
  * codemirror@6   // 最新版本: 模块整合
@@ -50,14 +51,32 @@ const CodeEditor: React.ForwardRefRenderFunction<CodeEditorRef, CodeEditorProps>
   const [value, setValue] = useState<string>('console.log("hello world!");');
 
   const [options, setOptions] = useState<BasicSetupOptions>(defaultEditorOptions);
-  const [extensions, setExtensions] = useState<Extension[]>(defaultEditorExtensions);
+  // const [extensions, setExtensions] = useState<Extension[]>(defaultEditorExtensions);
+  const [formData, setFormData] = useState<IFormData>({});
+
+  const codeEditorRef = useRef<any>(null);
 
   useImperativeHandle(ref, () => ({}));
+
+  const extensions = useMemo(
+    () => () => {
+      const defaultValue: Extension[] = [];
+      if (formData.language && langNames.includes(formData.language)) {
+        return [loadLanguage(formData.language)] as Extension[];
+      }
+      return defaultValue;
+    },
+    [formData],
+  );
 
   const editorOnChange = useCallback((val: string, viewUpdate: ViewUpdate) => {
     setValue(val);
     typeof onChange === 'function' && onChange(val);
   }, []);
+
+  const controllerOnChange = (value: IFormData) => {
+    setFormData(value);
+  };
 
   return (
     <React.Fragment>
@@ -65,16 +84,18 @@ const CodeEditor: React.ForwardRefRenderFunction<CodeEditorRef, CodeEditorProps>
         {/** 控制栏 */}
         {controller && (
           <div className={classNames([styles['editor-controller']])}>
-            <EditorController />
+            <EditorController onChange={controllerOnChange} languageOptions={languageOptions} />
           </div>
         )}
         {/** 编辑器 */}
         <div className={classNames([styles['editor-content']])}>
+          {/*{JSON.stringify(extensions())}*/}
           <CodeMirror
+            ref={codeEditorRef}
             value={value}
             height={height}
             basicSetup={options}
-            extensions={extensions}
+            extensions={extensions()}
             onChange={editorOnChange}
             placeholder={placeholder}
             {...restProps}

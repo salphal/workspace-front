@@ -6,6 +6,7 @@
 // biome-ignore lint: disable
 export {}
 declare global {
+  const AutoComplete: typeof import('antd')['AutoComplete']
   const Col: typeof import('antd')['Col']
   const ConfigProvider: typeof import('antd')['ConfigProvider']
   const Divider: typeof import('antd')['Divider']

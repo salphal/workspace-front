@@ -1,3 +1,3 @@
 /**
- * https://uiwjs.github.io/react-codemirror/#/editor/theme/multiple
+ * https://uiwjs.github.io/react-codemirror/#/extensions/themes-all
  */
