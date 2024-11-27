@@ -42,6 +42,7 @@
     "@codemirror/lang-xml": "^6.1.0",
     "@codemirror/lang-yaml": "^6.1.1",
     "@codemirror/state": "^6.4.1",
+    "@codemirror/view": "^6.35.0",
     "@uiw/codemirror-extensions-basic-setup": "^4.23.6",
     "@uiw/codemirror-extensions-classname": "^4.23.6",
     "@uiw/codemirror-extensions-events": "^4.23.6",
