@@ -3,6 +3,7 @@ import { Form } from 'antd';
 import classNames from 'classnames';
 
 import styles from './index.module.scss';
+import CodeEditorContext from '@/components/code-editor/context.ts';
 
 const defaultPagination = {
   currentPage: 1,
@@ -30,6 +31,10 @@ const EditorStatusBar: React.ForwardRefRenderFunction<EditorStatusBarRef, Editor
   props: EditorStatusBarProps & EditorStatusBarMethods,
   ref: Ref<EditorStatusBarRef | HTMLDivElement>,
 ) => {
+  const {
+    cursorInfo: { line, column },
+  } = useContext(CodeEditorContext);
+
   const { ...restProps } = props;
 
   const [form] = Form.useForm();
@@ -41,9 +46,10 @@ const EditorStatusBar: React.ForwardRefRenderFunction<EditorStatusBarRef, Editor
   return (
     <React.Fragment>
       <div className={classNames([styles['editor-status-bar']])}>
-        {props.children}
-        props: {JSON.stringify(props)}
-        <br />
+        <div className={styles.left}></div>
+        <div className={styles.right}>
+          <span>{line}</span>:<span>{column}</span>
+        </div>
       </div>
     </React.Fragment>
   );

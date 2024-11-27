@@ -10,8 +10,11 @@ import CodeEditorContext from '@/components/code-editor/context.ts';
 const { Item } = Form;
 
 export interface ISettings {
+  /** 名称 */
   name?: string;
+  /** 语言 */
   language?: LanguageName;
+  /** 主题 */
   theme?: string;
 }
 

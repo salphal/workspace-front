@@ -1,3 +1,23 @@
 .editor-status-bar {
   padding: 12px 30px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+
+  .left,
+  .right {
+    flex: 1;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+  }
+
+  .left {
+    justify-content: flex-start;
+  }
+
+  .right {
+    justify-content: flex-end;
+  }
 }
