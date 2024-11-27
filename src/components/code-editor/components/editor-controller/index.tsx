@@ -5,24 +5,19 @@ import classNames from 'classnames';
 
 import styles from './index.module.scss';
 import { CE_FORM_KEYS } from '@/components/code-editor/components/editor-controller/constant.tsx';
+import CodeEditorContext from '@/components/code-editor/context.ts';
 
 const { Item } = Form;
 
-type selectOptions = Array<{ label: string; value: any }>;
-
-// export type EditorTheme = defaultThemeNames & themeNames;
-
-export interface IFormData {
+export interface ISettings {
   name?: string;
   language?: LanguageName;
   theme?: string;
 }
 
 export interface EditorControllerProps {
-  value?: IFormData;
-  onChange?: (value: IFormData) => void;
-  languageOptions?: selectOptions;
-  themeOptions?: selectOptions;
+  value?: ISettings;
+  onChange?: (value: ISettings) => void;
 }
 
 export interface EditorControllerMethods {}
@@ -36,11 +31,13 @@ const EditorController: React.ForwardRefRenderFunction<
   props: EditorControllerProps & EditorControllerMethods,
   ref: Ref<EditorControllerRef | HTMLDivElement>,
 ) => {
-  const { value, onChange, languageOptions = [], themeOptions = [], ...restProps } = props;
+  const { value, onChange, ...restProps } = props;
+
+  const { languageOptions = [], themeOptions = [] } = useContext(CodeEditorContext);
 
   const [form] = Form.useForm();
 
-  const [formData, setFormData] = useState<IFormData>({});
+  const [formData, setFormData] = useState<ISettings>({});
 
   useImperativeHandle(ref, () => ({}));
 

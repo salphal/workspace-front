@@ -1,5 +1,6 @@
 import * as themes from '@uiw/codemirror-themes-all';
 import { Extension } from '@uiw/react-codemirror';
+import { message } from 'antd';
 
 export const defaultTheme = 'light';
 
@@ -33,6 +34,7 @@ export function getDynamicTheme(themeName: string) {
   } else if (themeName in themes) {
     return themes[themeName as keyof typeof themes];
   } else {
+    message.warning(`Theme "${themeName}" not found.`);
     console.error(`Theme "${themeName}" not found.`);
     return defaultTheme;
   }
