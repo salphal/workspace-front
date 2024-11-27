@@ -39,3 +39,9 @@ export function getDynamicTheme(themeName: string) {
     return defaultTheme;
   }
 }
+
+export interface IUseTheme {}
+
+export const useTheme = (props: IUseTheme) => {
+  return {};
+};
