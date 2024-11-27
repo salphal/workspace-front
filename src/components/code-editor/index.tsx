@@ -1,20 +1,21 @@
 import React, { Ref, useImperativeHandle } from 'react';
 import { BasicSetupOptions } from '@uiw/codemirror-extensions-basic-setup';
-import { langNames, loadLanguage } from '@uiw/codemirror-extensions-langs';
-import CodeMirror, { Extension, ViewUpdate } from '@uiw/react-codemirror';
+import CodeMirror, { ViewUpdate } from '@uiw/react-codemirror';
 import classNames from 'classnames';
 
 import EditorController, { ISettings } from './components/editor-controller';
 import EditorStatusBar from './components/editor-status-bar';
 import { CodeEditorContextProvider } from './context.ts';
-import { defaultCursorInfo, ICursorInfo, useCursorListener } from './extensions/cursor.ts';
+import { useCursorListener } from './extensions/cursor.ts';
 import { useEvents } from './extensions/events.ts';
 import { hyperLink } from './extensions/hyper-link.ts';
-import { languageOptions } from './extensions/language.ts';
+import { languageOptions, useLanguage } from './extensions/language.ts';
 import { defaultEditorOptions } from './extensions/options.ts';
-import { defaultTheme, getDynamicTheme, ThemeNames, themeOptions } from './extensions/theme.ts';
+import { themeOptions, useTheme } from './extensions/theme.ts';
 import styles from './index.module.scss';
 import { defaultSettings } from '@/components/code-editor/constants/code-editor.ts';
+import { useShortcut } from '@/components/code-editor/extensions/shortcut.ts';
+import { ExtensionList, Themes } from '@/components/code-editor/typings';
 
 /**
  * codemirror@6   // 最新版本: 模块整合
@@ -27,16 +28,28 @@ export interface CodeEditorProps {
   value?: string;
   /** 代码改变时触发的事件 */
   onChange?: (value: string) => void;
+
   /** 高度 */
   height?: string;
   /** 编辑器基础配置 */
   options?: { [key: string]: any };
+
   /** 占位符 */
   placeholder?: string;
+
   /** 是否展示控制条 */
   controller?: boolean;
   /** 是否展示状态条 */
   statusBar?: boolean;
+
+  /** 点击事件 */
+  onClick?: (e: Event) => void;
+  /** 聚焦事件 */
+  onFocus?: (e: Event) => void;
+  /** 失焦事件 */
+  onBlur?: (e: Event) => void;
+  /** 滚动事件 */
+  onScroll?: (e: Event) => void;
 }
 
 interface CodeEditorRef {}
@@ -51,6 +64,10 @@ const CodeEditor: React.ForwardRefRenderFunction<CodeEditorRef, CodeEditorProps>
     placeholder = '',
     controller = true,
     statusBar = true,
+    onClick,
+    onFocus,
+    onBlur,
+    onScroll,
     ...restProps
   } = props;
 
@@ -58,54 +75,34 @@ const CodeEditor: React.ForwardRefRenderFunction<CodeEditorRef, CodeEditorProps>
 
   const [options, setOptions] = useState<BasicSetupOptions>(defaultEditorOptions);
   const [settings, setSettings] = useState<ISettings>(defaultSettings);
-  const [cursorInfo, setCursorInfo] = useState<ICursorInfo>(defaultCursorInfo);
 
   const codeEditorRef = useRef<any>(null);
 
-  const { editorEventExtList } = useEvents({});
-  const { cursorListenerExt } = useCursorListener({ onChange: setCursorInfo });
+  const { editorEventListExt } = useEvents({ onClick, onFocus, onBlur, onScroll });
+  const { cursorInfo, cursorListenerExt } = useCursorListener();
+  const { editorTheme } = useTheme({ settings });
+  const { language } = useLanguage({ settings });
+  const { shortcutListExt } = useShortcut({});
+  // const { highlightExt } = useHighLight();
 
   useImperativeHandle(ref, () => ({}));
-
-  /** 语言类型 */
-  const editorLanguage = useMemo(
-    () => () => {
-      const defaultValue: Extension[] = [loadLanguage('javascript')] as Extension[];
-      if (settings.language && langNames.includes(settings.language)) {
-        return [loadLanguage(settings.language)] as Extension[];
-      }
-      return defaultValue;
-    },
-    [settings],
-  );
-
-  /** 主题 */
-  const editorTheme = useMemo(
-    () => () => {
-      if (settings.theme) {
-        return getDynamicTheme(settings.theme);
-      }
-      return defaultTheme;
-    },
-    [settings],
-  );
 
   const editorOnChange = useCallback((val: string, viewUpdate: ViewUpdate) => {
     setValue(val);
     typeof onChange === 'function' && onChange(val);
   }, []);
 
-  const editorExtensions: Extension[] = [
+  const editorExtensions: ExtensionList = [
     /** 语言扩展 */
-    ...editorLanguage(),
+    language,
     /** 事件扩展 */
-    ...editorEventExtList,
+    ...editorEventListExt,
     /** 代码中超链接识别扩展跳转 */
     hyperLink,
     /** 输入时相对行号扩展 */
     // lineNumbersRelative,
     /** 快捷键扩展 */
-    // shortcutsExt,
+    shortcutListExt,
     /** 光标扩展 */
     cursorListenerExt,
   ];
@@ -115,6 +112,7 @@ const CodeEditor: React.ForwardRefRenderFunction<CodeEditorRef, CodeEditorProps>
       <CodeEditorContextProvider
         value={{
           options,
+          settings,
           cursorInfo,
           languageOptions,
           themeOptions,
@@ -133,7 +131,7 @@ const CodeEditor: React.ForwardRefRenderFunction<CodeEditorRef, CodeEditorProps>
               ref={codeEditorRef}
               value={value}
               height={height}
-              theme={editorTheme() as ThemeNames}
+              theme={editorTheme() as Themes}
               basicSetup={options}
               extensions={editorExtensions}
               onChange={editorOnChange}
