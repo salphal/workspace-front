@@ -52,10 +52,7 @@ const CodeEditor: React.ForwardRefRenderFunction<CodeEditorRef, CodeEditorProps>
   const [value, setValue] = useState<string>('console.log("hello world!");');
 
   const [options, setOptions] = useState<BasicSetupOptions>(defaultEditorOptions);
-  // const [extensions, setExtensions] = useState<Extension[]>(defaultEditorExtensions);
   const [formData, setFormData] = useState<IFormData>({});
-  // const [theme, setTheme] = useState<EditorTheme>('none');
-  // console.log('=>(index.tsx:58) theme', theme);
   const codeEditorRef = useRef<any>(null);
 
   useImperativeHandle(ref, () => ({}));
