@@ -2,6 +2,7 @@ import { classname } from '@uiw/codemirror-extensions-classname';
 import { EditorView } from '@uiw/react-codemirror';
 
 /**
+ * 扩展类名
  * https://uiwjs.github.io/react-codemirror/#/extensions/classname
  */
 

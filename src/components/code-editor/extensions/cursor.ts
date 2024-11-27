@@ -1,7 +1,8 @@
-/**
- *
- */
 import { EditorView } from '@uiw/react-codemirror';
+
+/**
+ * 扩展光标信息
+ */
 
 export const defaultCursorInfo = { line: 0, column: 0 };
 
@@ -10,12 +11,10 @@ export interface ICursorInfo {
   column: number;
 }
 
-export interface IUseCursorProps {
-  onChange?: (info: ICursorInfo) => void;
-}
+export interface IUseCursorProps {}
 
-export const useCursorListener = (props: IUseCursorProps) => {
-  const { onChange } = props;
+export const useCursorListener = (props: IUseCursorProps = {}) => {
+  const [cursorInfo, setCursorInfo] = useState<ICursorInfo>(defaultCursorInfo);
 
   const cursorListenerExt = EditorView.updateListener.of((update) => {
     if (update.selectionSet) {
@@ -23,11 +22,13 @@ export const useCursorListener = (props: IUseCursorProps) => {
       const line = update.state.doc.lineAt(cursorPos); // 根据绝对位置获取所在行信息
       const column = cursorPos - line.from; // 列号计算为行内偏移量
       const cursorInfo: ICursorInfo = { line: line.number, column };
-      typeof onChange === 'function' && onChange(cursorInfo);
+      setCursorInfo(cursorInfo);
     }
   });
 
   return {
+    cursorInfo,
+    setCursorInfo,
     cursorListenerExt,
   };
 };

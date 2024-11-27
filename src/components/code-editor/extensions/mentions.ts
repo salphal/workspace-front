@@ -1,6 +1,7 @@
 /**
- * 开启后语法提示插件失效
+ * 扩展使用 @ 快捷调用
  * https://uiwjs.github.io/react-codemirror/#/extensions/mentions
+ * 开启后语法提示插件失效
  */
 import { mentions } from '@uiw/codemirror-extensions-mentions';
 

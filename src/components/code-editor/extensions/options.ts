@@ -1,6 +1,7 @@
 import { BasicSetupOptions } from '@uiw/codemirror-extensions-basic-setup';
 
 /**
+ * 扩展编辑器基础设置
  * https://codemirror.net/docs/ref/#language.indentUnit
  */
 export const defaultEditorOptions: BasicSetupOptions = {

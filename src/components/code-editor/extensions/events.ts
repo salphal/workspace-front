@@ -1,13 +1,18 @@
 import * as events from '@uiw/codemirror-extensions-events';
 
 /**
+ * 扩展各种事件
  * https://uiwjs.github.io/react-codemirror/#/extensions/events
  */
 
 export interface IUseEventProps {
+  /** 点击事件 */
   onClick?: (e: Event) => void;
+  /** 聚焦事件 */
   onFocus?: (e: Event) => void;
+  /** 失焦事件 */
   onBlur?: (e: Event) => void;
+  /** 滚动事件 */
   onScroll?: (e: Event) => void;
 }
 
@@ -46,9 +51,9 @@ export const useEvents = (props: IUseEventProps) => {
     },
   });
 
-  const editorEventExtList = [scrollExt, domExt, contentExt, domExt, elementExt];
+  const editorEventListExt = [scrollExt, domExt, contentExt, domExt, elementExt];
 
   return {
-    editorEventExtList,
+    editorEventListExt,
   };
 };
