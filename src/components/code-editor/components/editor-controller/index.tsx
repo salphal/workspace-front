@@ -8,6 +8,10 @@ import { CE_FORM_KEYS } from '@/components/code-editor/components/editor-control
 
 const { Item } = Form;
 
+type selectOptions = Array<{ label: string; value: any }>;
+
+// export type EditorTheme = defaultThemeNames & themeNames;
+
 export interface IFormData {
   name?: string;
   language?: LanguageName;
@@ -17,7 +21,8 @@ export interface IFormData {
 export interface EditorControllerProps {
   value?: IFormData;
   onChange?: (value: IFormData) => void;
-  languageOptions?: Array<{ label: string; value: any }>;
+  languageOptions?: selectOptions;
+  themeOptions?: selectOptions;
 }
 
 export interface EditorControllerMethods {}
@@ -31,7 +36,7 @@ const EditorController: React.ForwardRefRenderFunction<
   props: EditorControllerProps & EditorControllerMethods,
   ref: Ref<EditorControllerRef | HTMLDivElement>,
 ) => {
-  const { value, onChange, languageOptions = [], ...restProps } = props;
+  const { value, onChange, languageOptions = [], themeOptions = [], ...restProps } = props;
 
   const [form] = Form.useForm();
 
@@ -62,9 +67,8 @@ const EditorController: React.ForwardRefRenderFunction<
           <Item name={CE_FORM_KEYS.language}>
             <Select
               options={languageOptions}
-              style={{ width: 120 }}
               onSearch={autoCompleteOnSearch}
-              optionFilterProp="label"
+              style={{ width: 120 }}
               placeholder={'language'}
               autoFocus
               allowClear
@@ -72,7 +76,14 @@ const EditorController: React.ForwardRefRenderFunction<
             />
           </Item>
           <Item name={CE_FORM_KEYS.theme}>
-            <Select style={{ width: 100 }} />
+            <Select
+              options={themeOptions}
+              placeholder={'theme'}
+              style={{ width: 120 }}
+              autoFocus
+              allowClear
+              showSearch
+            />
           </Item>
         </Form>
       </div>

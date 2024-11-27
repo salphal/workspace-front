@@ -6,9 +6,10 @@ import classNames from 'classnames';
 
 import EditorController, { IFormData } from './components/editor-controller';
 import EditorStatusBar from './components/editor-status-bar';
+import { languageOptions } from './constants/language.ts';
 import { defaultEditorOptions } from './constants/options.ts';
+import { getDynamicTheme, ThemeNames, themeOptions } from './constants/theme.ts';
 import styles from './index.module.scss';
-import { languageOptions } from '@/components/code-editor/constants/language.ts';
 
 /**
  * codemirror@6   // 最新版本: 模块整合
@@ -40,7 +41,7 @@ const CodeEditor: React.ForwardRefRenderFunction<CodeEditorRef, CodeEditorProps>
   ref: Ref<CodeEditorRef | HTMLDivElement>,
 ) => {
   const {
-    height = '200px',
+    height = '500px',
     onChange,
     placeholder = '',
     controller = true,
@@ -53,18 +54,32 @@ const CodeEditor: React.ForwardRefRenderFunction<CodeEditorRef, CodeEditorProps>
   const [options, setOptions] = useState<BasicSetupOptions>(defaultEditorOptions);
   // const [extensions, setExtensions] = useState<Extension[]>(defaultEditorExtensions);
   const [formData, setFormData] = useState<IFormData>({});
-
+  // const [theme, setTheme] = useState<EditorTheme>('none');
+  // console.log('=>(index.tsx:58) theme', theme);
   const codeEditorRef = useRef<any>(null);
 
   useImperativeHandle(ref, () => ({}));
 
-  const extensions = useMemo(
+  /** 语言类型 */
+  const editorExtensions = useMemo(
     () => () => {
       const defaultValue: Extension[] = [];
       if (formData.language && langNames.includes(formData.language)) {
         return [loadLanguage(formData.language)] as Extension[];
       }
       return defaultValue;
+    },
+    [formData],
+  );
+
+  /** 主题 */
+  const editorTheme = useMemo(
+    () => () => {
+      const defaultTheme = 'dark';
+      if (formData.theme) {
+        return getDynamicTheme(formData.theme);
+      }
+      return defaultTheme;
     },
     [formData],
   );
@@ -84,18 +99,22 @@ const CodeEditor: React.ForwardRefRenderFunction<CodeEditorRef, CodeEditorProps>
         {/** 控制栏 */}
         {controller && (
           <div className={classNames([styles['editor-controller']])}>
-            <EditorController onChange={controllerOnChange} languageOptions={languageOptions} />
+            <EditorController
+              onChange={controllerOnChange}
+              languageOptions={languageOptions}
+              themeOptions={themeOptions}
+            />
           </div>
         )}
         {/** 编辑器 */}
         <div className={classNames([styles['editor-content']])}>
-          {/*{JSON.stringify(extensions())}*/}
           <CodeMirror
             ref={codeEditorRef}
             value={value}
             height={height}
+            theme={editorTheme() as ThemeNames}
             basicSetup={options}
-            extensions={extensions()}
+            extensions={editorExtensions()}
             onChange={editorOnChange}
             placeholder={placeholder}
             {...restProps}
