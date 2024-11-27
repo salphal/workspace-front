@@ -3,4 +3,5 @@ export const CE_FORM_KEYS = {
   language: 'language',
   theme: 'theme',
   placeholder: 'placeholder',
+  format: 'format',
 };

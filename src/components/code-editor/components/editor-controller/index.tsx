@@ -1,6 +1,6 @@
 import React, { Ref, useImperativeHandle, useState } from 'react';
 import { LanguageName } from '@uiw/codemirror-extensions-langs/src';
-import { Form, Input, Select } from 'antd';
+import { Button, Form, Input, Select } from 'antd';
 import classNames from 'classnames';
 
 import styles from './index.module.scss';
@@ -84,6 +84,19 @@ const EditorController: React.ForwardRefRenderFunction<
               allowClear
               showSearch
             />
+          </Item>
+          <Item name={CE_FORM_KEYS.placeholder}>
+            <Select
+              options={[]}
+              placeholder={'placeholder'}
+              style={{ width: 120 }}
+              autoFocus
+              allowClear
+              showSearch
+            />
+          </Item>
+          <Item>
+            <Button>format</Button>
           </Item>
         </Form>
       </div>

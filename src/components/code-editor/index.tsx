@@ -1,6 +1,6 @@
 import React, { Ref, useImperativeHandle } from 'react';
 import { BasicSetupOptions } from '@uiw/codemirror-extensions-basic-setup';
-import CodeMirror, { ViewUpdate } from '@uiw/react-codemirror';
+import CodeMirror, { EditorView, ViewUpdate } from '@uiw/react-codemirror';
 import classNames from 'classnames';
 
 import EditorController, { ISettings } from './components/editor-controller';
@@ -14,6 +14,7 @@ import { defaultEditorOptions } from './extensions/options.ts';
 import { themeOptions, useTheme } from './extensions/theme.ts';
 import styles from './index.module.scss';
 import { defaultSettings } from '@/components/code-editor/constants/code-editor.ts';
+import { useCompletion } from '@/components/code-editor/extensions/completion.ts';
 import { useShortcut } from '@/components/code-editor/extensions/shortcut.ts';
 import { ExtensionList, Themes } from '@/components/code-editor/typings';
 
@@ -82,7 +83,8 @@ const CodeEditor: React.ForwardRefRenderFunction<CodeEditorRef, CodeEditorProps>
   const { cursorInfo, cursorListenerExt } = useCursorListener();
   const { editorTheme } = useTheme({ settings });
   const { language } = useLanguage({ settings });
-  const { shortcutListExt } = useShortcut({});
+  const { shortcutListExt } = useShortcut();
+  const { completionExt } = useCompletion();
   // const { highlightExt } = useHighLight();
 
   useImperativeHandle(ref, () => ({}));
@@ -93,18 +95,23 @@ const CodeEditor: React.ForwardRefRenderFunction<CodeEditorRef, CodeEditorProps>
   }, []);
 
   const editorExtensions: ExtensionList = [
-    /** 语言扩展 */
-    language,
-    /** 事件扩展 */
-    ...editorEventListExt,
     /** 代码中超链接识别扩展跳转 */
     hyperLink,
+    /** 语言扩展 */
+    language,
     /** 输入时相对行号扩展 */
     // lineNumbersRelative,
     /** 快捷键扩展 */
     shortcutListExt,
     /** 光标扩展 */
     cursorListenerExt,
+    // mentionExt,
+    /** 自定义代码提示扩展 */
+    // completionExt,
+    /** 事件扩展 */
+    ...editorEventListExt,
+    // regexHighlightPlugin,
+    EditorView.lineWrapping,
   ];
 
   return (

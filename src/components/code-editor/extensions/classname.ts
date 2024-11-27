@@ -1,25 +1,61 @@
+import { CSSProperties } from 'react';
 import { classname } from '@uiw/codemirror-extensions-classname';
 import { EditorView } from '@uiw/react-codemirror';
 
 /**
- * 扩展类名
+ * 扩展指定行的样式
  * https://uiwjs.github.io/react-codemirror/#/extensions/classname
  */
 
-const baseTheme = EditorView.baseTheme({
-  '&dark .first-line': { backgroundColor: 'red' },
-  '&light .first-line': { backgroundColor: 'red' },
-  '&dark .line-color': { backgroundColor: 'blue' },
-  '&light .line-color': { backgroundColor: 'blue' },
-});
+type lineFunc = (lineNumber: number) => boolean;
 
-export const classnameExt = classname({
-  add: (lineNumber) => {
-    if (lineNumber === 1) {
-      return 'first-line';
-    }
-    if (lineNumber === 5) {
-      return 'line-color';
-    }
-  },
-});
+export interface IClassNameItem {
+  className: string;
+  styles: CSSProperties;
+  line: number | lineFunc;
+}
+
+export type ILineStyleList = Array<IClassNameItem>;
+
+export interface IUseClassNameProps {
+  lineStyleList?: ILineStyleList;
+}
+
+export const useClassName = (props: IUseClassNameProps) => {
+  const { lineStyleList } = props;
+
+  const [customTheme, setCustomTheme] = useState<{ [key: string]: any }>({});
+
+  useEffect(() => {
+    if (!Array.isArray(lineStyleList) || !lineStyleList.length) return;
+    const theme: any = {};
+    lineStyleList.forEach((lineStyle) => {
+      const { className, styles } = lineStyle;
+      theme[className] = styles;
+    });
+    setCustomTheme(theme);
+  }, [lineStyleList]);
+
+  const lineStyleExt = classname({
+    add: (lineNumber) => {
+      if (!Array.isArray(lineStyleList) || !lineStyleList.length) return '';
+      lineStyleList.forEach((lineStyle) => {
+        const { line, className } = lineStyle;
+        if (typeof line === 'number') {
+          if (lineNumber === line) {
+            return className;
+          }
+        } else if (typeof line === 'function') {
+          if (line(lineNumber)) {
+            return className;
+          }
+        }
+      });
+    },
+  });
+
+  return {
+    customTheme: EditorView.baseTheme(customTheme),
+    lineStyleExt,
+  };
+};

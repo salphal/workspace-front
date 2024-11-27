@@ -10,7 +10,7 @@ export interface IUseShortcutProps {
   onSave?: () => void;
 }
 
-export const useShortcut = (props: IUseShortcutProps) => {
+export const useShortcut = (props: IUseShortcutProps = {}) => {
   const { onSave } = props;
 
   /**
