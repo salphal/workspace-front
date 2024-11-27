@@ -8,7 +8,7 @@ import EditorController, { IFormData } from './components/editor-controller';
 import EditorStatusBar from './components/editor-status-bar';
 import { languageOptions } from './constants/language.ts';
 import { defaultEditorOptions } from './constants/options.ts';
-import { getDynamicTheme, ThemeNames, themeOptions } from './constants/theme.ts';
+import { defaultTheme, getDynamicTheme, ThemeNames, themeOptions } from './constants/theme.ts';
 import styles from './index.module.scss';
 
 /**
@@ -52,7 +52,10 @@ const CodeEditor: React.ForwardRefRenderFunction<CodeEditorRef, CodeEditorProps>
   const [value, setValue] = useState<string>('console.log("hello world!");');
 
   const [options, setOptions] = useState<BasicSetupOptions>(defaultEditorOptions);
+  // const [extensions, setExtensions] = useState<Extension[]>(defaultEditorExtensions);
   const [formData, setFormData] = useState<IFormData>({});
+  // const [theme, setTheme] = useState<EditorTheme>('none');
+  // console.log('=>(index.tsx:58) theme', theme);
   const codeEditorRef = useRef<any>(null);
 
   useImperativeHandle(ref, () => ({}));
@@ -72,7 +75,6 @@ const CodeEditor: React.ForwardRefRenderFunction<CodeEditorRef, CodeEditorProps>
   /** 主题 */
   const editorTheme = useMemo(
     () => () => {
-      const defaultTheme = 'dark';
       if (formData.theme) {
         return getDynamicTheme(formData.theme);
       }

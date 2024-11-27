@@ -6,7 +6,7 @@ export const defaultTheme = 'light';
 /**
  * https://uiwjs.github.io/react-codemirror/#/extensions/themes-all
  */
-export const defaultThemeNames: any = ['light', 'dark', 'none'] as const;
+export const defaultThemeNames: string[] = ['light', 'dark', 'none'] as const;
 
 /**
  * 筛选出所有主题
@@ -28,7 +28,7 @@ export const themeOptions = [...defaultThemeNames, ...OtherThemeNames].map((name
  * @returns 动态加载的主题扩展
  */
 export function getDynamicTheme(themeName: string) {
-  if (defaultThemeNames.indexes(themeName)) {
+  if (defaultThemeNames.includes(themeName)) {
     return themeName;
   } else if (themeName in themes) {
     return themes[themeName as keyof typeof themes];
