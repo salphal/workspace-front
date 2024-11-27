@@ -6,6 +6,7 @@ import classNames from 'classnames';
 
 import EditorController, { IFormData } from './components/editor-controller';
 import EditorStatusBar from './components/editor-status-bar';
+import { editorEventExtList } from './constants/events.ts';
 import { languageOptions } from './constants/language.ts';
 import { defaultEditorOptions } from './constants/options.ts';
 import { defaultTheme, getDynamicTheme, ThemeNames, themeOptions } from './constants/theme.ts';
@@ -53,12 +54,13 @@ const CodeEditor: React.ForwardRefRenderFunction<CodeEditorRef, CodeEditorProps>
 
   const [options, setOptions] = useState<BasicSetupOptions>(defaultEditorOptions);
   const [formData, setFormData] = useState<IFormData>({});
+
   const codeEditorRef = useRef<any>(null);
 
   useImperativeHandle(ref, () => ({}));
 
   /** 语言类型 */
-  const editorExtensions = useMemo(
+  const editorLanguage = useMemo(
     () => () => {
       const defaultValue: Extension[] = [];
       if (formData.language && langNames.includes(formData.language)) {
@@ -110,7 +112,7 @@ const CodeEditor: React.ForwardRefRenderFunction<CodeEditorRef, CodeEditorProps>
             height={height}
             theme={editorTheme() as ThemeNames}
             basicSetup={options}
-            extensions={editorExtensions()}
+            extensions={[...editorLanguage(), ...editorEventExtList]}
             onChange={editorOnChange}
             placeholder={placeholder}
             {...restProps}
