@@ -20,6 +20,9 @@ importers:
       '@ant-design/pro-components':
         specifier: ^2.6.51
         version: 2.7.19(antd@5.20.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(rc-field-form@2.4.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@codemirror/autocomplete':
+        specifier: ^6.18.3
+        version: 6.18.3(@codemirror/language@6.10.4)(@codemirror/state@6.4.1)(@codemirror/view@6.35.0)(@lezer/common@1.2.3)
       '@codemirror/lang-angular':
         specifier: ^0.1.3
         version: 0.1.3
@@ -71,6 +74,9 @@ importers:
       '@codemirror/lang-yaml':
         specifier: ^6.1.1
         version: 6.1.1(@codemirror/view@6.35.0)
+      '@codemirror/state':
+        specifier: ^6.4.1
+        version: 6.4.1
       '@uiw/codemirror-extensions-basic-setup':
         specifier: ^4.23.6
         version: 4.23.6(@codemirror/autocomplete@6.18.3(@codemirror/language@6.10.4)(@codemirror/state@6.4.1)(@codemirror/view@6.35.0)(@lezer/common@1.2.3))(@codemirror/commands@6.7.1)(@codemirror/language@6.10.4)(@codemirror/lint@6.8.3)(@codemirror/search@6.5.8)(@codemirror/state@6.4.1)(@codemirror/view@6.35.0)
