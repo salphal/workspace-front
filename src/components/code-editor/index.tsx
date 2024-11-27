@@ -5,18 +5,18 @@ import classNames from 'classnames';
 
 import EditorController, { ISettings } from './components/editor-controller';
 import EditorStatusBar from './components/editor-status-bar';
+import { defaultSettings } from './constants/code-editor.ts';
 import { CodeEditorContextProvider } from './context.ts';
+import { useCompletion } from './extensions/completion.ts';
 import { useCursorListener } from './extensions/cursor.ts';
 import { useEvents } from './extensions/events.ts';
 import { hyperLink } from './extensions/hyper-link.ts';
 import { languageOptions, useLanguage } from './extensions/language.ts';
 import { defaultEditorOptions } from './extensions/options.ts';
+import { useShortcut } from './extensions/shortcut.ts';
 import { themeOptions, useTheme } from './extensions/theme.ts';
 import styles from './index.module.scss';
-import { defaultSettings } from '@/components/code-editor/constants/code-editor.ts';
-import { useCompletion } from '@/components/code-editor/extensions/completion.ts';
-import { useShortcut } from '@/components/code-editor/extensions/shortcut.ts';
-import { ExtensionList, Themes } from '@/components/code-editor/typings';
+import { ExtensionList, Themes } from './typings';
 
 /**
  * codemirror@6   // 最新版本: 模块整合
