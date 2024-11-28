@@ -1,7 +1,7 @@
 import { Context, createContext } from 'react';
 import { BasicSetupOptions } from '@uiw/codemirror-extensions-basic-setup';
+import { ISettings } from 'src/components/code-editor/components/editor-controller-bar';
 
-import { ISettings } from '@/components/code-editor/components/editor-controller';
 import { defaultCursorInfo, ICursorInfo } from '@/components/code-editor/extensions/cursor.ts';
 import { ISelectOptions } from '@/components/code-editor/typings';
 

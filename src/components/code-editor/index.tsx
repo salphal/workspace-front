@@ -3,7 +3,7 @@ import { BasicSetupOptions } from '@uiw/codemirror-extensions-basic-setup';
 import CodeMirror, { EditorView, ViewUpdate } from '@uiw/react-codemirror';
 import classNames from 'classnames';
 
-import EditorController, { ISettings } from './components/editor-controller';
+import EditorControllerBar, { ISettings } from './components/editor-controller-bar';
 import EditorStatusBar from './components/editor-status-bar';
 import { defaultSettings } from './constants/code-editor.ts';
 import { CodeEditorContextProvider } from './context.ts';
@@ -17,6 +17,7 @@ import { useShortcut } from './extensions/shortcut.ts';
 import { themeOptions, useTheme } from './extensions/theme.ts';
 import styles from './index.module.scss';
 import { ExtensionList, Themes } from './typings';
+import QuickOperationModal from '@/components/code-editor/components/quick-operation-modal';
 
 /**
  * codemirror@6   // 最新版本: 模块整合
@@ -29,6 +30,8 @@ export interface CodeEditorProps {
   value?: string;
   /** 代码改变时触发的事件 */
   onChange?: (value: string) => void;
+
+  mode?: 'light' | 'dark';
 
   /** 高度 */
   height?: string;
@@ -80,12 +83,11 @@ const CodeEditor: React.ForwardRefRenderFunction<CodeEditorRef, CodeEditorProps>
   const codeEditorRef = useRef<any>(null);
 
   const { editorEventListExt } = useEvents({ onClick, onFocus, onBlur, onScroll });
-  const { cursorInfo, cursorListenerExt } = useCursorListener();
+  const { cursorInfo, cursorPosition, cursorListenerExt } = useCursorListener();
   const { editorTheme } = useTheme({ settings });
   const { language } = useLanguage({ settings });
   const { shortcutListExt } = useShortcut();
   const { completionExt } = useCompletion();
-  // const { highlightExt } = useHighLight();
 
   useImperativeHandle(ref, () => ({}));
 
@@ -129,7 +131,7 @@ const CodeEditor: React.ForwardRefRenderFunction<CodeEditorRef, CodeEditorProps>
           {/** 控制栏 */}
           {controller && (
             <div className={classNames([styles['editor-controller']])}>
-              <EditorController value={settings} onChange={setSettings} />
+              <EditorControllerBar value={settings} onChange={setSettings} />
             </div>
           )}
           {/** 编辑器 */}
@@ -145,6 +147,7 @@ const CodeEditor: React.ForwardRefRenderFunction<CodeEditorRef, CodeEditorProps>
               placeholder={placeholder}
               {...restProps}
             />
+            <QuickOperationModal />
           </div>
           {/** 状态条 */}
           {statusBar && (
@@ -152,6 +155,7 @@ const CodeEditor: React.ForwardRefRenderFunction<CodeEditorRef, CodeEditorProps>
               <EditorStatusBar />
             </div>
           )}
+          {JSON.stringify(cursorPosition)}
         </div>
       </CodeEditorContextProvider>
     </React.Fragment>

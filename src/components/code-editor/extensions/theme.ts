@@ -1,7 +1,6 @@
 import * as themes from '@uiw/codemirror-themes-all';
 import { message } from 'antd';
-
-import { ISettings } from '@/components/code-editor/components/editor-controller';
+import { ISettings } from 'src/components/code-editor/components/editor-controller-bar';
 
 /**
  * 扩展所有主题

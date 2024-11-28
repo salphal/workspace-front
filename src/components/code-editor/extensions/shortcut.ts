@@ -30,7 +30,6 @@ export const useShortcut = (props: IUseShortcutProps = {}) => {
     {
       key: insertShortcut, // 插入文本功能
       run: (view: EditorView) => {
-        console.log('=>(shortcut.ts:41) view', view);
         const transaction = view.state.update({
           changes: { from: view.state.selection.main.head, insert: 'Hello, CodeMirror!' },
         });

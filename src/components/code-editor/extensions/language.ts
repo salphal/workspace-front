@@ -1,12 +1,11 @@
 import { langNames, loadLanguage } from '@uiw/codemirror-extensions-langs';
 import { Extension } from '@uiw/react-codemirror';
-
 /**
  * 扩展多种语言支持
  * https://uiwjs.github.io/react-codemirror/#/extensions/languages
  */
 
-import { ISettings } from '@/components/code-editor/components/editor-controller';
+import { ISettings } from 'src/components/code-editor/components/editor-controller-bar';
 
 export const defaultLanguage: Extension = loadLanguage('javascript') as Extension;
 

@@ -11,7 +11,7 @@ type lineFunc = (lineNumber: number) => boolean;
 
 export interface IClassNameItem {
   className: string;
-  styles: CSSProperties;
+  style: CSSProperties;
   line: number | lineFunc;
 }
 
@@ -30,8 +30,8 @@ export const useClassName = (props: IUseClassNameProps) => {
     if (!Array.isArray(lineStyleList) || !lineStyleList.length) return;
     const theme: any = {};
     lineStyleList.forEach((lineStyle) => {
-      const { className, styles } = lineStyle;
-      theme[className] = styles;
+      const { className, style } = lineStyle;
+      theme[className] = style;
     });
     setCustomTheme(theme);
   }, [lineStyleList]);
