@@ -4,7 +4,7 @@ import { Button, Form, Input, Select } from 'antd';
 import classNames from 'classnames';
 
 import styles from './index.module.scss';
-import { CE_FORM_KEYS } from '@/components/code-editor/components/editor-controller/constant.tsx';
+import { CE_FORM_KEYS } from '@/components/code-editor/components/editor-controller-bar/constant.tsx';
 import CodeEditorContext from '@/components/code-editor/context.ts';
 
 const { Item } = Form;
@@ -18,22 +18,17 @@ export interface ISettings {
   theme?: string;
 }
 
-export interface EditorControllerProps {
+export interface EditorControllerBarProps {
   value?: ISettings;
   onChange?: (value: ISettings) => void;
 }
 
-export interface EditorControllerMethods {}
+interface EditorControllerBarRef {}
 
-interface EditorControllerRef {}
-
-const EditorController: React.ForwardRefRenderFunction<
-  EditorControllerRef,
-  EditorControllerProps
-> = (
-  props: EditorControllerProps & EditorControllerMethods,
-  ref: Ref<EditorControllerRef | HTMLDivElement>,
-) => {
+const EditorControllerBar: React.ForwardRefRenderFunction<
+  EditorControllerBarRef,
+  EditorControllerBarProps
+> = (props: EditorControllerBarProps, ref: Ref<EditorControllerBarRef | HTMLDivElement>) => {
   const { value, onChange, ...restProps } = props;
 
   const { languageOptions = [], themeOptions = [] } = useContext(CodeEditorContext);
@@ -104,4 +99,4 @@ const EditorController: React.ForwardRefRenderFunction<
   );
 };
 
-export default React.forwardRef(EditorController);
+export default React.forwardRef(EditorControllerBar);
