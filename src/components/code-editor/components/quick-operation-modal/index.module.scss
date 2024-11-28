@@ -1,0 +1,41 @@
+.quick-operation-modal {
+  overflow: hidden;
+  position: absolute;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 40%;
+  height: 50%;
+
+  border-radius: 3px;
+
+  color: #fff;
+  background-color: #393b40;
+
+  > div {
+    width: 100%;
+  }
+
+  .header {
+  }
+
+  .content {
+    overflow: hidden auto;
+    flex: 1;
+    background-color: #2b2d30;
+    box-sizing: border-box;
+    border-left: 2px solid #393b40;
+    border-right: 2px solid #393b40;
+  }
+
+  .footer {
+    height: 18px;
+    line-height: 18px;
+  }
+}
