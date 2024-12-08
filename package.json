@@ -94,6 +94,8 @@
     "@commitlint/config-conventional": "^19.2.2",
     "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
     "@react-dev-inspector/babel-plugin": "^2.0.1",
+    "@svgr/plugin-jsx": "^8.1.0",
+    "@svgr/plugin-svgo": "^8.1.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/forms": "^0.5.7",
@@ -148,6 +150,7 @@
     "uuid": "^9.0.1",
     "vite": "^5.1.6",
     "vite-plugin-compression": "^0.5.1",
+    "vite-plugin-svgr": "^4.3.0",
     "zustand": "^4.5.2"
   },
   "lint-staged": {

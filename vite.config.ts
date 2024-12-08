@@ -11,6 +11,7 @@ import viteCDNPlugin from 'vite-plugin-cdn-import';
 import viteCompression from 'vite-plugin-compression';
 import viteImagemin from 'vite-plugin-imagemin';
 import { VitePWA } from 'vite-plugin-pwa';
+import svgr from 'vite-plugin-svgr';
 
 /**
  * 配置文档: https://vitejs.dev/config/
@@ -179,6 +180,29 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
         algorithm: 'gzip', // 压缩算法，可选['gzip'，' brotliccompress '，'deflate '，'deflateRaw']
         ext: '.gz',
         // deleteOriginFile: true, // 源文件压缩后是否删除( 为了看压缩后的效果，先选择了 true )
+      }),
+      /**
+       * 将 svg 作为组件使用
+       * https://github.com/pd4d10/vite-plugin-svgr
+       *
+       * 使用: import SvgIcon from '../assets/svg-icons/demo.svg?react';
+       * 注意: 路径结尾添加 ?react
+       *      添加 ts 支持, 在 src/typings/svg.d.ts 中
+       */
+      svgr({
+        svgrOptions: {
+          plugins: ['@svgr/plugin-svgo', '@svgr/plugin-jsx'],
+          svgoConfig: {
+            floatPrecision: 2,
+          },
+          exportType: 'default',
+          ref: true,
+          svgo: false,
+          titleProp: true,
+        },
+        esbuildOptions: {},
+        include: '**/*.svg?react',
+        exclude: '**/*.svg',
       }),
       /**
        * 图片压缩
