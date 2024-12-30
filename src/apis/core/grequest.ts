@@ -164,7 +164,7 @@ export class GraphqlRequest implements IGraphqlRequest {
             payload: {
               variables,
               extensions: {},
-              operationName: extractQueryName(query), // 必须填写的和 query 的名称一致
+              operationName: operationName || extractQueryName(query), // 必须填写的和 query 的名称一致
               query,
             },
           });
