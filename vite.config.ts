@@ -88,7 +88,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
               options: {
                 cacheName: 'interface-cache',
                 expiration: {
-                  maxEntries: 30, // 最多缓存30个，超过的按照LRU原则删除
+                  maxEntries: 30, // 最多缓存30个, 超过的按照LRU原则删除
                   maxAgeSeconds: 0.5 * (24 * 60 * 60), // 缓存 半天
                 },
                 cacheableResponse: {
@@ -102,7 +102,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
               options: {
                 cacheName: 'js-css-cache',
                 expiration: {
-                  // maxEntries: 30, // 最多缓存30个，超过的按照LRU原则删除
+                  // maxEntries: 30, // 最多缓存30个, 超过的按照LRU原则删除
                   maxAgeSeconds: 30 * (24 * 60 * 60), // 缓存 30天
                 },
                 cacheableResponse: {
@@ -116,7 +116,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
               options: {
                 cacheName: 'image-cache',
                 expiration: {
-                  // maxEntries: 30, // 最多缓存30个，超过的按照LRU原则删除
+                  // maxEntries: 30, // 最多缓存30个, 超过的按照LRU原则删除
                   maxAgeSeconds: 30 * (24 * 60 * 60), // 缓存 30天
                 },
                 cacheableResponse: {
@@ -154,32 +154,54 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
        * https://github.com/vitejs/vite/tree/main/packages/plugin-legacy
        */
       legacy({
-        // 需要兼容的目标列表，可以设置多个
+        // 需要兼容的目标列表, 可以设置多个
         targets: ['chrome 52', 'Android > 39', 'iOS >= 10.3', 'iOS >= 10.3'],
         // 面向 IE11 时需要此插件
         additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
       }),
       /**
-       * 开启 gzip 压缩
-       * 服务端 nginx 还需要配置一下才能生效
+       * 需要配置在以下配置之一
+       *  - 主模块 http
+       *  - 各个服务 server
+       *
+       *  * 检查主模块 mime.types 中是否包含指定的压缩类型
+       *
+       * # 开启gzip功能
+       * gzip on;
+       * # 启用gzip压缩的最小文件，小于设置值的文件将不会压缩
+       * #gzip_min_length 100k;
+       * # 开启gzip静态压缩功能
+       * gzip_static on;
+       * # 设置压缩所需要的缓冲区大小
+       * gzip_buffers 4 16k;
+       * # gzip http版本
+       * gzip_http_version 1.1;
+       * # gzip 压缩级别 1-10( 值越大压缩效果越好, 同时消耗服务器性能越大 )
+       * gzip_comp_level 7;
+       * # gzip 压缩类型
+       * gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+       * # 是否在http header 中添加 Vary: Accept-Encoding, ** 一定要开启, 不开启读取不到 .gz 结尾的压缩文件 **
+       * gzip_vary on;
+       *
+       * 验证是否生效
+       *  响应头: content-encoding: gzip
        */
-      // http {
-      //    # 启用 Gzip 压缩功能
-      //    gzip on;
-      //    # Nginx 检查是否存在预压缩的 .gz 文件，如果有的话，就直接发送这些文件而不是压缩原文件
-      //    gzip_static on;
-      //    # 指定哪些 MIME 类型的响应会被压缩
-      //    gzip_types text/plain text/html text/css application/javascript application/xml;
-      //    # 小于 10240 字节的响应不会被压缩
-      //    gzip_min_length 10240;
-      // }
+      /**
+       * 根据算法打包指定 压缩文件
+       * https://github.com/vbenjs/vite-plugin-compression
+       *
+       ** 需要开启 nginx gzip 配置
+       */
       viteCompression({
         verbose: true, // 是否在控制台中输出压缩结果
-        disable: false,
-        threshold: 10240, // 如果体积大于阈值，将被压缩，单位为b，体积过小时请不要压缩，以免适得其反
-        algorithm: 'gzip', // 压缩算法，可选['gzip'，' brotliccompress '，'deflate '，'deflateRaw']
-        ext: '.gz',
-        // deleteOriginFile: true, // 源文件压缩后是否删除( 为了看压缩后的效果，先选择了 true )
+        disable: false, // 是否禁用
+        threshold: 10240, // 体积大于 threshold 则进行压缩, 单位为 b( 1m = 1024b ), 体积过小时请不要压缩, 以免适得其反
+        algorithm: 'gzip', // 压缩算法: 可选['gzip', ' brotliccompress ', 'deflate ', 'deflateRaw']
+        ext: '.gz', // 生成的压缩包后缀
+        /**
+         * nginx 中不要删除原文件( 否则无法匹配压缩的文件 demo.js => demo.js.gz )
+         */
+        deleteOriginFile: false, // 源文件压缩后是否删除( false: 服务器会自动优先返回同名的 .gzip 资源, 如果找不到还可以拿原始文件 )
       }),
       /**
        * 将 svg 作为组件使用
@@ -237,16 +259,16 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
       /**
        * 开启 cdn
        */
-      // viteCDNPlugin({
-      //   // 需要 CDN 加速的模块
-      //   modules: [
-      //     {
-      //       name: 'lodash',
-      //       var: '_',
-      //       path: `https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js`
-      //     }
-      //   ]
-      // })
+      viteCDNPlugin({
+        // 需要 CDN 加速的模块
+        modules: [
+          {
+            name: 'lodash',
+            var: '_',
+            path: `https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js`,
+          },
+        ],
+      }),
     ],
     resolve: {
       /** 定义路径别名 */
@@ -299,7 +321,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
       include: [],
       // 依赖预构建( esbuild ), vite 会将预构建存放在 node_modules/.vite 中
       exclude: [''],
-      // 强制依赖预构建，而忽略之前已经缓存过的、已经优化过的依赖
+      // 强制依赖预构建, 而忽略之前已经缓存过的、已经优化过的依赖
       force: true,
     },
     css: {
@@ -326,7 +348,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
             mediaQuery: false,
             // 设置要替换的最小像素值
             minPixelValue: 1,
-            // 默认false，可以( reg )利用正则表达式排除某些文件夹的方法，例如 /(node_modules)/i
+            // 默认false, 可以( reg )利用正则表达式排除某些文件夹的方法, 例如 /(node_modules)/i
             // 如果想把前端UI框架内的 px 也转换成 rem, 请把此属性设为默认值
             exclude: /node_modules/i,
           }),
@@ -334,7 +356,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
       },
       preprocessorOptions: {
         scss: {
-          // 加入全局变量( 不要单独引入该文件样式，否则在最中产物中会重复出现 )
+          // 加入全局变量( 不要单独引入该文件样式, 否则在最中产物中会重复出现 )
           // 引入多个文件以；分割
           additionalData: "@use '@/styles/index.scss' as *;",
           javascriptEnabled: true,
