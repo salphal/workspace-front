@@ -168,8 +168,8 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
        *
        * # 开启gzip功能
        * gzip on;
-       * # 启用gzip压缩的最小文件，小于设置值的文件将不会压缩
-       * #gzip_min_length 100k;
+       * # 启用gzip压缩的最小文件, 小于设置值的文件将不会压缩
+       * gzip_min_length 100k;
        * # 开启gzip静态压缩功能
        * gzip_static on;
        * # 设置压缩所需要的缓冲区大小
@@ -191,6 +191,22 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
        * https://github.com/vbenjs/vite-plugin-compression
        *
        ** 需要开启 nginx gzip 配置
+       */
+      /**
+       * nginx brotli( 仅生效于 https )
+       *  - 需要单独安装
+       *  - 需要打包 demo.js => demo.js.br 文件
+       *  - 可以和 gzip 同时生效
+       *
+       * https://github.com/google/ngx_brotli
+       *
+       * brotli on;              # 启用
+       * brotli_comp_level 6;    # 压缩等级, 默认6, 最高11, 太高的压缩水平可能需要更多的CPU
+       * brotli_buffers 16 8k;   # 请求缓冲区的数量和大小
+       * brotli_min_length 20;   # 指定压缩数据的最小长度, 只有大于或等于最小长度才会对其压缩。这里指定20字节
+       * brotli_types text/plain application/javascript application/x-javascript text/javascript text/css application/xml text/html application/json image/svg application/font-woff application/vnd.ms-fontobject application/vnd.apple.mpegurl image/x-icon image/jpeg image/gif image/png image/bmp;   #指定允许进行压缩类型
+       * brotli_static always;   # 是否允许查找预处理好的、以.br结尾的压缩文件, 可选值为on、off、always
+       * brotli_window 512k;     # 窗口值, 默认值为512k
        */
       viteCompression({
         verbose: true, // 是否在控制台中输出压缩结果
