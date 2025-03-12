@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 import styles from './index.module.scss';
-import { setData } from '@/store/global.ts';
+import { setData } from '@src/store/global.ts';
 
 export interface OverviewProps {
   [key: string]: any;

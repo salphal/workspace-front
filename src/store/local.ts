@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
-import { setStoreProperties, zustandLocalStorage } from '@/utils/store/zustand.ts';
+import { setStoreProperties, zustandLocalStorage } from '@src/utils/store/zustand.ts';
 
 export interface ILocalStore {
   [key: string]: any;

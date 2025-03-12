@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { useRoutes } from 'react-router-dom';
 
-import LazyImportComponent from '@/components/lazy-import-component.tsx';
+import LazyImportComponent from '@src/components/lazy-import-component.tsx';
 
 const OverviewRoutes = () => {
   const routers: ReactElement | null = useRoutes([

@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
-import MicroServiceApp from '@/components/micro-service-app/micro-service-app.tsx';
-import { wujieEventBus } from '@/microservices';
+import MicroServiceApp from '@src/components/micro-service-app/micro-service-app.tsx';
+import { wujieEventBus } from '@src/microservices';
 
 type MicroApp = {
   /** 子服务名称( 唯一 ) */

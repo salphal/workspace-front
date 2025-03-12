@@ -15,9 +15,9 @@ import { t } from 'i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import styles from './index.module.scss';
-import LanguageSwitcher from '@/components/language-switcher';
-import ThemeSwitcher from '@/components/theme-switcher';
-import { setMode } from '@/store/theme.ts';
+import LanguageSwitcher from '@src/components/language-switcher';
+import ThemeSwitcher from '@src/components/theme-switcher';
+import { setMode } from '@src/store/theme.ts';
 
 const { Header, Content, Footer, Sider } = AntdLayout;
 

@@ -3,7 +3,7 @@ import { MoonFilled, SunFilled } from '@ant-design/icons';
 import { Select, Switch } from 'antd';
 
 import styles from './index.module.scss';
-import { themeKeys, toggleTheme } from '@/components/theme-switcher/utils.ts';
+import { themeKeys, toggleTheme } from '@src/components/theme-switcher/utils.ts';
 
 export const defaultModeList = ['light', 'dark'] as const;
 //
