@@ -12,6 +12,7 @@ import viteCompression from 'vite-plugin-compression';
 import viteImagemin from 'vite-plugin-imagemin';
 import { VitePWA } from 'vite-plugin-pwa';
 import svgr from 'vite-plugin-svgr';
+import { resolve } from 'node:path'
 
 /**
  * 配置文档: https://vitejs.dev/config/
@@ -289,7 +290,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
     resolve: {
       /** 定义路径别名 */
       alias: {
-        '@': '/src',
+        '@src': resolve(__dirname, 'src'),
       },
     },
     build: {
@@ -331,7 +332,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
     },
     optimizeDeps: {
       // 自定义预构建的入口文件
-      entries: ['@/main.tsx'],
+      entries: ['@src/main.tsx'],
       // 让 vite启动的时候预编译一些包, 而不是运行网页的时候才编译
       // 这样可以加快网页首次的加载速度, 但是可能vite首次启动会比较慢点
       include: [],
@@ -374,7 +375,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
         scss: {
           // 加入全局变量( 不要单独引入该文件样式, 否则在最中产物中会重复出现 )
           // 引入多个文件以；分割
-          additionalData: "@use '@/styles/index.scss' as *;",
+          additionalData: "@use '@src/styles/index.scss' as *;",
           javascriptEnabled: true,
         },
       },

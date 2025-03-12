@@ -24,9 +24,7 @@
     /* alias */
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@src/*": ["src/*"]
     }
   },
   "include": [
