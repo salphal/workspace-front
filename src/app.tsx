@@ -1,18 +1,16 @@
 import React from 'react';
-import { useLocation, useRoutes } from 'react-router-dom';
-
 import Layout from '@src/layout';
-import routes from '@src/routes';
+import routes from '@src/route';
+import { useLocation, useRoutes } from 'react-router-dom';
 
 import './app.scss';
 
 import { StyleProvider } from '@ant-design/cssinjs';
+import useThemeStore from '@src/store/theme.ts';
 import { theme } from 'antd';
 import { ThemeProvider } from 'antd-style';
 import zhCN from 'antd/locale/zh_CN';
 import { useShallow } from 'zustand/react/shallow';
-
-import useThemeStore from '@src/store/theme.ts';
 
 function App() {
   const { mode } = useThemeStore(useShallow((state: any) => state));

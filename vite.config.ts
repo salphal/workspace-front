@@ -1,3 +1,4 @@
+import { resolve } from 'node:path';
 import legacy from '@vitejs/plugin-legacy';
 import react from '@vitejs/plugin-react';
 import autoprefixer from 'autoprefixer';
@@ -12,7 +13,6 @@ import viteCompression from 'vite-plugin-compression';
 import viteImagemin from 'vite-plugin-imagemin';
 import { VitePWA } from 'vite-plugin-pwa';
 import svgr from 'vite-plugin-svgr';
-import { resolve } from 'node:path'
 
 /**
  * 配置文档: https://vitejs.dev/config/
@@ -375,7 +375,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
         scss: {
           // 加入全局变量( 不要单独引入该文件样式, 否则在最中产物中会重复出现 )
           // 引入多个文件以；分割
-          additionalData: "@use '@src/styles/index.scss' as *;",
+          additionalData: "@use '@src/style/index.scss' as *;",
           javascriptEnabled: true,
         },
       },

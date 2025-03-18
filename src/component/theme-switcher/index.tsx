@@ -1,9 +1,9 @@
 import React, { ForwardRefRenderFunction, Ref, useEffect, useImperativeHandle } from 'react';
 import { MoonFilled, SunFilled } from '@ant-design/icons';
+import { themeKeys, toggleTheme } from '@src/component/theme-switcher/utils.ts';
 import { Select, Switch } from 'antd';
 
 import styles from './index.module.scss';
-import { themeKeys, toggleTheme } from '@src/components/theme-switcher/utils.ts';
 
 export const defaultModeList = ['light', 'dark'] as const;
 //

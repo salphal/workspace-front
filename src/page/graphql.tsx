@@ -1,8 +1,8 @@
 import React from 'react';
+import { testGraphqlSubscription } from '@src/api/__test__/graphql.ts';
 import { Segmented, Typography } from 'antd';
 
 import styles from './test.module.scss';
-import { testGraphqlSubscription } from '@src/apis/__test__/graphql.ts';
 
 const { Title, Paragraph, Text, Link } = Typography;
 

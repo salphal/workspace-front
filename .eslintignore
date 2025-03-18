@@ -1,8 +1,8 @@
-components/**/*.js
-components/**/*.jsx
-components/version/token.tsx
-!components/*/__tests__/**/*.js
-!components/*/demo/*.md
+src/component/**/*.js
+src/component/**/*.jsx
+src/component/version/token.tsx
+!src/component/*/__tests__/**/*.js
+!src/component/*/demo/*.md
 !.*.js
 ~*
 es/**/*

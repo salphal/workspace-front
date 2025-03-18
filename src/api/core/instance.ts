@@ -1,7 +1,6 @@
+import { GraphqlRequest } from '@src/api/core/grequest.ts';
+import { HttpRequest } from '@src/api/core/hrequest.ts';
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
-
-import { GraphqlRequest } from '@src/apis/core/grequest.ts';
-import { HttpRequest } from '@src/apis/core/hrequest.ts';
 
 export const hrequest = new HttpRequest({
   baseURL: '/api',

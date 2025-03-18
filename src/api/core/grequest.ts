@@ -1,8 +1,7 @@
+import { HttpRequest } from '@src/api/core/hrequest.ts';
+import { SocketRequest } from '@src/api/core/srequest.ts';
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-
-import { HttpRequest } from '@src/apis/core/hrequest.ts';
-import { SocketRequest } from '@src/apis/core/srequest.ts';
 
 /**
  * 获取 graphql 语句中的名称

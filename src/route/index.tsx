@@ -1,7 +1,6 @@
+import OverviewRoutes from '@src/page/overview/route.tsx';
+import Test from '@src/page/test.tsx';
 import { Navigate, type RouteObject } from 'react-router-dom';
-
-import OverviewRoutes from '@src/pages/overview/route.tsx';
-import Test from '@src/pages/test.tsx';
 
 /**
  * React.lazy: 只会在真正渲染的时候再加载异步组件，无法提前加载

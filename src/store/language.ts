@@ -1,7 +1,6 @@
+import { setStoreProperties, zustandLocalStorage } from '@src/util/store/zustand.ts';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-
-import { setStoreProperties, zustandLocalStorage } from '@src/utils/store/zustand.ts';
 
 /**
  * https://ant-design.antgroup.com/docs/react/i18n-cn

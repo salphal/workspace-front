@@ -1,8 +1,8 @@
 import React from 'react';
+import { useSubMicroServices } from '@src/hook/use-submicro-services.tsx';
+import { apps } from '@src/microservice/apps.ts';
 
 import { demoPrefix } from './apps';
-import { useSubMicroServices } from '@src/hooks/use-submicro-services.tsx';
-import { apps } from '@src/microservices/apps.ts';
 
 const wrapStyle = {
   width: '100%',

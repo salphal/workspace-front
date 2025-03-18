@@ -1,8 +1,7 @@
+import { setStoreProperties, zustandLocalStorage } from '@src/util/store/zustand.ts';
 import { ThemeConfig } from 'antd/es/config-provider/context';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-
-import { setStoreProperties, zustandLocalStorage } from '@src/utils/store/zustand.ts';
 
 /**
  * https://ant-design.antgroup.com/docs/react/customize-theme-cn

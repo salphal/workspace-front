@@ -1,7 +1,6 @@
+import { setStoreProperties, zustandSessionStorage } from '@src/util/store/zustand.ts';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-
-import { setStoreProperties, zustandSessionStorage } from '@src/utils/store/zustand.ts';
 
 export interface ISessionStore {
   [key: string]: any;

@@ -10,14 +10,14 @@ import {
   VideoCameraOutlined,
 } from '@ant-design/icons';
 import { useBreakpoint } from '@ant-design/pro-components';
+import LanguageSwitcher from '@src/component/language-switcher';
+import ThemeSwitcher from '@src/component/theme-switcher';
+import { setMode } from '@src/store/theme.ts';
 import { Layout as AntdLayout, Avatar, Button, Col, Divider, Flex, Input, Menu, Spin } from 'antd';
 import { t } from 'i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import styles from './index.module.scss';
-import LanguageSwitcher from '@src/components/language-switcher';
-import ThemeSwitcher from '@src/components/theme-switcher';
-import { setMode } from '@src/store/theme.ts';
 
 const { Header, Content, Footer, Sider } = AntdLayout;
 
