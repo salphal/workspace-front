@@ -6,6 +6,7 @@ import { useLocation, useRoutes } from 'react-router-dom';
 import './app.scss';
 
 import { StyleProvider } from '@ant-design/cssinjs';
+import { WhitePageList } from '@src/constant/white-page.ts';
 import useThemeStore from '@src/store/theme.ts';
 import { theme } from 'antd';
 import { ThemeProvider } from 'antd-style';
@@ -18,7 +19,7 @@ function App() {
 
   const page = useRoutes(routes);
 
-  if (['/overview'].includes(pathname)) return page;
+  if (WhitePageList.includes(pathname)) return page;
 
   return (
     <React.Fragment>
