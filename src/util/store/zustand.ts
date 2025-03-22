@@ -61,15 +61,15 @@ export const setStoreProperties = ({
   value,
   merge = true,
   insertBefore = false,
-  isDeconstruct = true,
+  isDeconstruct = false,
 }: ISetPropertiesConfig) => {
   // 提取一个更新状态的函数
   const updateState = (updateFn: (prev: any) => any) => {
     store.setState(loggerWrapper(updateFn, name));
   };
 
-  // 直接使用 value 赋值, 避免解构, 丢失私有成员等
-  if (!isDeconstruct) {
+  // 避免解构, 丢失私有成员等
+  if (isDeconstruct) {
     updateState((prev: any) => ({
       ...prev,
       [key]: value,
@@ -92,6 +92,11 @@ export const setStoreProperties = ({
     updateState((prev: any) => ({
       ...prev,
       [key]: value(prev[key]),
+    }));
+  } else {
+    updateState((prev: any) => ({
+      ...prev,
+      [key]: value,
     }));
   }
 };
@@ -154,4 +159,60 @@ export const zustandUrlHashStorage: StateStorage = {
     searchParams.delete(key);
     location.hash = searchParams.toString();
   },
+};
+
+/** custom zustand cross tab sync save method */
+const createStorageEventHandler = (zustandStore: ZustandStore) => {
+  return (event: StorageEvent) => {
+    if (event.key && event.newValue) {
+      const newValue = JSON.parse(event.newValue);
+      console.log('[zustand] 跨标签页更新:', { key: event.key, newValue });
+      setStoreProperties({
+        store: zustandStore,
+        key: event.key,
+        value: newValue,
+        merge: true,
+        insertBefore: false,
+        isDeconstruct: false,
+      });
+    }
+  };
+};
+
+/** 初始化跨标签页通信 */
+const initCrossTabSync = (
+  zustandStore: ZustandStore,
+  channelName: string = 'zustandCrossTabChannel',
+) => {
+  if (typeof BroadcastChannel !== 'undefined') {
+    const bc = new BroadcastChannel(channelName);
+
+    // 监听 BroadcastChannel 消息
+    bc.onmessage = (event) => {
+      const { key, newValue } = event.data;
+      console.log('[zustand] BroadcastChannel 收到更新:', { key, newValue });
+
+      setStoreProperties({
+        store: zustandStore,
+        key,
+        value: newValue,
+        merge: true,
+        insertBefore: false,
+        isDeconstruct: false,
+      });
+    };
+
+    // 包装存储方法，使其广播数据
+    const originalSetItem = localStorage.setItem;
+
+    localStorage.setItem = (key, newValue) => {
+      originalSetItem.call(localStorage, key, newValue);
+      bc.postMessage({ key, newValue: JSON.parse(newValue) }); // 发送广播
+    };
+  } else {
+    // 若不支持 BroadcastChannel，则降级监听 localStorage
+    console.warn('[zustand] BroadcastChannel 不支持，降级到 localStorage 监听');
+    const storageHandler = createStorageEventHandler(zustandStore);
+    window.addEventListener('storage', storageHandler);
+  }
 };
