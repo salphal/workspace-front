@@ -194,7 +194,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
        ** 需要开启 nginx gzip 配置
        */
       /**
-       * nginx brotli( 仅生效于 https )
+       * nginx brotli( 仅生效于 https ), 因为 http 请求中 request-header 里的 Accept-Encoding 没有 br
        *  - 需要单独安装
        *  - 需要打包 demo.js => demo.js.br 文件
        *  - 可以和 gzip 同时生效
@@ -213,8 +213,12 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
         verbose: true, // 是否在控制台中输出压缩结果
         disable: false, // 是否禁用
         threshold: 10240, // 体积大于 threshold 则进行压缩, 单位为 b( 1m = 1024b ), 体积过小时请不要压缩, 以免适得其反
-        algorithm: 'gzip', // 压缩算法: 可选['gzip', ' brotliccompress ', 'deflate ', 'deflateRaw']
-        ext: '.gz', // 生成的压缩包后缀
+        /** gzip */
+        // algorithm: 'gzip', // 压缩算法: 可选['gzip', ' brotliCompress ', 'deflate ', 'deflateRaw']
+        // ext: '.gz', // 生成的压缩包后缀
+        /** brotli */
+        algorithm: 'brotliCompress', // 压缩算法: 可选['gzip', ' brotliccompress ', 'deflate ', 'deflateRaw']
+        ext: '.br', // 生成的压缩包后缀
         /**
          * nginx 中不要删除原文件( 否则无法匹配压缩的文件 demo.js => demo.js.gz )
          */
