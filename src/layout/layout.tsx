@@ -52,12 +52,15 @@ const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
         )
       }
       items={navigateMenuItems}
+      onClick={({ item, key, keyPath }) => {
+        if (item && key) navigate(key);
+      }}
     />
   );
 
   const subMenuItems = [UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].map(
     (icon, index) => ({
-      key: String(index + 1),
+      key: '/test',
       icon: React.createElement(icon),
       label: `nav ${index + 1}`,
     }),
@@ -68,9 +71,12 @@ const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
     <Menu
       theme="light"
       mode="inline"
-      defaultSelectedKeys={['4']}
+      defaultSelectedKeys={['/test']}
       items={subMenuItems}
       style={{ height: '100%' }}
+      onClick={({ item, key, keyPath }) => {
+        if (item && key) navigate(key);
+      }}
     />
   );
 
