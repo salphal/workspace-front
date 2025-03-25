@@ -33,19 +33,12 @@ const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
 
   const [collapsed, setCollapsed] = useState(false);
 
-  const items1 = ['1', '2', '3'].map((key) => ({
+  const navigateMenuItems = ['1', '2', '3'].map((key) => ({
     key,
     label: `nav ${key}`,
   }));
 
-  const items = [UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].map(
-    (icon, index) => ({
-      key: String(index + 1),
-      icon: React.createElement(icon),
-      label: `nav ${index + 1}`,
-    }),
-  );
-
+  /** 顶部导航菜单 */
   const NavigateMenu = () => (
     <Menu
       theme="light"
@@ -58,16 +51,25 @@ const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
           <EllipsisOutlined />
         )
       }
-      items={items1}
+      items={navigateMenuItems}
     />
   );
 
+  const subMenuItems = [UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].map(
+    (icon, index) => ({
+      key: String(index + 1),
+      icon: React.createElement(icon),
+      label: `nav ${index + 1}`,
+    }),
+  );
+
+  /** 侧边导航菜单 */
   const AsideMenu = () => (
     <Menu
       theme="light"
       mode="inline"
       defaultSelectedKeys={['4']}
-      items={items}
+      items={subMenuItems}
       style={{ height: '100%' }}
     />
   );
