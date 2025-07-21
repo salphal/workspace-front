@@ -17,14 +17,11 @@ FROM base AS deps
 # 安装 pnpm
 RUN npm install -g pnpm
 
-# 设置国内镜像源( 可选，加快安装速度 )
-RUN pnpm config set registry https://registry.npmmirror.com/
-
 # 拷贝依赖文件
 COPY package.json pnpm-lock.yaml ./
 
-# 安装依赖
-RUN pnpm install
+# 安装依赖, 设置国内镜像源( 可选，加快安装速度 )
+RUN pnpm install --registry=https://registry.npmmirror.com
 
 
 ##########################
