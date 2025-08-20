@@ -1,4 +1,4 @@
-import { setStoreProperties, zustandSessionStorage } from '@src/util/store/zustand.ts';
+import { setStoreProperties, zustandSessionStorage } from '@src/utils/store/zustand.ts';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 

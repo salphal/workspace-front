@@ -1,4 +1,4 @@
-import { setStoreProperties } from '@src/util/store/zustand.ts';
+import { setStoreProperties } from '@src/utils/store/zustand.ts';
 import { create } from 'zustand';
 
 export interface IGlobalStore {
