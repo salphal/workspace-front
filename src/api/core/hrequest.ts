@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
 
-export declare interface R<T> {
+export declare interface R<T = any> {
   [key: string]: any;
 
   /** 响应状态码 */
@@ -8,7 +8,7 @@ export declare interface R<T> {
   /** 响应数据 */
   data: T;
   /** 响应消息 */
-  message: string;
+  msg: string;
 }
 
 export type OnFulfilled<V = any> = (value: V) => V | Promise<V>;
