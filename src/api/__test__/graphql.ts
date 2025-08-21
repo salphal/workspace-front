@@ -1,4 +1,4 @@
-import { grequest } from '@src/api/core/instance.ts';
+import { grequest } from '@src/api/core';
 
 export const testGraphqlQuery = (variables = {}) => {
   return grequest.query<{ id: number; name: string; remark: string }[]>({
