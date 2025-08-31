@@ -28,3 +28,4 @@ vite.config.ts.timestamp-*
 
 .dev-cli/__template__
 __output__
+auto-imports.d.ts
