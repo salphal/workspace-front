@@ -353,6 +353,9 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
           /**
            * https://github.com/cuth/postcss-pxtorem
            * 使用的官方配置的默认值
+           *
+           * postcss-pxtorem 把 px 转换成 rem 时，都会以 html 的 font-size 作为基准
+           * body 上的 font-size 仅仅是文字样式，不会影响 rem
            */
           postCssPxToRem({
             // 表示根元素字体大小
