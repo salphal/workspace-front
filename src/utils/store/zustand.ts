@@ -8,49 +8,56 @@ export interface ISetPropertiesConfig {
   /** 更新的键 */
   key: string;
   /** 更新的值 */
-  value: any;
+  value: unknown;
   /** 是否与之前的数据合并 */
-  merge: boolean;
+  merge?: boolean;
   /** 如果该数据为数组, 是否从前面插入数据 */
-  insertBefore: boolean;
+  insertBefore?: boolean;
   /** 是否使用解构数据合并值 */
-  isDeconstruct: boolean;
+  isDeconstruct?: boolean;
 }
 
 export interface ZustandStore {
-  setState: (...arg: any[]) => void;
+  setState: (...args: any[]) => void;
 }
 
-/** 若存入的不是 object 类型, 而是自定义类, 则展开运算可能会导致私有成员丢失 */
-const isZustandObject = (target: any) =>
+/** 类型检查工具函数 */
+const isZustandObject = (target: unknown): target is Record<string, unknown> =>
   Object.prototype.toString.call(target) === '[object Object]';
 
-const isZustandFunc = (target: any) => typeof target === 'function';
+const isZustandFunc = (target: unknown): target is (arg: unknown) => unknown =>
+  typeof target === 'function';
 
-const isZustandArray = (target: any) => Array.isArray(target);
+const isZustandArray = (target: unknown): target is unknown[] => Array.isArray(target);
 
 const loggerWrapper =
-  (updateFn: (prev: any) => any, name: string = '') =>
-  (prevState: any) => {
+  (updateFn: (prev: unknown) => unknown, name: string = '', isLogger: boolean = false) =>
+  (prevState: unknown) => {
     const nextState = updateFn(prevState);
-    const stateName = name ? name : 'setState';
-    const size = name.length + 20 * 2 + 2;
-    const separator = (size: number) => Array(size).fill('-').join('');
-    console.log(`%c${separator(20)} ${stateName} ${separator(20)}`, 'color: gray;');
-    console.log('%c[ prev state ]:', 'color: gray;', prevState);
-    console.log('%c[ next state ]:', 'color: green;', nextState);
-    console.log(`%c${separator(size)}`, 'color: gray;');
+
+    if (isLogger) {
+      const stateName = name || 'setState';
+      const size = name.length + 40;
+      const separator = (size: number) => Array(size).fill('-').join('');
+      console.log(`%c${separator(20)} ${stateName} ${separator(20)}`, 'color: gray;');
+      console.log('%c[ prev state ]:', 'color: gray;', prevState);
+      console.log('%c[ next state ]:', 'color: green;', nextState);
+      console.log(`%c${separator(size)}`, 'color: gray;');
+    }
+
     return nextState;
   };
 
 /**
- * @param {string} [name=''] - 仓库名称
- * @param {ZustandStore} store - ZustandStore 实例
- * @param {string} key - 数据名
- * @param {any} value - 数据值
- * @param {boolean} [merge=true] - 是否和之前的该值合并
- * @param {boolean} [insertBefore=false] - 如果该数据为数组, 是否从前面插入数据
- * @param {boolean} [isDeconstruct=false] - 是否使用解构数据合并值
+ * 更新 Zustand 状态库属性的通用方法
+ * @param config 配置对象
+ * @param config.name 仓库名称
+ * @param config.store ZustandStore 实例
+ * @param config.key 数据名
+ * @param config.value 数据值
+ * @param config.merge 是否和之前的该值合并，默认 true
+ * @param config.insertBefore 如果该数据为数组, 是否从前面插入数据，默认 false
+ * @param config.isDeconstruct 是否使用解构数据合并值，默认 false
  *    - 会保证每次都是一个新的引用地址
  *    - 注意: 会失去解构对象上的私有成员
  */
@@ -63,42 +70,65 @@ export const setStoreProperties = ({
   insertBefore = false,
   isDeconstruct = false,
 }: ISetPropertiesConfig) => {
+  // 参数验证
+  if (!store || !key) {
+    console.warn('[setStoreProperties] store 和 key 参数不能为空');
+    return;
+  }
+
   // 提取一个更新状态的函数
-  const updateState = (updateFn: (prev: any) => any) => {
-    store.setState(loggerWrapper(updateFn, name));
+  const updateState = (updateFn: (prev: unknown) => unknown) => {
+    store.setState(loggerWrapper(updateFn, name, false));
   };
 
   // 避免解构, 丢失私有成员等
   if (isDeconstruct) {
-    updateState((prev: any) => ({
-      ...prev,
+    updateState((prev: unknown) => ({
+      ...(prev as Record<string, unknown>),
       [key]: value,
     }));
     return;
   }
 
-  // 判断不同类型的 value，并更新状态
-  if (isZustandObject(value)) {
-    updateState((prev: any) => ({
-      ...prev,
-      [key]: merge ? { ...prev[key], ...value } : { ...value },
-    }));
-  } else if (isZustandArray(value)) {
-    updateState((prev: any) => ({
-      ...prev,
-      [key]: merge ? (!insertBefore ? [...prev[key], ...value] : [...value, ...prev[key]]) : value,
-    }));
-  } else if (isZustandFunc(value)) {
-    updateState((prev: any) => ({
-      ...prev,
-      [key]: value(prev[key]),
-    }));
-  } else {
-    updateState((prev: any) => ({
-      ...prev,
+  // 根据不同的 value 类型进行状态更新
+  const updateStateByType = (prev: unknown) => {
+    const prevState = prev as Record<string, unknown>;
+    const prevValue = prevState[key];
+
+    if (isZustandObject(value)) {
+      return {
+        ...prevState,
+        [key]: merge && isZustandObject(prevValue) ? { ...prevValue, ...value } : { ...value },
+      };
+    }
+
+    if (isZustandArray(value)) {
+      return {
+        ...prevState,
+        [key]:
+          merge && isZustandArray(prevValue)
+            ? insertBefore
+              ? [...value, ...prevValue]
+              : [...prevValue, ...value]
+            : value,
+      };
+    }
+
+    if (isZustandFunc(value)) {
+      return {
+        ...prevState,
+        [key]: value(prevValue),
+      };
+    }
+
+    // 基础类型直接赋值
+    return {
+      ...prevState,
       [key]: value,
-    }));
-  }
+    };
+  };
+
+  updateState(updateStateByType);
 };
 
 /** custom zustand localStorage save methods */
@@ -132,7 +162,7 @@ export const zustandCookieStorage: StateStorage = {
   getItem: (key): string => {
     const cookies = document.cookie.split('; ');
     const cookie = cookies.find((c) => c.startsWith(`${key}=`));
-    return cookie ? JSON.parse(decodeURIComponent(cookie.split('=')[1])) : null;
+    return cookie ? JSON.parse(decodeURIComponent(cookie.split('=')[1])) : '';
   },
   setItem: (key, newValue): void => {
     document.cookie = `${key}=${encodeURIComponent(JSON.stringify(newValue))}; path=/;`;
