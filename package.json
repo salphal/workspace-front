@@ -16,7 +16,10 @@
     "lint": "eslint . --ext js,jsx,ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
     "prettier": "prettier . --write --check --fix",
     "style": "stylelint \"src/**/*.(scss)\" --fix",
-    "tailwindcss": "npx tailwindcss -i ./src/main.scss -o ./public/tailwind.css --watch && npx tailwindcss -o ./public/tailwind.css --minify"
+    "tailwindcss": "npx tailwindcss -i ./src/main.scss -o ./public/tailwind.css --watch && npx tailwindcss -o ./public/tailwind.css --minify",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@ant-design/colors": "^7.1.0",
@@ -61,6 +64,8 @@
     "wujie-react": "^1.0.22"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.28.5",
+    "@babel/preset-react": "^7.28.5",
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
     "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
@@ -88,6 +93,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "antd-style": "^3.6.2",
     "autoprefixer": "^10.4.18",
+    "babel-jest": "^30.2.0",
     "classnames": "^2.5.1",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
@@ -96,6 +102,7 @@
     "eslint-plugin-react-refresh": "^0.4.5",
     "eslint-plugin-unused-imports": "^4.1.4",
     "husky": "^9.0.11",
+    "jest": "^30.2.0",
     "lint-staged": "^15.2.5",
     "lodash": "^4.17.21",
     "mockjs": "^1.1.0",
@@ -106,6 +113,7 @@
     "postcss-pxtorem": "^6.1.0",
     "prettier": "^3.3.0",
     "react-dev-inspector": "^2.0.1",
+    "react-test-renderer": "^19.2.0",
     "rollup-plugin-visualizer": "^5.12.0",
     "sass": "^1.72.0",
     "stylelint": "^16.6.1",
