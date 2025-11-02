@@ -7,14 +7,14 @@ import './app.scss';
 
 import { StyleProvider } from '@ant-design/cssinjs';
 import { WhitePageList } from '@src/constant/white-page.ts';
-import useThemeStore from '@src/store/theme.ts';
-import { theme } from 'antd';
+import useThemeStore, { IThemeStore } from '@src/store/theme.ts';
+import { ConfigProvider, theme } from 'antd';
 import { ThemeProvider } from 'antd-style';
 import zhCN from 'antd/locale/zh_CN';
 import { useShallow } from 'zustand/react/shallow';
 
 function App() {
-  const { mode } = useThemeStore(useShallow((state: any) => state));
+  const { mode } = useThemeStore(useShallow((state: IThemeStore) => state));
   const { pathname } = useLocation();
 
   const page = useRoutes(routes);

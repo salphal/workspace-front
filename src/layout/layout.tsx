@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
 import { gray } from '@ant-design/colors';
 import {
   EllipsisOutlined,
@@ -13,7 +13,19 @@ import { useBreakpoint } from '@ant-design/pro-components';
 import LanguageSwitcher from '@src/component/language-switcher';
 import ThemeSwitcher from '@src/component/theme-switcher';
 import { setMode } from '@src/store/theme.ts';
-import { Layout as AntdLayout, Avatar, Button, Col, Divider, Flex, Input, Menu, Spin } from 'antd';
+import {
+  Layout as AntdLayout,
+  Avatar,
+  Button,
+  Col,
+  Divider,
+  Flex,
+  Input,
+  Menu,
+  Row,
+  Space,
+  Spin,
+} from 'antd';
 import { t } from 'i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -60,7 +72,7 @@ const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
 
   const subMenuItems = [UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].map(
     (icon, index) => ({
-      key: '/test',
+      key: `/test-${index}`,
       icon: React.createElement(icon),
       label: `nav ${index + 1}`,
     }),
