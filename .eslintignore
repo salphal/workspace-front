@@ -24,3 +24,4 @@ jest-stare
 vite.config.ts
 .eslintrc.cjs
 jest.config.mjs
+postcss.config.cjs
