@@ -1,19 +1,14 @@
 export default {
+  roots: ['<rootDir>/src'],
+
   // 测试环境
   testEnvironment: 'jsdom',
 
   // 测试文件匹配模式
-  testMatch: [
-    '**/__test__/**/*.(test|spec).(ts|tsx|js|jsx)',
-    '**/*.(test|spec).(ts|tsx|js|jsx)',
-  ],
+  testMatch: ['**/__test__/**/*.(test|spec).(ts|tsx|js|jsx)', '**/*.(test|spec).(ts|tsx|js|jsx)'],
 
   // 需要忽略的文件
-  testPathIgnorePatterns: [
-    '/node_modules/',
-    '/dist/',
-    '/.git/',
-  ],
+  testPathIgnorePatterns: ['/node_modules/', '/dist/', '/.git/'],
 
   // 模块文件扩展名
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
@@ -30,26 +25,37 @@ export default {
 
   // 转换配置
   transform: {
-    '^.+\\.(ts|tsx|js|jsx)$': ['babel-jest', {
-      presets: [
-        ['@babel/preset-env', {
-          targets: { node: 'current' },
-          modules: 'auto',
-        }],
-        ['@babel/preset-react', {
-          runtime: 'automatic',
-        }],
-      ],
-    }],
+    '^.+\\.(ts|tsx|js|jsx|mjs)$': [
+      'babel-jest',
+      {
+        presets: [
+          [
+            '@babel/preset-env',
+            {
+              targets: { node: 'current' },
+              modules: 'commonjs',
+            },
+          ],
+          [
+            '@babel/preset-react',
+            {
+              runtime: 'automatic',
+            },
+          ],
+          '@babel/preset-typescript',
+        ],
+      },
+    ],
   },
 
-  // 转换忽略模式
+  // 转换忽略模式（需要转换 ESM 模块）
+  // pnpm 的路径格式：node_modules/.pnpm/package@version/node_modules/package/
   transformIgnorePatterns: [
-    'node_modules/(?!(.*\\.mjs$))',
+    'node_modules/(?!(.pnpm/)?([^/]+/)*lodash-es|(.pnpm/)?([^/]+/)*@ant-design|(.pnpm/)?([^/]+/)*ahooks)',
   ],
 
   // 设置文件（测试前执行的脚本）
-  setupFilesAfterEnv: [],
+  setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
 
   // 收集覆盖率
   collectCoverageFrom: [
@@ -76,15 +82,5 @@ export default {
 
   // 覆盖率报告格式
   coverageReporters: ['text', 'lcov', 'html'],
-
-  // 全局变量配置
-  globals: {
-    'ts-jest': {
-      tsconfig: {
-        jsx: 'react-jsx',
-      },
-    },
-  },
 };
-
 
