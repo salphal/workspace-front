@@ -22,3 +22,5 @@ coverage
 scripts/previewEditor/**/*
 jest-stare
 vite.config.ts
+.eslintrc.cjs
+jest.config.mjs
