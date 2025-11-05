@@ -1,14 +1,16 @@
 import '@testing-library/jest-dom';
 
 import * as React from 'react';
+import { server } from '@src/__mock__/node.ts';
 import * as Antd from 'antd';
 import * as ReactRouterDom from 'react-router-dom';
 
 /**
- * 设置 document.title
+ * 设置 document.title, div#id
  * 注意：测试环境不会加载 index.html，需要手动设置
  */
 document.title = 'vite react front temp';
+document.body.innerHTML = '<div id="root"></div>';
 
 /**
  * Mock matchMedia for jsdom environment
@@ -95,3 +97,20 @@ const setupGlobalAutoImports = () => {
 // 执行初始化
 mockMatchMedia();
 setupGlobalAutoImports();
+
+beforeAll(() => {
+  // Enable API mocking before all the tests.
+  server.listen();
+});
+
+afterEach(() => {
+  // Reset the request handlers between each test.
+  // This way the handlers we add on a per-test basis
+  // do not leak to other, irrelevant tests.
+  server.resetHandlers();
+});
+
+afterAll(() => {
+  // Finally, disable API mocking after the tests are done.
+  server.close();
+});
