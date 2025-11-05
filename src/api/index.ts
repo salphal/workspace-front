@@ -1,5 +1,6 @@
 import { GraphqlRequest } from '@src/api/core/grequest.ts';
 import { HttpRequest } from '@src/api/core/hrequest.ts';
+import { SocketRequest } from '@src/api/core/srequest.ts';
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export const hrequest = new HttpRequest({
@@ -39,11 +40,30 @@ export const hrequest = new HttpRequest({
           return res.data;
         },
         // 响应错误捕获
-        (err: AxiosError) => {
+        (err: AxiosError<{ message?: string }>) => {
           /**
            * 全局响应异常处理
            */
-          return Promise.reject(err);
+
+          const status = err.response?.status;
+
+          switch (status) {
+            case 401:
+              console.warn('未授权,跳转登录');
+              // redirect('/login')
+              break;
+            case 500:
+              console.error('服务器错误:', err.message);
+              break;
+            default:
+              console.error('网络错误:', err.message);
+          }
+
+          return Promise.reject({
+            code: status,
+            message: err.response?.data?.message || err.message,
+            raw: err,
+          });
         },
       ],
     ],
@@ -51,3 +71,11 @@ export const hrequest = new HttpRequest({
 });
 
 export const grequest = new GraphqlRequest({ baseURL: '/v1/graphql' });
+
+export const srequest = new SocketRequest<{ type: string; payload: any }>({
+  url: 'wss://example.com/socket',
+  reconnect: true,
+  heartbeatInterval: 10000,
+  heartbeatMessage: { ping: true },
+  responseInterceptor: (data) => data.payload,
+});
