@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import LazyImportComponent from '@src/component/lazy-import-component.tsx';
+import LazyImportComponent from '@src/components/lazy-import-component.tsx';
 import { useRoutes } from 'react-router-dom';
 
 const OverviewRoutes = () => {

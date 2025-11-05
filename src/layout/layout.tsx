@@ -10,8 +10,8 @@ import {
   VideoCameraOutlined,
 } from '@ant-design/icons';
 import { useBreakpoint } from '@ant-design/pro-components';
-import LanguageSwitcher from '@src/component/language-switcher';
-import ThemeSwitcher from '@src/component/theme-switcher';
+import LanguageSwitcher from '@src/components/language-switcher';
+import ThemeSwitcher from '@src/components/theme-switcher';
 import { setMode } from '@src/store/theme.ts';
 import {
   Layout as AntdLayout,

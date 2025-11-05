@@ -1,5 +1,5 @@
 import React from 'react';
-import { testGraphqlSubscription } from '@src/api/__test__/graphql.ts';
+import { GraphqlUserApi } from '@src/api/__example__/graphql.ts';
 import { Segmented, Typography } from 'antd';
 
 import styles from './test.module.scss';
@@ -29,7 +29,7 @@ const Graphql: React.FC<GraphqlProps> = (props: GraphqlProps) => {
   const socketRef = useRef<any>();
 
   useEffect(() => {
-    testGraphqlSubscription({ onMessage: dataOnMessage }).then((ws) => {
+    GraphqlUserApi.subscribeToUsers({ onMessage: dataOnMessage }).then((ws) => {
       socketRef.current = ws;
     });
     return () => {

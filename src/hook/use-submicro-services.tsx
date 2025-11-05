@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import MicroServiceApp from '@src/component/micro-service-app/micro-service-app.tsx';
+import MicroServiceApp from '@src/components/micro-service-app/micro-service-app.tsx';
 import { wujieEventBus } from 'src/microservice';
 
 type MicroApp = {
