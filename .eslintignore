@@ -1,8 +1,8 @@
-src/component/**/*.js
-src/component/**/*.jsx
-src/component/version/token.tsx
-!src/component/*/__tests__/**/*.js
-!src/component/*/demo/*.md
+src/components/**/*.js
+src/components/**/*.jsx
+src/components/version/token.tsx
+!src/components/*/__tests__/**/*.js
+!src/components/*/demo/*.md
 !.*.js
 ~*
 es/**/*
@@ -23,5 +23,5 @@ scripts/previewEditor/**/*
 jest-stare
 vite.config.ts
 .eslintrc.cjs
-jest.config.mjs
+jest.config.cjs
 postcss.config.cjs

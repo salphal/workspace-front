@@ -41,4 +41,14 @@ module.exports = {
       },
     ],
   },
+  overrides: [
+    {
+      files: ['src/setupPolyfills.ts'],
+      rules: {
+        '@typescript-eslint/no-var-requires': 'off',
+        '@typescript-eslint/no-empty-function': 'off',
+        'prettier/prettier': 'off',
+      },
+    },
+  ],
 };
