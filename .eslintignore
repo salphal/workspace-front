@@ -1,28 +1,63 @@
-src/components/**/*.js
-src/components/**/*.jsx
-src/components/version/token.tsx
-!src/components/*/__tests__/**/*.js
-!src/components/*/demo/*.md
-!.*.js
-~*
-es/**/*
-lib/**/*
-locale
-server
-.dumi/tmp
-.dumi/tmp-production
-!.dumi/
-node_modules
+# 构建输出目录
+dist/
+coverage/
 .eslintcache
-_site
-dist
-coverage
-**/*.d.ts
-# Scripts
-scripts/previewEditor/**/*
-jest-stare
+
+# 依赖目录
+node_modules/
+
+# 配置文件（通常不需要 lint）
 vite.config.ts
-.eslintrc.cjs
 jest.config.cjs
 postcss.config.cjs
 babel.config.cjs
+.eslintrc.cjs
+.prettierrc.cjs
+.stylelintrc.cjs
+commitlint.config.cjs
+tailwind.config.js
+
+# 环境变量文件
+.env
+.env.*
+!.env.example
+
+# 文档和工具目录
+docs/
+nginx/
+plugin/
+
+# 公共资源目录
+public/
+!public/locales/
+
+# 类型定义文件
+**/*.d.ts
+
+# 临时文件和备份文件
+~*
+.*.js
+.*.cjs
+
+# 测试相关（如果需要可以取消注释）
+# src/__test__/
+# src/__mock__/
+
+# 构建产物
+es/
+lib/
+_site/
+jest-stare/
+
+# 微前端相关构建文件
+src/microservice/wujie.d.ts
+
+# 忽略特定文件模式
+*.min.js
+*.min.css
+*.bundle.js
+
+# 忽略特定目录
+.dumi/tmp
+.dumi/tmp-production
+!.dumi/
