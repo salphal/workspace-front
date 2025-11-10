@@ -98,11 +98,9 @@ const setupGlobalAutoImports = () => {
 mockMatchMedia();
 setupGlobalAutoImports();
 
-beforeAll(() => {
-  // Enable API mocking before all the tests.
-  server.listen();
-});
-
+/**
+ * 每个测试用例调用之前被执行
+ */
 afterEach(() => {
   // Reset the request handlers between each test.
   // This way the handlers we add on a per-test basis
@@ -110,6 +108,22 @@ afterEach(() => {
   server.resetHandlers();
 });
 
+/**
+ * 每个测试用例调用后被执行
+ */
+afterEach(() => {});
+
+/**
+ * 全局测试用例调用前执行
+ */
+beforeAll(() => {
+  // Enable API mocking before all the tests.
+  server.listen();
+});
+
+/**
+ * 全局测试用例调用后执行
+ */
 afterAll(() => {
   // Finally, disable API mocking after the tests are done.
   server.close();
