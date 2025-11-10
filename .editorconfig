@@ -1,11 +1,50 @@
+# 🧩 让 EditorConfig 生效的根文件
+# 作用:一旦声明为 root = true,则上层目录的 .editorconfig 将被忽略
 root = true
 
+# -----------------------------------------------------
+# 🌍 通用规则(适用于所有文件类型)
+# -----------------------------------------------------
 [*]
+# 字符编码统一为 UTF-8(避免 BOM / 中文乱码问题)
 charset = utf-8
+
+# 换行符统一为 LF(适用于跨平台开发,推荐)
 end_of_line = lf
-indent_size = 2
+
+# 缩进风格:使用空格而非 Tab(前端社区主流)
 indent_style = space
-insert_final_newline = true
-max_line_length = 100
+
+# 缩进宽度:2 个空格(与 Prettier、ESLint 保持一致)
+indent_size = 2
+
+# Tab 键等价宽度(建议与 indent_size 一致)
 tab_width = 2
+
+# 保存文件时自动去除行尾多余空格
 trim_trailing_whitespace = true
+
+# 文件末尾强制保留一个空行(POSIX 规范 & diff 友好)
+insert_final_newline = true
+
+# 每行最大字符数(辅助代码可读性)
+max_line_length = 100
+
+# -----------------------------------------------------
+# 🧠 针对特定文件类型的规则
+# -----------------------------------------------------
+
+# 📄 Markdown 文件:保留原始格式(不删尾空格、不强制换行)
+[*.md]
+trim_trailing_whitespace = false
+max_line_length = off
+
+# 📦 JSON / 配置文件:同样使用 2 空格缩进
+[*.{json,yml,yaml}]
+indent_size = 2
+
+# 🧪 TypeScript / JavaScript / JSX / TSX:继承默认规则
+[*.{js,jsx,ts,tsx}]
+indent_size = 2
+end_of_line = lf
+charset = utf-8
