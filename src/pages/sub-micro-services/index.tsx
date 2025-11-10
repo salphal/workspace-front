@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSubMicroServices } from '@src/hook/use-submicro-services.tsx';
+import { useSubMicroServices } from '@src/hook/useSubMicroServices.tsx';
 import { apps } from '@src/microservice/apps.ts';
 
 import { demoPrefix } from './apps';

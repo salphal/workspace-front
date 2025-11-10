@@ -1,4 +1,4 @@
-import { MicroApps } from '@src/hook/use-submicro-services.tsx';
+import { MicroApps } from '@src/hook/useSubMicroServices.tsx';
 
 /**
  * 尽量保证导出的变量命名唯一
