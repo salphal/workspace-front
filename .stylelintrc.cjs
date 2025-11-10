@@ -25,7 +25,6 @@ module.exports = {
   extends: [
     'stylelint-config-standard',
     'stylelint-config-standard-scss',
-    'stylelint-prettier/recommended',
     'stylelint-config-clean-order',
     'stylelint-config-tailwindcss', // ✅ 官方 Tailwind 插件支持
   ],
