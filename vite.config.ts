@@ -7,7 +7,7 @@ import postCssPxToRem from 'postcss-pxtorem';
 import { visualizer } from 'rollup-plugin-visualizer';
 import AntdResolver from 'unplugin-antd-resolver';
 import AutoImport from 'unplugin-auto-import/vite';
-import { ConfigEnv, defineConfig, loadEnv, UserConfig } from 'vite';
+import { ConfigEnv, defineConfig, loadEnv, TerserOptions, UserConfig } from 'vite';
 import viteCDNPlugin from 'vite-plugin-cdn-import';
 import viteCompression from 'vite-plugin-compression';
 import viteImagemin from 'vite-plugin-imagemin';
@@ -308,7 +308,13 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
           drop_console: true,
           drop_debugger: true,
         },
-      },
+        format: {
+          /**
+           * 移除注释
+           */
+          comments: false,
+        },
+      } as TerserOptions,
       rollupOptions: {
         external: ['workbox-window'], // Add workbox-window to external
         output: {
@@ -319,7 +325,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
           /** 定义资源文件( 如字体、图片等 )的命名格式 */
           assetFileNames: '[ext]/[name]-[hash].[ext]',
           /** 自定义分包策略 */
-          manualChunks(id) {
+          manualChunks(id: string) {
             // 将 node_modules 打成一个包, 好方便缓存
             // if (id.includes('node_modules')) {
             //   return 'vendor';
@@ -327,6 +333,9 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
             // 对 d3 图表展示库 单独打包
             if (id.includes('d3')) {
               return 'd3';
+            }
+            if (id.includes('node_modules')) {
+              return id.toString().split('node_modules/')[1].split('/')[0].toString();
             }
           },
         },
@@ -382,7 +391,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
         scss: {
           // 加入全局变量( 不要单独引入该文件样式, 否则在最中产物中会重复出现 )
           // 引入多个文件以；分割
-          additionalData: "@use '@src/style/index.scss' as *;",
+          additionalData: '@use \'@src/style/index.scss\' as *;',
           javascriptEnabled: true,
         },
       },

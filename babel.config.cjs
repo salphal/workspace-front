@@ -46,9 +46,6 @@ module.exports = {
     // ✅ 支持装饰器语法（MobX / InversifyJS 常用）
     ['@babel/plugin-proposal-decorators', { legacy: true }],
 
-    // ✅ 支持类属性定义（loose 模式输出更轻量）
-    ['@babel/plugin-proposal-class-properties', { loose: true }],
-
     // ✅ 减少 helper 冗余代码（强烈推荐）
     [
       '@babel/plugin-transform-runtime',
