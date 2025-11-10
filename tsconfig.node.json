@@ -1,11 +1,52 @@
 {
+  // 📦 专用于 Node 环境下的 TypeScript 配置(例如 vite.config.ts)
   "compilerOptions": {
+    /**
+     * 🧩 启用项目引用(composite 模式)
+     * 允许被主 tsconfig.json 引用,便于 IDE 类型分析;
+     */
     "composite": true,
-    "skipLibCheck": true,
+
+    /**
+     * 🚀 模块系统
+     * 采用 ESNext,以支持 import/export(Vite 原生支持);
+     */
     "module": "ESNext",
-    "moduleResolution": "bundler",
+
+    /**
+     * ⚙️ 模块解析策略
+     * Node 或 bundler 都可;此处推荐 "node",适合 Node 运行环境;
+     * ("bundler" 更适用于前端代码)
+     */
+    "moduleResolution": "node",
+
+    /**
+     * 🧠 跳过库文件类型检查
+     * 提高构建速度,不影响类型安全;
+     */
+    "skipLibCheck": true,
+
+    /**
+     * 🌐 Node 环境类型声明
+     * 提供 fs、path、process 等全局定义;
+     */
+    "types": ["node"],
+
+    /**
+     * ✅ 允许默认导入 CommonJS 模块(Vite 插件常见)
+     */
     "allowSyntheticDefaultImports": true,
+
+    /**
+     * 🔒 开启严格模式(推荐)
+     * 保证类型推断更精确;
+     */
     "strict": true
   },
-  "include": ["vite.config.ts"]
+
+  /**
+   * 📂 包含的文件范围
+   * 限定为 Node 侧配置文件(如 vite.config.ts)
+   */
+  "include": ["vite.config.ts", "scripts/**/*.ts"]
 }

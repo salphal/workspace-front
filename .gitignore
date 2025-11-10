@@ -1,5 +1,28 @@
-# Logs
-logs
+# 🚫 Git 忽略文件配置
+# ============================================
+# 忽略以下文件和目录，不提交到版本控制
+# ============================================
+
+# 📦 依赖包目录
+node_modules/
+
+# 🔨 构建输出目录
+dist/
+dist-ssr/
+build/
+out/
+
+# 📁 缓存目录
+.cache/
+.vscode/
+.idea/
+.history/
+
+# 📊 覆盖率报告
+coverage/
+
+# 📝 日志文件
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -7,26 +30,94 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# 🔧 配置文件（通常包含敏感信息）
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# 🖼️ 图片和字体文件
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.ico
+*.woff
+*.woff2
+*.ttf
+*.eot
+
+# 📄 文档文件
+*.md
+*.txt
+*.pdf
+
+# 🗄️ 数据文件
+*.json
+*.xml
+*.yml
+*.yaml
+
+# 📊 其他构建产物
+*.min.css
+*.min.js
+
+# 🎨 忽略的目录（完整路径）
+docs/
+nginx/
+plugin/
+
+# 📋 特定文件
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
 .DS_Store
+.gitignore
+.npmignore
+.prettierignore
+.eslintignore
+.stylelintignore
+.editorconfig
+
+# 🧪 测试相关快照文件
+*.snap
+
+# 🔧 脚本文件
+*.sh
+
+# 📊 其他忽略项
+LICENSE
+AUTHORS.txt
+CNAME
+netlify.toml
+yarn-error.log
+
+# 🔒 系统文件
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# 🛠️ 开发工具相关
 /.husky/
 stats.html
 vite.config.ts.timestamp-*
 
-.dev-cli/__template__
+# 🗂️ 临时文件
+*.local
 __output__
 auto-imports.d.ts
-coverage
+.dev-cli/__template__
+
+# 💾 数据库文件
+*.db
+*.sqlite
+*.sqlite3
+
+# 📦 包管理器缓存
+.pnpm-store/
+.yarn/
+.npm/

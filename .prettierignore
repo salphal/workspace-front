@@ -1,33 +1,88 @@
-**/*.png
-**/*.svg
-CODEOWNERS
-.dockerignore
-Dockerfile.ui-test
-.dumi/tmp
-.dumi/tmp-production
-AUTHORS.txt
-lib/
-es/
+# 🚫 Prettier 忽略文件配置
+# ============================================
+# 忽略以下文件和目录，不进行代码格式化
+# ============================================
+
+# 📦 依赖包目录
+node_modules/
+
+# 🔨 构建输出目录
 dist/
-_site/
-server
+build/
+out/
+
+# 📁 缓存目录
+.cache/
+.vscode/
+.idea/
+
+# 📊 覆盖率报告
 coverage/
-CNAME
-LICENSE
+
+# 📝 日志文件
+*.log
+
+# 🔧 配置文件（通常不需要格式化）
+*.config.*
+*.conf.*
+
+# 🖼️ 图片和字体文件
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.ico
+*.woff
+*.woff2
+*.ttf
+*.eot
+
+# 📄 文档文件
+*.md
+*.txt
+*.pdf
+
+# 🗄️ 数据文件
+*.json
+*.xml
+*.yml
+*.yaml
+
+# 🔒 环境变量文件
+.env*
+.env.*
+
+# 📊 其他构建产物
+*.min.css
+*.min.js
+
+# 🎨 忽略的目录（完整路径）
+docs/
+nginx/
+plugin/
+
+# 📋 特定文件
+pnpm-lock.yaml
 yarn.lock
-netlify.toml
-yarn-error.log
-*.sh
-*.snap
-src/components/*/*.js
-src/components/*/*.jsx
+package-lock.json
+.DS_Store
 .gitignore
 .npmignore
 .prettierignore
-.DS_Store
-.editorconfig
 .eslintignore
-.history
-**/*.yml
-*.html
-pnpm-lock.yaml
+.stylelintignore
+.editorconfig
+
+# 🧪 测试相关快照文件
+*.snap
+
+# 🔧 脚本文件
+*.sh
+
+# 📊 其他忽略项
+LICENSE
+AUTHORS.txt
+CNAME
+netlify.toml
+yarn-error.log

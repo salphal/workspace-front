@@ -1,41 +1,136 @@
 {
+  // ✨ 基础编译配置(适用于 React + Vite + TypeScript)
   "compilerOptions": {
+    /**
+     * 🧱 输出目标(编译后的 JS 版本)
+     * "ES2020" 提供现代语法支持(可使用可选链、空值合并等)
+     */
     "target": "ES2020",
+
+    /**
+     * ⚙️ 类字段语义
+     * 使用 ES 提案的 `define` 行为(与 Babel 保持一致)
+     */
     "useDefineForClassFields": true,
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
+
+    /**
+     * 🌐 TypeScript 可用的全局 API
+     * 包含现代 JS 与浏览器 DOM 支持
+     */
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+
+    /**
+     * 📦 模块系统
+     * Vite 默认使用 ES 模块,因此选用 "ESNext"
+     */
     "module": "ESNext",
-    "skipLibCheck": true,
+
+    /**
+     * 🚀 模块解析策略
+     * "bundler" 是 Vite 推荐的现代解析方式(支持 import.meta.url)
+     */
     "moduleResolution": "bundler",
+
+    /**
+     * 🧩 允许导入 .ts 文件(在 Vite 下非常实用)
+     */
     "allowImportingTsExtensions": true,
+
+    /**
+     * 📄 允许导入 JSON 文件为模块
+     */
     "resolveJsonModule": true,
+
+    /**
+     * 🚫 跳过类型定义文件检查
+     * 提升构建速度,不影响类型安全
+     */
+    "skipLibCheck": true,
+
+    /**
+     * 🧠 独立编译每个文件(Vite + HMR 必需)
+     */
     "isolatedModules": true,
+
+    /**
+     * 🚫 不输出编译后的文件(Vite 自行处理)
+     */
     "noEmit": true,
+
+    /**
+     * ⚛️ JSX 编译模式
+     * 使用 React 17+ 新的自动 JSX 运行时(无需显式引入 React)
+     */
     "jsx": "react-jsx",
+
+    /**
+     * 🔒 启用严格模式(推荐保持开启)
+     * 提供更强的类型安全保障
+     */
     "strict": true,
+
+    /**
+     * ⚠️ 忽略未使用的本地变量和参数
+     * 开发阶段关闭更灵活,生产项目建议开启
+     */
     "noUnusedLocals": false,
     "noUnusedParameters": false,
+
+    /**
+     * 🚫 禁止 switch case 无 break(可防止逻辑漏洞)
+     */
     "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "noImplicitThis": true,
+
+    /**
+     * ✅ 强类型校验配置
+     */
+    "noImplicitAny": true, // 禁止隐式 any
+    "strictNullChecks": true, // 空值检查
+    "noImplicitThis": true, // 禁止隐式 this
+
+    /**
+     * 🔁 ES 模块兼容性
+     */
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+
+    /**
+     * ✅ 允许混合使用 JS/TS 文件(迁移项目时很实用)
+     */
     "allowJs": true,
+
+    /**
+     * 🧭 基础路径配置
+     * 便于在项目中使用别名(结合 Vite resolve.alias)
+     */
     "baseUrl": ".",
     "paths": {
       "@src/*": ["src/*"]
     },
+
+    /**
+     * ⚠️ 临时忽略 TypeScript 6.0 的弃用警告
+     * 避免升级时的冗余提示(可根据未来版本移除)
+     */
     "ignoreDeprecations": "6.0"
   },
+
+  /**
+   * 📁 包含的文件范围
+   * -------------------------------------------------------
+   * 注意:排除 node_modules 以防止类型冲突;
+   */
   "include": [
     "src",
     "auto-imports.d.ts",
     "node_modules/vite-plugin-pwa/client.d.ts"
   ],
+
+  /**
+   * 🔗 引用其他配置文件
+   * -------------------------------------------------------
+   * Vite 会使用单独的 tsconfig.node.json 处理服务端逻辑(如配置文件)
+   */
   "references": [
     {
       "path": "./tsconfig.node.json"

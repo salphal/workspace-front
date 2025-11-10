@@ -25,3 +25,4 @@ vite.config.ts
 .eslintrc.cjs
 jest.config.cjs
 postcss.config.cjs
+babel.config.cjs

@@ -1,7 +1,70 @@
-.js
-.cjs
-.mjs
-.jsx
-.ts
-.tsx
-/public
+# 🚫 Stylelint 忽略文件配置
+# ============================================
+# 忽略以下文件和目录，不进行样式检查
+# ============================================
+
+# 📦 依赖包目录
+node_modules/
+
+# 🔨 构建输出目录
+dist/
+build/
+out/
+
+# 📁 缓存目录
+.cache/
+.vscode/
+.idea/
+
+# 📊 覆盖率报告
+coverage/
+
+# 📝 日志文件
+*.log
+
+# 🔧 配置文件（通常不需要样式检查）
+*.config.*
+*.conf.*
+
+# 🖼️ 图片和字体文件
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.ico
+*.woff
+*.woff2
+*.ttf
+*.eot
+
+# 📄 文档文件
+*.md
+*.txt
+*.pdf
+
+# 🗄️ 数据文件
+*.json
+*.xml
+*.yml
+*.yaml
+
+# 🔒 环境变量文件
+.env*
+.env.*
+
+# 🎯 特定文件
+/public/tailwind.css  # Tailwind 生成的 CSS 文件
+
+# 🧪 测试相关文件
+**/__test__/**
+**/__mock__/**
+
+# 📊 其他构建产物
+*.min.css
+*.min.js
+
+# 🎨 忽略的目录（完整路径）
+docs/
+nginx/
+plugin/
