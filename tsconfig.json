@@ -116,7 +116,8 @@
 
     "types": [
       "jest",                       // ✅ 启用 Jest 全局类型
-      "@testing-library/jest-dom"   // ✅ 启用 jest-dom 自定义匹配器类型
+      "@testing-library/jest-dom",  // ✅ 启用 jest-dom 自定义匹配器类型
+      "node"                        // ✅ 启用 Node.js 全局类型(process 等)
     ]
   },
 
