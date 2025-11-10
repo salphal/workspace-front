@@ -112,7 +112,12 @@
      * ⚠️ 临时忽略 TypeScript 6.0 的弃用警告
      * 避免升级时的冗余提示(可根据未来版本移除)
      */
-    "ignoreDeprecations": "6.0"
+    "ignoreDeprecations": "6.0",
+
+    "types": [
+      "jest",                       // ✅ 启用 Jest 全局类型
+      "@testing-library/jest-dom"   // ✅ 启用 jest-dom 自定义匹配器类型
+    ]
   },
 
   /**
@@ -123,7 +128,10 @@
   "include": [
     "src",
     "auto-imports.d.ts",
-    "node_modules/vite-plugin-pwa/client.d.ts"
+    "node_modules/vite-plugin-pwa/client.d.ts",
+    "jest.setup.ts",
+    "**/*.test.ts",
+    "**/*,test.tsx"
   ],
 
   /**

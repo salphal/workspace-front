@@ -41,8 +41,8 @@ module.exports = {
   transformIgnorePatterns: [`node_modules/(?!(.pnpm/)?([^/]+/)*(${esmModules.join('|')}))`],
 
   // ⚙️ 前置与后置环境设置
-  setupFiles: ['<rootDir>/src/setupPolyfills.ts'],
-  setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
+  setupFiles: ['<rootDir>/src/jest.setup.polyfills.ts'],
+  setupFilesAfterEnv: ['<rootDir>/src/jest.setup.ts'],
 
   // 🧮 覆盖率收集范围
   collectCoverageFrom: [
