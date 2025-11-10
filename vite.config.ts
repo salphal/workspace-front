@@ -7,7 +7,7 @@ import postCssPxToRem from 'postcss-pxtorem';
 import { visualizer } from 'rollup-plugin-visualizer';
 import AntdResolver from 'unplugin-antd-resolver';
 import AutoImport from 'unplugin-auto-import/vite';
-import { ConfigEnv, defineConfig, loadEnv, TerserOptions, UserConfig } from 'vite';
+import { ConfigEnv, defineConfig, loadEnv, UserConfig } from 'vite';
 import viteCDNPlugin from 'vite-plugin-cdn-import';
 import viteCompression from 'vite-plugin-compression';
 import viteImagemin from 'vite-plugin-imagemin';
@@ -314,7 +314,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
            */
           comments: false,
         },
-      } as TerserOptions,
+      },
       rollupOptions: {
         external: ['workbox-window'], // Add workbox-window to external
         output: {
