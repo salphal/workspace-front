@@ -27,7 +27,7 @@ declare global {
       bus: EventBus;
       shadowRoot?: ShadowRoot;
       props?: { [key: string]: any };
-      location?: Object;
+      location?: object;
     };
   }
 }

@@ -8,13 +8,13 @@ $theme-map: (
   light: (
     bg-color: #007bff,
     text-color: #fff,
-    primary-color: #007bff
+    primary-color: #007bff,
   ),
   dark: (
     bg-color: #999,
     text-color: #f9d83c,
-    primary-color: #ff5722
-  )
+    primary-color: #ff5722,
+  ),
 );
 
 /**
@@ -31,7 +31,7 @@ $theme-map: (
  */
 @mixin initAllThemeVars($themes) {
   @each $name, $theme in $themes {
-    :root[data-theme="#{$name}"] {
+    :root[data-theme='#{$name}'] {
       @include generateThemeVars($theme);
     }
   }
@@ -76,10 +76,8 @@ $theme-map: (
  * @param $default - 使用提升变量至于 :root
  */
 @mixin useTheme($name, $default: false) {
-
   // 检查传入的主题名称是否存在于 `$theme-map` 中
   @if map-has-key($theme-map, $name) {
-
     // 获取 指定主题 对应的映射( 键值对 )
     $theme: map-get($theme-map, $name);
 
@@ -90,13 +88,12 @@ $theme-map: (
       }
     } @else {
       // 为 指定主题 生成 样式作用域，基于 `[data-theme="#{$name}"]` 属性选择器
-      [#{$theme-selector}="#{$name}"] & {
+      [#{$theme-selector}='#{$name}'] & {
         @include generateThemeVars($theme);
         @content;
       }
     }
   } @else {
-
     @error "Theme `#{$name}` not found in $theme-map! (Called in `useTheme`)";
   }
 }
@@ -110,7 +107,7 @@ $theme-map: (
   // 遍历主题映射中的所有主题名称
   @each $name in map-keys($theme-map) {
     // 基于 [data-theme="theme-name"] 属性选择器生成样式规则
-    [#{$theme-selector}="#{$name}"] #{$selector} {
+    [#{$theme-selector}='#{$name}'] #{$selector} {
       // 遍历传入的样式映射
       @each $property, $key in $styles {
         // 尝试从主题中获取变量值，若不存在则检查默认值

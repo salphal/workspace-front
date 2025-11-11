@@ -10,7 +10,7 @@ $container-default-height: 100%;
   $overflow: hidden,
   $margin: $container-default-margin,
   $padding: $container-default-padding,
-  $height: $container-default-height,
+  $height: $container-default-height
 ) {
   overflow: $overflow;
   margin: $margin;

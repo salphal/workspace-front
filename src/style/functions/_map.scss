@@ -16,11 +16,16 @@
     // 遍历传入的额外参数
     @each $arg in $args {
       // 判断是传递键、值，还是原始参数
-      $_args: append($_args, if($arg == "$key", $key, if($arg == "$value", $value, $arg)));
+      $_args: append($_args, if($arg == '$key', $key, if($arg == '$value', $value, $arg)));
     }
 
     // 调用函数处理键值对，并将结果合并到新映射中
-    $_map: map-merge($_map, ($key: call(get-function($func), $_args...)));
+    $_map: map-merge(
+      $_map,
+      (
+        $key: call(get-function($func), $_args...),
+      )
+    );
   }
 
   @return $_map; // 返回新映射
@@ -36,9 +41,15 @@
 @function map-get-multiple($map, $values) {
   $result: (); // 初始化结果映射为空
   @each $key, $value in $map {
-    @if (index($values, $key) != null) { // 检查 $key 是否存在于 $values 列表中
+    @if (index($values, $key) != null) {
+      // 检查 $key 是否存在于 $values 列表中
       // 将匹配的键值对添加到结果映射中
-      $result: map-merge($result, ($key: $value));
+      $result: map-merge(
+        $result,
+        (
+          $key: $value,
+        )
+      );
     }
   }
   @return $result; // 返回包含指定键的映射

@@ -32,37 +32,35 @@ const LanguageSwitcher: ForwardRefRenderFunction<LanguageSwitcherRef, LanguageSw
   };
 
   return (
-    <React.Fragment>
-      <Button
-        className={styles['language-switcher']}
-        type="text"
-        onClick={switchOnChange}
-        icon={
-          <div className={styles.inner}>
-            <span
-              className={classNames({
-                [styles.text]: true,
-                [styles.zh]: true,
-                [styles.active]: checked,
-                [styles.disabled]: !checked,
-              })}
-            >
-              中
-            </span>
-            <span
-              className={classNames({
-                [styles.text]: true,
-                [styles.en]: true,
-                [styles.active]: !checked,
-                [styles.disabled]: checked,
-              })}
-            >
-              En
-            </span>
-          </div>
-        }
-      />
-    </React.Fragment>
+    <Button
+      className={styles['language-switcher']}
+      type="text"
+      onClick={switchOnChange}
+      icon={
+        <div className={styles.inner}>
+          <span
+            className={classNames({
+              [styles.text]: true,
+              [styles.zh]: true,
+              [styles.active]: checked,
+              [styles.disabled]: !checked,
+            })}
+          >
+            中
+          </span>
+          <span
+            className={classNames({
+              [styles.text]: true,
+              [styles.en]: true,
+              [styles.active]: !checked,
+              [styles.disabled]: checked,
+            })}
+          >
+            En
+          </span>
+        </div>
+      }
+    />
   );
 };
 

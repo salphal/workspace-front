@@ -7,10 +7,10 @@ $background-all-property-name-list: (
   'background-size',
   'background-clip',
   'background-blend-mode',
-  'background-origin',
+  'background-origin'
 );
 
-$background-default-image: "" !default;
+$background-default-image: '' !default;
 $background-default-color: transparent !default;
 $background-default-repeat: no-repeat !default;
 $background-default-attachment: fixed !default;
@@ -21,23 +21,27 @@ $background-default-blend-mode: normal !default;
 $background-default-origin: padding-box !default;
 
 $background-default-params: (
-  "url": $background-default-image,
-  "color": $background-default-color,
-  "repeat": $background-default-repeat,
-  "attachment": $background-default-attachment,
-  "position": $background-default-position,
-  "size": $background-default-size,
-  "clip": $background-default-clip,
-  "mode": $background-default-blend-mode,
-  "origin": $background-default-origin,
+  'url': $background-default-image,
+  'color': $background-default-color,
+  'repeat': $background-default-repeat,
+  'attachment': $background-default-attachment,
+  'position': $background-default-position,
+  'size': $background-default-size,
+  'clip': $background-default-clip,
+  'mode': $background-default-blend-mode,
+  'origin': $background-default-origin,
 );
 
 $background-default-params-key-map: (
-  "url": "image",
-  "mode": "blend-mode"
+  'url': 'image',
+  'mode': 'blend-mode',
 );
 
-@function getBackgroundPropertyName($suffix, $prefix: 'background', $key-map: $background-default-params-key-map) {
+@function getBackgroundPropertyName(
+  $suffix,
+  $prefix: 'background',
+  $key-map: $background-default-params-key-map
+) {
   $property-name: #{$prefix}-#{$suffix};
   @if (map-has-key($key-map, $suffix)) {
     $property-name: #{$prefix}-#{map-get($key-map, $suffix)};
@@ -49,7 +53,12 @@ $background-default-params-key-map: (
   @if (type-of($background-params) == string) {
     @each $key, $val in $background-default-params {
       $property-name: getBackgroundPropertyName($key);
-      @if (index($background-all-property-name-list, $property-name) != null and $property-name != 'background-image') {
+      @if (
+        index($background-all-property-name-list, $property-name) !=
+          null and
+          $property-name !=
+          'background-image'
+      ) {
         #{$property-name}: map-get($background-default-params, $key);
       } @else {
         background-image: url($background-params);

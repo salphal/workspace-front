@@ -29,12 +29,17 @@ if (typeof globalThis.TextEncoder === 'undefined') {
  * -------------------------------------------------------------- */
 if (typeof globalThis.fetch === 'undefined') {
   try {
-    // node-fetch v3 (ESM)
-    const nodeFetch = require('node-fetch');
-    (globalThis as any).fetch = nodeFetch.default || nodeFetch;
-    (globalThis as any).Headers = nodeFetch.Headers;
-    (globalThis as any).Request = nodeFetch.Request;
-    (globalThis as any).Response = nodeFetch.Response;
+    // node-fetch v3 (ESM) - 使用动态导入
+    import('node-fetch')
+      .then((nodeFetch) => {
+        (globalThis as any).fetch = nodeFetch.default || nodeFetch;
+        (globalThis as any).Headers = nodeFetch.Headers;
+        (globalThis as any).Request = nodeFetch.Request;
+        (globalThis as any).Response = nodeFetch.Response;
+      })
+      .catch(() => {
+        console.warn('[jest.setup] ⚠️ Node <18 且未安装 node-fetch，fetch 将不可用');
+      });
   } catch {
     console.warn('[jest.setup] ⚠️ Node <18 且未安装 node-fetch，fetch 将不可用');
   }

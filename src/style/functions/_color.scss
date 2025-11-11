@@ -69,20 +69,30 @@
 @function luminance($color) {
   // 获取颜色的 RGB 值
   $rgb: (
-    "r": red($color),
-    "g": green($color),
-    "b": blue($color)
+    'r': red($color),
+    'g': green($color),
+    'b': blue($color),
   );
 
   // 对每个颜色通道进行调整，以符合相对亮度计算公式
   @each $name, $value in $rgb {
     // 将颜色值标准化为 0 到 1 的范围，并应用对应的转换规则
-    $value: if(divide($value, 255) < .04045, divide(divide($value, 255), 12.92), nth($_luminance-list, $value + 1));
-    $rgb: map-merge($rgb, ($name: $value));
+    $value: if(
+      divide($value, 255) < 0.04045,
+      divide(divide($value, 255), 12.92),
+      nth($_luminance-list, $value + 1)
+    );
+    $rgb: map-merge(
+      $rgb,
+      (
+        $name: $value,
+      )
+    );
   }
 
   // 使用相对亮度加权公式计算最终的亮度值
-  @return (map-get($rgb, "r") * .2126) + (map-get($rgb, "g") * .7152) + (map-get($rgb, "b") * .0722);
+  @return (map-get($rgb, 'r') * 0.2126) + (map-get($rgb, 'g') * 0.7152) +
+    (map-get($rgb, 'b') * 0.0722);
 }
 
 /**
@@ -129,7 +139,7 @@
 
     // 将商乘以 10，并继续计算
     $result: $result * 10 + $quotient;
-    $factor: $factor * .1;
+    $factor: $factor * 0.1;
     $remainder: $remainder * 10;
     $precision: $precision - 1;
 
@@ -148,10 +158,10 @@
 
   // 支持的单位映射
   $unit-map: (
-    "px": 1px,
-    "rem": 1rem,
-    "em": 1em,
-    "%": 1%
+    'px': 1px,
+    'rem': 1rem,
+    'em': 1em,
+    '%': 1%,
   );
 
   // 如果被除数和除数的单位不一致，则按单位映射调整结果

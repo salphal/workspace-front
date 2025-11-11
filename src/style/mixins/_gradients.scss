@@ -5,7 +5,6 @@ $purple: #6f42c1 !default;
 $red: #dc3545 !default;
 $white: #fff !default;
 
-
 // 水平渐变( 默认: 灰色 700 到灰色 800 ）
 @mixin gradient-x(
   $start-color: $gray-700,
@@ -23,15 +22,15 @@ $white: #fff !default;
   $start-percent: 0%,
   $end-percent: 100%
 ) {
-  background-image: linear-gradient(to bottom, $start-color $start-percent, $end-color $end-percent);
+  background-image: linear-gradient(
+    to bottom,
+    $start-color $start-percent,
+    $end-color $end-percent
+  );
 }
 
 // 自定义角度渐变( 默认: 角度：45deg ）
-@mixin gradient-directional(
-  $start-color: $gray-700,
-  $end-color: $gray-800,
-  $deg: 45deg
-) {
+@mixin gradient-directional($start-color: $gray-700, $end-color: $gray-800, $deg: 45deg) {
   background-image: linear-gradient($deg, $start-color, $end-color);
 }
 
@@ -56,17 +55,20 @@ $white: #fff !default;
 }
 
 // 径向渐变( 默认: 灰色 700 到灰色 800 ）
-@mixin gradient-radial(
-  $inner-color: $gray-700,
-  $outer-color: $gray-800
-) {
+@mixin gradient-radial($inner-color: $gray-700, $outer-color: $gray-800) {
   background-image: radial-gradient(circle, $inner-color, $outer-color);
 }
 
 // 条纹渐变( 默认: 白色 15% 透明，45deg 角度 ）
-@mixin gradient-striped(
-  $color: rgba($white, .15),
-  $angle: 45deg
-) {
-  background-image: linear-gradient($angle, $color 25%, transparent 25%, transparent 50%, $color 50%, $color 75%, transparent 75%, transparent);
+@mixin gradient-striped($color: rgba($white, 0.15), $angle: 45deg) {
+  background-image: linear-gradient(
+    $angle,
+    $color 25%,
+    transparent 25%,
+    transparent 50%,
+    $color 50%,
+    $color 75%,
+    transparent 75%,
+    transparent
+  );
 }

@@ -20,7 +20,11 @@
     @return $value1 + $value2;
   }
 
-  @return if($return-calc == true, calc(#{$value1} + #{$value2}), $value1 + unquote(" + ") + $value2);
+  @return if(
+    $return-calc == true,
+    calc(#{$value1} + #{$value2}),
+    $value1 + unquote(' + ') + $value2
+  );
 }
 
 /**
@@ -50,9 +54,12 @@
   }
 
   @if type-of($value2) != number {
-    $value2: unquote("(") + $value2 + unquote(")");
+    $value2: unquote('(') + $value2 + unquote(')');
   }
 
-  @return if($return-calc == true, calc(#{$value1} - #{$value2}), $value1 + unquote(" - ") + $value2);
+  @return if(
+    $return-calc == true,
+    calc(#{$value1} - #{$value2}),
+    $value1 + unquote(' - ') + $value2
+  );
 }
-

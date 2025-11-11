@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Input } from 'antd';
 
 export interface TestProps {
   [key: string]: any;
 }
 
-const Test: React.FC<TestProps> = (props: TestProps) => {
+const Test: React.FC<TestProps> = (_props: TestProps) => {
   const [value, setValue] = useState<string>('');
-  const [isForce, setIsForce] = useState<boolean>(false);
+  const [_isForce, setIsForce] = useState<boolean>(false);
 
   useEffect(() => {}, []);
 

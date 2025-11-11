@@ -52,7 +52,12 @@ $shape-default-size: 100px;
  * @param {String} $color 矩形的颜色，默认为 $shape-default-color
  * @param {String} $border-width 边框宽度，默认为 $shape-default-border-width
  */
-@mixin shape-border-rect($width, $height, $color: $shape-default-color, $border-width: $shape-default-border-width) {
+@mixin shape-border-rect(
+  $width,
+  $height,
+  $color: $shape-default-color,
+  $border-width: $shape-default-border-width
+) {
   @include shape-rect($width, $height); // 包含矩形形状的宽高设置
   @include border($border-width, $color); // 包含边框的设置
 }
@@ -89,7 +94,11 @@ $shape-default-size: 100px;
  * @param {String} $color 圆形的颜色，默认为 $shape-default-color
  * @param {String} $border-width 边框宽度，默认为 $shape-default-border-width
  */
-@mixin shape-border-circle($radius, $color: $shape-default-color, $border-width: $shape-default-border-width) {
+@mixin shape-border-circle(
+  $radius,
+  $color: $shape-default-color,
+  $border-width: $shape-default-border-width
+) {
   @include shape-circle($radius); // 包含圆形的半径设置
   @include border($border-width, $color); // 包含边框的设置
 }
@@ -102,7 +111,11 @@ $shape-default-size: 100px;
  * @param {String} $color 三角形的颜色，默认为 $shape-default-color
  * @param {Number} $angle 三角形旋转的角度，默认为 0
  */
-@mixin shape-isosceles-triangle($width: $shape-default-size, $color: $shape-default-color, $angle: 0) {
+@mixin shape-isosceles-triangle(
+  $width: $shape-default-size,
+  $color: $shape-default-color,
+  $angle: 0
+) {
   width: 0; // 三角形的宽度
   height: 0; // 三角形的高度
   border-top: $width solid $color; // 设置顶部边框（实线，指定宽度和颜色）

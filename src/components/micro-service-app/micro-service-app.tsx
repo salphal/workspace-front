@@ -150,67 +150,58 @@ const MicroServiceApp: ForwardRefRenderFunction<
    * 子应用开始加载静态资源前触发
    */
   const beforeLoad: LifeCycle = (win: Window) => {
-    // console.log('=>(micro-service-app.tsx:127) beforeLoad');
-    props.beforeLoad && props.beforeLoad(win);
+    props.beforeLoad?.(win);
   };
 
   /**
    * 子应用渲染（调用window.__WUJIE_MOUNT）前触发
    */
   const beforeMount: LifeCycle = (win: Window) => {
-    // console.log('=>(micro-service-app.tsx:132) beforeMount');
-    props.beforeMount && props.beforeMount(win);
+    props.beforeMount?.(win);
   };
 
   /**
    * 子应用渲染（调用window.__WUJIE_MOUNT）后触发
    */
   const afterMount: LifeCycle = (win: Window) => {
-    // console.log('=>(micro-service-app.tsx:138) afterMount');
-    // if (name && url) setLoading(false);
-    props.afterMount && props.afterMount(win);
+    props.afterMount?.(win);
   };
 
   /**
    * 子应用卸载（调用window.__WUJIE_UNMOUNT）前触发
    */
   const beforeUnmount: LifeCycle = (win: Window) => {
-    // console.log('=>(micro-service-app.tsx:143) beforeUnmount');
-    props.beforeUnmount && props.beforeUnmount(win);
+    props.beforeUnmount?.(win);
   };
 
   /**
    * 子应用卸载（调用window.__WUJIE_UNMOUNT）后触发
    */
   const afterUnmount: LifeCycle = (win: Window) => {
-    // console.log('=>(micro-service-app.tsx:148) afterUnmount');
-    props.afterMount && props.afterMount(win);
+    props.afterMount?.(win);
   };
 
   /**
    * 子应用保活模式下，进入时触发
    */
   const activated: LifeCycle = (win: Window) => {
-    // console.log('=>(micro-service-app.tsx:154) activated');
     if (name && url) setLoading(false);
-    props.activated && props.activated(win);
+    props.activated?.(win);
   };
 
   /**
    * 子应用保活模式下，离开时触发
    */
   const deactivated: LifeCycle = (win: Window) => {
-    // console.log('=>(micro-service-app.tsx:159) deactivated');
-    props.deactivated && props.deactivated(win);
+    props.deactivated?.(win);
   };
 
   /**
    * 子应用加载资源失败后触发
    */
   const loadError: loadErrorHandler = (url: string, err: Error) => {
-    // console.log('=>(micro-service-app.tsx:165) loadError');
     setLoading(false);
-    props.loadError && props.loadError(url, err);
+    props.loadError?.(url, err);
   };
 
   return (

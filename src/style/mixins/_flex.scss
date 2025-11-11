@@ -7,10 +7,13 @@ $flex-default-sub: flex-start; // 默认交叉轴对齐方式为上对齐
 // 通用的 flex 布局 mixin
 // 这个 mixin 接受方向、换行、主轴对齐、交叉轴对齐作为参数
 @mixin flex(
-  $direction: $flex-default-direction,  // 方向，默认 row
-  $wrap: $flex-default-wrap,            // 换行方式，默认 nowrap
-  $main: $flex-default-main,            // 主轴对齐方式，默认 flex-start
-  $sub: $flex-default-sub              // 交叉轴对齐方式，默认 flex-start
+  $direction: $flex-default-direction,
+  // 方向，默认 row
+  $wrap: $flex-default-wrap,
+  // 换行方式，默认 nowrap
+  $main: $flex-default-main,
+  // 主轴对齐方式，默认 flex-start
+  $sub: $flex-default-sub // 交叉轴对齐方式，默认 flex-start
 ) {
   display: flex; // 设置为 flex 布局
   flex-flow: $direction $wrap; // 设置 flex-flow，控制主轴方向和换行方式
@@ -21,10 +24,13 @@ $flex-default-sub: flex-start; // 默认交叉轴对齐方式为上对齐
 // 合并 row 和 column 方向的 mixin
 // 这个 mixin 用于通用的 flex 布局方向配置( 可以是行或列 )
 @mixin flex-direction(
-  $direction: $flex-default-direction,  // 方向，默认 row
-  $main: $flex-default-main,            // 主轴对齐方式，默认 flex-start
-  $sub: $flex-default-sub,              // 交叉轴对齐方式，默认 flex-start
-  $wrap: $flex-default-wrap             // 换行方式，默认 nowrap
+  $direction: $flex-default-direction,
+  // 方向，默认 row
+  $main: $flex-default-main,
+  // 主轴对齐方式，默认 flex-start
+  $sub: $flex-default-sub,
+  // 交叉轴对齐方式，默认 flex-start
+  $wrap: $flex-default-wrap // 换行方式，默认 nowrap
 ) {
   @include flex($direction, $wrap, $main, $sub); // 调用通用 flex mixin，传递相应参数
 }
@@ -32,34 +38,40 @@ $flex-default-sub: flex-start; // 默认交叉轴对齐方式为上对齐
 // 合并具体的 flex-row 和 flex-column mixin
 // 用于实现基于行( row )方向的布局
 @mixin flex-row(
-  $main: $flex-default-main,   // 主轴对齐方式，默认 flex-start
-  $sub: $flex-default-sub,     // 交叉轴对齐方式，默认 flex-start
-  $wrap: $flex-default-wrap    // 换行方式，默认 nowrap
+  $main: $flex-default-main,
+  // 主轴对齐方式，默认 flex-start
+  $sub: $flex-default-sub,
+  // 交叉轴对齐方式，默认 flex-start
+  $wrap: $flex-default-wrap // 换行方式，默认 nowrap
 ) {
   @include flex-direction(row, $main, $sub, $wrap); // 调用 flex-direction，方向设置为 row
 }
 
 // 用于实现基于列( column )方向的布局
 @mixin flex-column(
-  $main: $flex-default-main,   // 主轴对齐方式，默认 flex-start
-  $sub: $flex-default-sub,     // 交叉轴对齐方式，默认 flex-start
-  $wrap: $flex-default-wrap    // 换行方式，默认 nowrap
+  $main: $flex-default-main,
+  // 主轴对齐方式，默认 flex-start
+  $sub: $flex-default-sub,
+  // 交叉轴对齐方式，默认 flex-start
+  $wrap: $flex-default-wrap // 换行方式，默认 nowrap
 ) {
   @include flex-direction(column, $main, $sub, $wrap); // 调用 flex-direction，方向设置为 column
 }
 
 // 用于实现不换行的 flex-row 布局
 @mixin flex-row-nowrap(
-  $main: $flex-default-main,   // 主轴对齐方式，默认 flex-start
-  $sub: $flex-default-sub      // 交叉轴对齐方式，默认 flex-start
+  $main: $flex-default-main,
+  // 主轴对齐方式，默认 flex-start
+  $sub: $flex-default-sub // 交叉轴对齐方式，默认 flex-start
 ) {
   @include flex-row($main, $sub, nowrap); // 调用 flex-row，指定 nowrap
 }
 
 // 用于实现不换行的 flex-column 布局
 @mixin flex-column-nowrap(
-  $main: $flex-default-main,   // 主轴对齐方式，默认 flex-start
-  $sub: $flex-default-sub      // 交叉轴对齐方式，默认 flex-start
+  $main: $flex-default-main,
+  // 主轴对齐方式，默认 flex-start
+  $sub: $flex-default-sub // 交叉轴对齐方式，默认 flex-start
 ) {
   @include flex-column($main, $sub, nowrap); // 调用 flex-column，指定 nowrap
 }
