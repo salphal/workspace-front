@@ -286,7 +286,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
           {
             name: 'lodash',
             var: '_',
-            path: `https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js`,
+            path: 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js',
           },
         ],
       }),

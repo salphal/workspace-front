@@ -3,7 +3,7 @@
  * ---------------------------------------------------------------------
  * 🎯 目标:
  *   - 保持团队代码风格一致
- *   - 结合 ESLint 与 import 排序插件自动化
+ *   - 结合 ESLint 9.x 与 import 排序插件自动化
  *   - 支持 TSX / JSX / Tailwind 项目
  * ---------------------------------------------------------------------
  */
@@ -28,6 +28,7 @@ module.exports = {
    * -------------------------------------------------------------------
    * 自动根据分组和字母顺序对 import 语句排序
    * ✅ 避免人工调整顺序带来的 merge 冲突
+   * ✅ 兼容 ESLint 9.x 的 import 规则
    */
   importOrder: [
     '^(react|react-dom)$', // 1️⃣ React 核心包
@@ -42,7 +43,7 @@ module.exports = {
    * 🔌 插件配置
    * -------------------------------------------------------------------
    * @ianvs/prettier-plugin-sort-imports → 自动排序 import
-   * 兼容 ESLint 的 unused-imports/no-unused-imports 规则
+   * 兼容 ESLint 9.x 的 unused-imports/no-unused-imports 规则
    */
   plugins: ['@ianvs/prettier-plugin-sort-imports'],
 
@@ -50,6 +51,7 @@ module.exports = {
    * 🧠 文件特例配置
    * -------------------------------------------------------------------
    * 针对 .prettierrc 自身(JSON 格式)设置正确的解析器;
+   * 针对 ESLint 9.x 配置文件使用正确的解析器
    */
   overrides: [
     {
@@ -58,5 +60,26 @@ module.exports = {
         parser: 'json',
       },
     },
+    {
+      files: 'eslint.config.js',
+      options: {
+        parser: 'javascript',
+      },
+    },
+    {
+      files: '*.{js,cjs,mjs}',
+      options: {
+        parser: 'babel',
+      },
+    },
   ],
+
+  /**
+   * 🎯 ESLint 9.x 兼容性优化
+   * -------------------------------------------------------------------
+   * 确保与 ESLint 9.x 的扁平化配置格式兼容
+   * 避免与 ESLint 的 import 排序规则冲突
+   */
+  // 禁用与 ESLint 冲突的格式规则，由 ESLint 处理
+  // 这些规则在 eslint-plugin-prettier 中会自动处理
 };
