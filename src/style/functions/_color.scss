@@ -130,9 +130,10 @@
   $factor: 10;
 
   // 执行除法运算，精确到指定的精度
-  @while ($remainder > 0 and $precision >= 0) {
+  @while $remainder > 0 and $precision >= 0 {
     $quotient: 0;
-    @while ($remainder >= $divisor) {
+
+    @while $remainder >= $divisor {
       $remainder: $remainder - $divisor;
       $quotient: $quotient + 1;
     }
@@ -144,7 +145,7 @@
     $precision: $precision - 1;
 
     // 如果精度小于0且余数大于等于5倍除数，进行四舍五入
-    @if ($precision < 0 and $remainder >= $divisor * 5) {
+    @if $precision < 0 and $remainder >= $divisor * 5 {
       $result: $result + 1;
     }
   }
@@ -165,7 +166,7 @@
   );
 
   // 如果被除数和除数的单位不一致，则按单位映射调整结果
-  @if ($dividend-unit != $divisor-unit and map-has-key($unit-map, $dividend-unit)) {
+  @if $dividend-unit != $divisor-unit and map-has-key($unit-map, $dividend-unit) {
     $result: $result * map-get($unit-map, $dividend-unit);
   }
 

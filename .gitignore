@@ -80,6 +80,7 @@ package-lock.json
 .eslintignore
 .stylelintignore
 .editorconfig
+.stylelintcache
 
 # 🧪 测试相关快照文件
 *.snap

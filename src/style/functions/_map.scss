@@ -40,8 +40,9 @@
  */
 @function map-get-multiple($map, $values) {
   $result: (); // 初始化结果映射为空
+
   @each $key, $value in $map {
-    @if (index($values, $key) != null) {
+    @if index($values, $key) != null {
       // 检查 $key 是否存在于 $values 列表中
       // 将匹配的键值对添加到结果映射中
       $result: map-merge(
@@ -52,6 +53,7 @@
       );
     }
   }
+
   @return $result; // 返回包含指定键的映射
 }
 

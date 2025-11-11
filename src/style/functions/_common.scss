@@ -7,9 +7,11 @@
  */
 @function varify($list, $prefix: '') {
   $result: null; // 初始化结果为空
+
   @each $entry in $list {
     // 将每个列表项转换为 CSS 自定义属性，并追加到结果中
     $result: append($result, var(--#{$prefix}#{$entry}), space);
   }
+
   @return $result; // 返回最终的变量列表
 }

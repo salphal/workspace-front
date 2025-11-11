@@ -1,12 +1,12 @@
 $reset-font-family: (
-  Inter,
+  inter,
   system-ui,
   -apple-system,
-  BlinkMacSystemFont,
+  blinkmacsystemfont,
   'Segoe UI',
-  Roboto,
+  roboto,
   'Helvetica Neue',
-  Arial,
+  arial,
   'Noto Sans',
   sans-serif,
   'Apple Color Emoji',
@@ -20,6 +20,7 @@ $reset-font-family: (
  */
 @mixin reset-text {
   font-family: $reset-font-family;
+
   // We deliberately do NOT reset font-size or overflow-wrap / word-wrap.
   font-style: normal;
   font-weight: 400;

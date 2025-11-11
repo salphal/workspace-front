@@ -32,27 +32,28 @@ module.exports = {
   /**
    * 🔌 插件声明（确保规则可识别）
    */
-  plugins: ['stylelint-scss', 'stylelint-order', 'stylelint-tailwindcss'],
+  plugins: ['stylelint-scss', 'stylelint-order'],
 
   /**
    * 🧩 自定义规则
    */
   rules: {
     /**
-     * ✅ 支持 Tailwind 的特殊 @ 指令
+     * ✅ 支持 SCSS 和 Tailwind 的特殊 @ 指令
      */
+    'at-rule-no-unknown': null, // 禁用基础规则，由 scss/at-rule-no-unknown 处理
     'scss/at-rule-no-unknown': [
       true,
       {
         ignoreAtRules: [
+          'use',
+          'forward',
           'tailwind',
           'apply',
           'layer',
           'responsive',
           'variants',
           'screen',
-          'use',
-          'forward',
           'function',
           'if',
           'else',
@@ -71,6 +72,7 @@ module.exports = {
     /**
      * ✅ 忽略部分自定义或内置 SCSS 函数
      */
+    'scss/no-global-function-names': null, // 禁用全局函数名检查
     'function-no-unknown': [
       true,
       {
@@ -86,6 +88,10 @@ module.exports = {
           'shade',
           'lighten',
           'percentage',
+          'tint-color',
+          'shade-color',
+          'shift-color',
+          'mix',
           '-', // 允许 SCSS 中的计算函数
         ],
       },
@@ -103,6 +109,7 @@ module.exports = {
     'selector-class-pattern': null,
     'selector-id-pattern': null,
     'selector-not-notation': null,
+    'scss/comment-no-empty': null, // 允许空注释
 
     /**
      * ✨ 数值与格式规范
@@ -126,12 +133,6 @@ module.exports = {
       ],
       { unspecified: 'bottom' },
     ],
-
-    /**
-     * ✅ Tailwind 推荐规则
-     */
-    'tailwindcss/classnames-order': true,
-    'tailwindcss/no-custom-classname': null, // 可选：关闭自定义类名限制
   },
 
   /**

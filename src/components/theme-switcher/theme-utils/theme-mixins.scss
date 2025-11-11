@@ -67,6 +67,7 @@ $theme-map: (
 
   // 不存在则返回 `null` 并发出警告
   @warn "Theme variable `#{$key}` not found in theme `#{$theme-name}`.";
+
   @return null;
 }
 
@@ -86,14 +87,18 @@ $theme-map: (
       :root {
         @include generateThemeVars($theme);
       }
-    } @else {
+    }
+
+ @else {
       // 为 指定主题 生成 样式作用域，基于 `[data-theme="#{$name}"]` 属性选择器
       [#{$theme-selector}='#{$name}'] & {
         @include generateThemeVars($theme);
         @content;
       }
     }
-  } @else {
+  }
+
+ @else {
     @error "Theme `#{$name}` not found in $theme-map! (Called in `useTheme`)";
   }
 }
@@ -111,7 +116,8 @@ $theme-map: (
       // 遍历传入的样式映射
       @each $property, $key in $styles {
         // 尝试从主题中获取变量值，若不存在则检查默认值
-        $value: getThemeVarWithFallback($name, $key, $default-values);
+        $value: getthemevarwithfallback($name, $key, $default-values);
+
         @if $value != null {
           // 如果变量值存在，生成 CSS 样式规则
           #{$property}: $value;
@@ -131,7 +137,8 @@ $theme-map: (
   // 遍历传入的样式映射
   @each $property, $key in $styles {
     // 从指定主题中获取对应变量的值
-    $value: getThemeVarWithFallback($theme-name, $key);
+    $value: getthemevarwithfallback($theme-name, $key);
+
     @if $value != null {
       // 如果变量值存在，则生成对应的 CSS 属性和值
       #{$property}: $value;
@@ -140,4 +147,4 @@ $theme-map: (
 }
 
 // 应用默认主题( 通常使用 js 控制 )
-//@include useTheme($default-theme, $default: true);
+// @include useTheme($default-theme, $default: true);

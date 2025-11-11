@@ -23,9 +23,11 @@ $animation-all-property-name-list: (
   0% {
     opacity: 0; // 动画初始状态：完全透明
   }
+
   50% {
     opacity: 0.5; // 动画中间状态：半透明
   }
+
   100% {
     opacity: 1; // 动画结束状态：完全不透明
   }
@@ -82,20 +84,23 @@ $animation-default-params-key-map: (
   $key-map: $animation-default-params-key-map
 ) {
   $property-name: #{$prefix}-#{$suffix}; // 默认动画属性名称
-  @if (map-has-key($key-map, $suffix)) {
+
+  @if map-has-key($key-map, $suffix) {
     // 如果映射表中有对应的 key
     $property-name: #{$prefix}-#{map-get($key-map, $suffix)}; // 使用映射表中的值作为属性名称
   }
+
   @return $property-name; // 返回属性名称
 }
 
 // 7. 定义动画 mixin，接收动画参数并设置对应的 CSS 样式
 @mixin animation($animation-params: $animation-default-params) {
-  @if (type-of($animation-params) == string) {
+  @if type-of($animation-params) == string {
     // 如果参数是字符串类型
     @each $key, $val in $animation-default-params {
       // 遍历默认参数
-      $property-name: getAnimationPropertyName($key); // 获取属性名称
+      $property-name: getanimationpropertyname($key); // 获取属性名称
+
       @if (
         index($animation-all-property-name-list, $property-name) !=
           null and
@@ -106,21 +111,28 @@ $animation-default-params-key-map: (
           $animation-default-params,
           $key
         ); // 如果是有效的动画属性，设置其值
-      } @else {
+      }
+
+ @else {
         animation-name: $animation-params; // 否则设置动画名称
       }
     }
-  } @else if (type-of($animation-params) == map and length($animation-params) > 0) {
+  }
+
+ @else if type-of($animation-params) == map and length($animation-params) > 0 {
     // 如果参数是 map 类型
     @each $key, $val in $animation-default-params {
       // 遍历默认参数
-      $property-name: getAnimationPropertyName($key); // 获取属性名称
-      @if (index($animation-all-property-name-list, $property-name) != null) {
+      $property-name: getanimationpropertyname($key); // 获取属性名称
+
+      @if index($animation-all-property-name-list, $property-name) != null {
         // 如果是有效的动画属性
-        @if (map-has-key($animation-params, $key)) {
+        @if map-has-key($animation-params, $key) {
           // 如果 map 中有该属性
           #{$property-name}: map-get($animation-params, $key); // 设置属性值
-        } @else {
+        }
+
+ @else {
           #{$property-name}: map-get($animation-default-params, $key); // 否则使用默认值
         }
       }

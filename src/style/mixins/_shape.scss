@@ -39,8 +39,9 @@ $shape-default-size: 100px;
  * @param {String} $color 矩形的背景颜色，默认为 $shape-default-color
  */
 @mixin shape-fill-rect($width, $height, $color: $shape-default-color) {
-  @include shape-rect($width, $height); // 包含矩形形状的宽高设置
   background-color: $color; // 设置背景颜色（默认颜色：#333）
+
+  @include shape-rect($width, $height); // 包含矩形形状的宽高设置
 }
 
 /**
@@ -82,8 +83,9 @@ $shape-default-size: 100px;
  * @param {String} $color 圆形的背景颜色，默认为 $shape-default-color
  */
 @mixin shape-fill-circle($radius, $color: $shape-default-color) {
-  @include shape-circle($radius); // 包含圆形的半径设置
   background-color: $color; // 设置圆形背景颜色（默认颜色：#333）
+
+  @include shape-circle($radius); // 包含圆形的半径设置
 }
 
 /**
