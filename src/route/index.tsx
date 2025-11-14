@@ -1,5 +1,5 @@
 import OverviewRoutes from '@src/pages/overview/route.tsx';
-import Test from '@src/pages/test.tsx';
+import Test from '@src/pages/test';
 import { Navigate, type RouteObject } from 'react-router-dom';
 
 /**

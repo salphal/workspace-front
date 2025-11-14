@@ -33,7 +33,7 @@ const Graphql: React.FC<GraphqlProps> = (props: GraphqlProps) => {
       socketRef.current = ws;
     });
     return () => {
-      typeof socketRef.current.disconnect === 'function' && socketRef.current.disconnect();
+      socketRef.current?.disconnect();
     };
   }, []);
 

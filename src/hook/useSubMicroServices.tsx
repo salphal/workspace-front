@@ -72,7 +72,7 @@ export const useSubMicroServices = (config: ISubMicroServices) => {
       const [app] = subApps.filter((v: any) => {
         return pathname === v.name;
       });
-      if (app && app.name && app.url) {
+      if (app?.name && app.url) {
         setApp(app);
       }
     } else {
@@ -85,32 +85,29 @@ export const useSubMicroServices = (config: ISubMicroServices) => {
   /**
    * 根据筛选出的 单个子服务配置 创建 wujie 微服务
    */
-  const microServiceApp = useMemo(
-    () => () => {
-      if (app && app.name && app.url) {
-        const appUrl = app.url + search + hash;
-        const appMeta = app.meta || {};
-        const appProps = {
-          /** 注入主服务的路由能力 */
-          navigate,
-          /** 路由数据 */
-          state,
-          /** 微服务定义时携带的 元数据 */
-          meta: appMeta,
-          /** 自定义属性 */
-          ...props,
-        };
-        return (
-          <MicroServiceApp name={app.name} url={appUrl} props={appProps} loadError={loadError} />
-        );
-      } else {
-        console.log('The same sub-service configuration as path name was not matched');
-        console.log('=> app', app);
-        return [];
-      }
-    },
-    [app, state, search, hash],
-  );
+  const microServiceApp = useMemo(() => {
+    if (app?.name && app.url) {
+      const appUrl = app.url + search + hash;
+      const appMeta = app.meta || {};
+      const appProps = {
+        /** 注入主服务的路由能力 */
+        navigate,
+        /** 路由数据 */
+        state,
+        /** 微服务定义时携带的 元数据 */
+        meta: appMeta,
+        /** 自定义属性 */
+        ...props,
+      };
+      return (
+        <MicroServiceApp name={app.name} url={appUrl} props={appProps} loadError={loadError} />
+      );
+    } else {
+      console.log('The same sub-service configuration as path name was not matched');
+      console.log('=> app', app);
+      return [];
+    }
+  }, [app, state, search, hash]);
 
   const loadError = (url: string, err: any) => {
     setError(err);

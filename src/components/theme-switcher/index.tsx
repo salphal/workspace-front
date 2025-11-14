@@ -78,7 +78,7 @@ const ThemeSwitcher: ForwardRefRenderFunction<ThemeSwitcherRef, ThemeSwitcherPro
     if (!mode) return;
     const themeMode = getThemeMode(mode);
     toggleTheme(themeMode);
-    typeof onChange === 'function' && onChange(themeMode);
+    onChange?.(themeMode);
   }, [mode, modeList]);
 
   const modeOptions = useMemo(

@@ -24,7 +24,7 @@ const LanguageSwitcher: ForwardRefRenderFunction<LanguageSwitcherRef, LanguageSw
   useImperativeHandle(ref, () => ({ checked }));
 
   useEffect(() => {
-    typeof onChange === 'function' && onChange(checked ? 'zh' : 'en');
+    onChange?.(checked ? 'zh' : 'en');
   }, [checked]);
 
   const switchOnChange = () => {
