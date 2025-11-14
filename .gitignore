@@ -78,8 +78,6 @@ package-lock.json
 .npmignore
 .prettierignore
 .eslintignore
-.stylelintignore
-.editorconfig
 .stylelintcache
 
 # 🧪 测试相关快照文件

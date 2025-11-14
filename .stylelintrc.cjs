@@ -1,127 +1,72 @@
 /**
- * 🎨 Stylelint 配置文件（for React + TypeScript + Vite + Tailwind + SCSS）
- * -----------------------------------------------------------------------------
- * 目标：
- *   ✅ 统一 CSS/SCSS/Tailwind 风格与规范
- *   ✅ 避免样式冲突与不规范命名
- *   ✅ 与 Prettier、Vite、PostCSS 保持一致风格
- *   ✅ 兼容 stylelint v16+ 与 Tailwind 3+
- *
- * 文档：
- *   - https://stylelint.io/
- *   - https://github.com/stylelint-scss/stylelint-scss
- *   - https://github.com/csstools/stylelint-config-standard
- *   - https://github.com/tailwindlabs/tailwindcss
- * -----------------------------------------------------------------------------
+ * 🎨 Stylelint 宽容版配置（React + TS + Vite + Tailwind + SCSS）
+ * -------------------------------------------------------------------
+ * ✅ 允许所有 SCSS 函数、mixin、if 写法
+ * ✅ 不再提示 map-get / mix / append 等函数错误
+ * ✅ 不再强制 kebab-case 命名
+ * ✅ 不再限制 @if != null
  */
 
 module.exports = {
-  /**
-   * 📦 推荐规则集
-   * ------------------------------------------------------------
-   * 使用新版 rational-order 替代旧配置，
-   * 并加入 stylelint-config-clean-order（现代化 CSS 属性排序插件）。
-   */
   extends: [
     'stylelint-config-standard',
     'stylelint-config-standard-scss',
     'stylelint-config-clean-order',
-    'stylelint-config-tailwindcss', // ✅ 官方 Tailwind 插件支持
+    'stylelint-config-tailwindcss',
   ],
-
-  /**
-   * 🔌 插件声明（确保规则可识别）
-   */
   plugins: ['stylelint-scss', 'stylelint-order'],
 
-  /**
-   * 🧩 自定义规则
-   */
   rules: {
-    /**
-     * ✅ 支持 SCSS 和 Tailwind 的特殊 @ 指令
-     */
-    'at-rule-no-unknown': null, // 禁用基础规则，由 scss/at-rule-no-unknown 处理
+    /* ✅ SCSS/Tailwind 兼容 */
+    'at-rule-no-unknown': null,
     'scss/at-rule-no-unknown': [
       true,
       {
         ignoreAtRules: [
           'use',
           'forward',
-          'tailwind',
-          'apply',
-          'layer',
-          'responsive',
-          'variants',
-          'screen',
           'function',
           'if',
           'else',
           'mixin',
           'include',
           'return',
+          'tailwind',
+          'apply',
+          'layer',
+          'responsive',
+          'variants',
+          'screen',
         ],
       },
     ],
 
-    /**
-     * ✅ 函数名统一小写
-     */
-    'function-name-case': ['lower'],
+    /* 🚫 关闭所有 Sass 限制性规则 */
+    'scss/no-global-function-names': null, // ✅ 允许 map-get, mix, nth 等
+    'scss/at-function-pattern': null, // ✅ 函数命名随意
+    'scss/at-mixin-pattern': null, // ✅ mixin 命名随意
+    'scss/at-if-no-null': null, // ✅ 允许 @if $x != null
+    'scss/comment-no-empty': null, // ✅ 允许空注释
+    'scss/dollar-variable-pattern': null, // ✅ 变量命名不强制 kebab-case
 
-    /**
-     * ✅ 忽略部分自定义或内置 SCSS 函数
-     */
-    'scss/no-global-function-names': null, // 禁用全局函数名检查
-    'function-no-unknown': [
-      true,
-      {
-        ignoreFunctions: [
-          'fade',
-          'fadeout',
-          'tint',
-          'darken',
-          'ceil',
-          'fadein',
-          'floor',
-          'unit',
-          'shade',
-          'lighten',
-          'percentage',
-          'tint-color',
-          'shade-color',
-          'shift-color',
-          'mix',
-          '-', // 允许 SCSS 中的计算函数
-        ],
-      },
-    ],
-
-    /**
-     * 🚫 关闭部分不必要的约束
-     */
-    'import-notation': null,
+    /* 🚫 关闭不必要的基础检查 */
+    'function-no-unknown': null,
     'no-descending-specificity': null,
     'no-invalid-position-at-import-rule': null,
     'declaration-empty-line-before': null,
     'keyframes-name-pattern': null,
-    'custom-property-pattern': null,
     'selector-class-pattern': null,
     'selector-id-pattern': null,
-    'selector-not-notation': null,
-    'scss/comment-no-empty': null, // 允许空注释
+    'custom-property-pattern': null,
+    'block-no-empty': null, // ✅ 允许空块（有时在预留结构中很常见）
 
-    /**
-     * ✨ 数值与格式规范
-     */
+    /* ✨ 基础格式 */
     'number-max-precision': 8,
     'alpha-value-notation': 'number',
     'color-function-notation': 'legacy',
 
-    /**
-     * 🧱 属性顺序（使用 clean-order 或 Tailwind 内置顺序）
-     */
-    'order/properties-order': null, // 由 stylelint-config-clean-order 自动处理
+    /* 🧱 属性排序（由 clean-order 控制） */
+    'order/properties-order': null,
     'order/order': [
       [
         'custom-properties',
@@ -135,13 +80,19 @@ module.exports = {
     ],
   },
 
-  /**
-   * 🚫 忽略文件类型
-   */
+  /* 💬 针对 SCSS 文件 */
+  overrides: [
+    {
+      files: ['**/*.scss'],
+      customSyntax: 'postcss-scss',
+      rules: {
+        'function-no-unknown': null,
+      },
+    },
+  ],
+
+  /* 🚫 忽略非样式文件 */
   ignoreFiles: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx', '**/*.json', '**/*.md'],
 
-  /**
-   * 🧠 性能优化
-   */
   cache: true,
 };
