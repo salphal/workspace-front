@@ -36,8 +36,8 @@ module.exports = {
     '', // 3️⃣ 分隔符(空行)
     '^[./]', // 4️⃣ 本地文件(相对路径)
   ],
-  importOrderSeparation: true, // 各分组之间插入空行
-  importOrderSortSpecifiers: true, // 同一导入语句内按字母顺序排列变量
+  // importOrderSeparation: true, // 各分组之间插入空行
+  // importOrderSortSpecifiers: true, // 同一导入语句内按字母顺序排列变量
 
   /**
    * 🔌 插件配置
