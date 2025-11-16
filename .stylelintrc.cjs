@@ -1,86 +1,125 @@
 /**
- * 🎨 Stylelint 宽容版配置（React + TS + Vite + Tailwind + SCSS）
- * -------------------------------------------------------------------
- * ✅ 允许所有 SCSS 函数、mixin、if 写法
- * ✅ 不再提示 map-get / mix / append 等函数错误
- * ✅ 不再强制 kebab-case 命名
- * ✅ 不再限制 @if != null
+ * 🎨 宽容 SCSS + Tailwind，但保留属性排序
  */
-
 module.exports = {
   extends: [
     'stylelint-config-standard',
     'stylelint-config-standard-scss',
-    'stylelint-config-clean-order',
     'stylelint-config-tailwindcss',
   ],
+
   plugins: ['stylelint-scss', 'stylelint-order'],
 
   rules: {
-    /* ✅ SCSS/Tailwind 兼容 */
+    /* ========== SCSS 兼容性 ========== */
     'at-rule-no-unknown': null,
-    'scss/at-rule-no-unknown': [
-      true,
-      {
-        ignoreAtRules: [
-          'use',
-          'forward',
-          'function',
-          'if',
-          'else',
-          'mixin',
-          'include',
-          'return',
-          'tailwind',
-          'apply',
-          'layer',
-          'responsive',
-          'variants',
-          'screen',
-        ],
-      },
-    ],
+    'scss/at-rule-no-unknown': null,
+    'scss/no-global-function-names': null,
+    'scss/at-mixin-pattern': null,
+    'scss/at-function-pattern': null,
+    'scss/at-if-no-null': null,
+    'scss/operator-no-newline-before': null,
+    'scss/operator-no-newline-after': null,
+    'scss/comment-no-empty': null,
+    'function-no-unknown': null, // 支持 tailwind & scss 函数
 
-    /* 🚫 关闭所有 Sass 限制性规则 */
-    'scss/no-global-function-names': null, // ✅ 允许 map-get, mix, nth 等
-    'scss/at-function-pattern': null, // ✅ 函数命名随意
-    'scss/at-mixin-pattern': null, // ✅ mixin 命名随意
-    'scss/at-if-no-null': null, // ✅ 允许 @if $x != null
-    'scss/comment-no-empty': null, // ✅ 允许空注释
-    'scss/dollar-variable-pattern': null, // ✅ 变量命名不强制 kebab-case
-
-    /* 🚫 关闭不必要的基础检查 */
-    'function-no-unknown': null,
-    'no-descending-specificity': null,
-    'no-invalid-position-at-import-rule': null,
-    'declaration-empty-line-before': null,
-    'keyframes-name-pattern': null,
+    /* ========== 命名规则放宽 ========== */
     'selector-class-pattern': null,
     'selector-id-pattern': null,
     'custom-property-pattern': null,
-    'block-no-empty': null, // ✅ 允许空块（有时在预留结构中很常见）
+    'keyframes-name-pattern': null,
+    'scss/dollar-variable-pattern': '^(_)?[a-z0-9-]+$',
 
-    /* ✨ 基础格式 */
+    /* ========== 文件结构宽容 ========== */
+    'block-no-empty': null,
+    'no-empty-source': null,
+
+    /* ========== 保留属性排序 ========== */
+    'order/order': null, // 不强制整体结构排序（如 custom-properties 之类）
+    'order/properties-order': [
+      [
+        // ⭐ 完整的属性排序。你可以随时让我调整为你们团队习惯的版本
+        // Positioning
+        'position',
+        'top',
+        'right',
+        'bottom',
+        'left',
+        'z-index',
+
+        // Display & Box Model
+        'display',
+        'flex',
+        'flex-direction',
+        'flex-grow',
+        'flex-shrink',
+        'flex-basis',
+        'flex-wrap',
+        'justify-content',
+        'align-items',
+        'align-content',
+        'order',
+        'float',
+        'clear',
+        'box-sizing',
+        'width',
+        'height',
+        'min-width',
+        'min-height',
+        'max-width',
+        'max-height',
+        'padding',
+        'padding-top',
+        'padding-right',
+        'padding-bottom',
+        'padding-left',
+        'margin',
+        'margin-top',
+        'margin-right',
+        'margin-bottom',
+        'margin-left',
+
+        // Typography
+        'font',
+        'font-family',
+        'font-size',
+        'font-weight',
+        'line-height',
+        'text-align',
+        'text-transform',
+        'text-decoration',
+        'white-space',
+        'color',
+
+        // Background
+        'background',
+        'background-color',
+        'background-image',
+        'background-repeat',
+        'background-position',
+        'background-size',
+
+        // Border
+        'border',
+        'border-radius',
+
+        // Effects
+        'opacity',
+        'box-shadow',
+        'transition',
+
+        // Others
+        'cursor',
+      ],
+      { unspecified: 'bottomAlphabetical' },
+    ],
+
+    /* ========== 基础风格 ========== */
     'number-max-precision': 8,
     'alpha-value-notation': 'number',
     'color-function-notation': 'legacy',
-
-    /* 🧱 属性排序（由 clean-order 控制） */
-    'order/properties-order': null,
-    'order/order': [
-      [
-        'custom-properties',
-        'dollar-variables',
-        'declarations',
-        { type: 'at-rule', hasBlock: false },
-        { type: 'at-rule', hasBlock: true },
-        'rules',
-      ],
-      { unspecified: 'bottom' },
-    ],
   },
 
-  /* 💬 针对 SCSS 文件 */
   overrides: [
     {
       files: ['**/*.scss'],
@@ -91,8 +130,7 @@ module.exports = {
     },
   ],
 
-  /* 🚫 忽略非样式文件 */
-  ignoreFiles: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx', '**/*.json', '**/*.md'],
+  ignoreFiles: ['**/*.{js,jsx,ts,tsx,json,md}'],
 
   cache: true,
 };
