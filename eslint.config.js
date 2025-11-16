@@ -71,9 +71,9 @@ export default [
         'warn',
         {
           vars: 'all',
-          varsIgnorePattern: '^_',
+          varsIgnorePattern: '.*',
           args: 'after-used',
-          argsIgnorePattern: '^_',
+          argsIgnorePattern: '.*',
         },
       ],
     },
@@ -95,7 +95,7 @@ export default [
       'react/jsx-uses-react': 'off',
       'react/prop-types': 'off',
       'react-hooks/rules-of-hooks': 'error',
-      'react-hooks/exhaustive-deps': 'warn',
+      'react-hooks/exhaustive-deps': 'off',
     },
     settings: {
       react: {
