@@ -31,60 +31,19 @@ pnpm-debug.log*
 lerna-debug.log*
 
 # 🔧 配置文件（通常包含敏感信息）
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# 🖼️ 图片和字体文件
-*.png
-*.jpg
-*.jpeg
-*.gif
-*.svg
-*.ico
-*.woff
-*.woff2
-*.ttf
-*.eot
-
-# 📄 文档文件
-*.md
-*.txt
-*.pdf
-
-# 🗄️ 数据文件
-*.json
-*.xml
-*.yml
-*.yaml
+.env.*
 
 # 📊 其他构建产物
 *.min.css
 *.min.js
 
-# 🎨 忽略的目录（完整路径）
-docs/
-nginx/
-plugin/
-
 # 📋 特定文件
-pnpm-lock.yaml
-yarn.lock
-package-lock.json
 .DS_Store
-.gitignore
-.npmignore
-.prettierignore
-.eslintignore
 .stylelintcache
+qodana.yaml
 
 # 🧪 测试相关快照文件
 *.snap
-
-# 🔧 脚本文件
-*.sh
 
 # 📊 其他忽略项
 LICENSE

@@ -1,0 +1,13 @@
+ignoredBuiltDependencies:
+  - unrs-resolver
+onlyBuiltDependencies:
+  - core-js
+  - cwebp-bin
+  - esbuild
+  - gifsicle
+  - jpegtran-bin
+  - mozjpeg
+  - msw
+  - optipng-bin
+  - pngquant-bin
+  - unplugin-antd-resolver
