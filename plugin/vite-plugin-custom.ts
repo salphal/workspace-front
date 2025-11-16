@@ -6,7 +6,6 @@ import { ResolvedConfig } from 'vite';
  */
 
 export default function vitePluginCustom() {
-  let config: any = {};
   return {
     /** 插件名称 */
     name: 'vite-plugin-custom',
@@ -17,7 +16,7 @@ export default function vitePluginCustom() {
     configResolved(resolvedConfig: ResolvedConfig) {
       // Vite 独有钩子 在解析 Vite 配置后调用。使用这个钩子读取和存储最终解析的配置。当插件需要根据运行的命令做一些不同的事情时，它也很有用。
       // 存储最终解析的配置
-      config = resolvedConfig;
+      console.log(resolvedConfig);
     },
   };
 }

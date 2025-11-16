@@ -27,7 +27,7 @@ export class SessionExtra {
     const data = sessionStorage.getItem(key);
     try {
       return JSON.parse(data as string);
-    } catch (err) {
+    } catch {
       return data;
     }
   }

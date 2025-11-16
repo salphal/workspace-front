@@ -17,15 +17,19 @@ const LanguageSwitcher: ForwardRefRenderFunction<LanguageSwitcherRef, LanguageSw
   props: LanguageSwitcherProps,
   ref: Ref<LanguageSwitcherRef | HTMLDivElement>,
 ) => {
-  const { value, onChange, ...restProps } = props;
+  const { value, onChange } = props;
 
   const [checked, setChecked] = useState<boolean>(true);
 
   useImperativeHandle(ref, () => ({ checked }));
 
   useEffect(() => {
+    setChecked(value);
+  }, [value]);
+
+  useEffect(() => {
     onChange?.(checked ? 'zh' : 'en');
-  }, [checked]);
+  }, [checked, onChange]);
 
   const switchOnChange = () => {
     setChecked((p) => !p);

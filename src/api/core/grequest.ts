@@ -34,7 +34,7 @@ export interface IGraphqlRequest {
   /** 修改 */
   mutation: <T = any>(config: GraphqlConfig) => Promise<GResp<T>>;
   /** 订阅 */
-  subscription: <T = any>(config: SubscriptionConfig) => Promise<() => void>;
+  subscription: (config: SubscriptionConfig) => Promise<() => void>;
 }
 
 /** GraphQL 响应结构 */
@@ -43,6 +43,7 @@ export interface GResp<T> {
   data: T;
   /** 错误消息 */
   error?: any;
+
   [key: string]: any;
 }
 
@@ -128,7 +129,7 @@ export class GraphqlRequest implements IGraphqlRequest {
    * GraphQL 订阅
    * 返回一个可调用的函数用于断开连接
    */
-  async subscription<T = any>(config: SubscriptionConfig): Promise<() => void> {
+  async subscription(config: SubscriptionConfig): Promise<() => void> {
     const { query, variables = {}, operationName, onMessage } = config;
 
     try {

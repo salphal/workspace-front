@@ -16,9 +16,9 @@ $flex-default-sub: flex-start; // 默认交叉轴对齐方式为上对齐
   $sub: $flex-default-sub // 交叉轴对齐方式，默认 flex-start
 ) {
   display: flex; // 设置为 flex 布局
-  flex-flow: $direction $wrap; // 设置 flex-flow，控制主轴方向和换行方式
   justify-content: $main; // 设置主轴对齐方式
   align-items: $sub; // 设置交叉轴对齐方式
+  flex-flow: $direction $wrap; // 设置 flex-flow，控制主轴方向和换行方式
 }
 
 // 合并 row 和 column 方向的 mixin

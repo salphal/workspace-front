@@ -38,7 +38,7 @@ export class CookieExtra {
         const value = decodeURIComponent(cookie.substring(nameEQ.length));
         try {
           return JSON.parse(value);
-        } catch (err) {
+        } catch {
           return value;
         }
       }

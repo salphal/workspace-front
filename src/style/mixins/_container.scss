@@ -12,9 +12,9 @@ $container-default-height: 100%;
   $padding: $container-default-padding,
   $height: $container-default-height
 ) {
-  overflow: $overflow;
-  margin: $margin;
-  padding: $padding;
-  height: $height;
   width: 100%;
+  height: $height;
+  padding: $padding;
+  margin: $margin;
+  overflow: $overflow;
 }

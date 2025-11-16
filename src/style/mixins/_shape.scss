@@ -13,9 +13,9 @@ $shape-default-size: 100px;
  * @param {String} $style 边框样式，默认为 solid
  */
 @mixin border($width: $shape-default-border-width, $color: $shape-default-color, $style: solid) {
-  border-width: $width; // 边框宽度
   border-color: $color; // 边框颜色
   border-style: $style; // 边框样式（默认 solid）
+  border-width: $width; // 边框宽度
 }
 
 /**
@@ -39,9 +39,9 @@ $shape-default-size: 100px;
  * @param {String} $color 矩形的背景颜色，默认为 $shape-default-color
  */
 @mixin shape-fill-rect($width, $height, $color: $shape-default-color) {
-  background-color: $color; // 设置背景颜色（默认颜色：#333）
-
   @include shape-rect($width, $height); // 包含矩形形状的宽高设置
+
+  background-color: $color; // 设置背景颜色（默认颜色：#333）
 }
 
 /**
@@ -83,9 +83,9 @@ $shape-default-size: 100px;
  * @param {String} $color 圆形的背景颜色，默认为 $shape-default-color
  */
 @mixin shape-fill-circle($radius, $color: $shape-default-color) {
-  background-color: $color; // 设置圆形背景颜色（默认颜色：#333）
-
   @include shape-circle($radius); // 包含圆形的半径设置
+
+  background-color: $color; // 设置圆形背景颜色（默认颜色：#333）
 }
 
 /**
@@ -120,10 +120,10 @@ $shape-default-size: 100px;
 ) {
   width: 0; // 三角形的宽度
   height: 0; // 三角形的高度
-  border-top: $width solid $color; // 设置顶部边框（实线，指定宽度和颜色）
-  border-right: $width solid transparent; // 设置右边边框（透明）
   border-bottom: $width solid transparent; // 设置底边边框（透明）
   border-left: $width solid transparent; // 设置左边边框（透明）
+  border-right: $width solid transparent; // 设置右边边框（透明）
+  border-top: $width solid $color; // 设置顶部边框（实线，指定宽度和颜色）
   transform: rotate(#{$angle}deg); // 使用 transform 旋转三角形，$angle 是旋转的角度
 }
 
@@ -138,9 +138,9 @@ $shape-default-size: 100px;
 @mixin shape-right-triangle($width: $shape-default-size, $color: $shape-default-color, $angle: 0) {
   width: 0; // 三角形的宽度
   height: 0; // 三角形的高度
-  border-top: $width solid $color; // 设置顶部边框（实线，指定宽度和颜色）
-  border-right: $width solid $color; // 设置右边边框（实线，指定宽度和颜色）
   border-bottom: $width solid transparent; // 设置底边边框（透明）
   border-left: $width solid transparent; // 设置左边边框（透明）
+  border-right: $width solid $color; // 设置右边边框（实线，指定宽度和颜色）
+  border-top: $width solid $color; // 设置顶部边框（实线，指定宽度和颜色）
   transform: rotate(#{$angle}deg); // 使用 transform 旋转三角形，$angle 是旋转的角度
 }

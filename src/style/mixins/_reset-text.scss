@@ -20,19 +20,19 @@ $reset-font-family: (
  */
 @mixin reset-text {
   font-family: $reset-font-family;
-
-  // We deliberately do NOT reset font-size or overflow-wrap / word-wrap.
-  font-style: normal;
   font-weight: 400;
   line-height: 1.5;
   text-align: left; // 如果浏览器不支持 start，则 text-align: left; 会作为回退方案，确保文本左对齐
   text-align: start; // 如果浏览器支持 start，则 text-align: start; 会生效，并根据书写模式自动调整对齐
-  text-decoration: none;
-  text-shadow: none;
   text-transform: none;
-  letter-spacing: normal;
-  word-break: normal;
+  text-decoration: none;
   white-space: normal;
-  word-spacing: normal;
+
+  // We deliberately do NOT reset font-size or overflow-wrap / word-wrap.
+  font-style: normal;
+  letter-spacing: normal;
   line-break: auto;
+  text-shadow: none;
+  word-break: normal;
+  word-spacing: normal;
 }

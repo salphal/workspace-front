@@ -111,15 +111,11 @@ $animation-default-params-key-map: (
           $animation-default-params,
           $key
         ); // 如果是有效的动画属性，设置其值
-      }
-
- @else {
+      } @else {
         animation-name: $animation-params; // 否则设置动画名称
       }
     }
-  }
-
- @else if type-of($animation-params) == map and length($animation-params) > 0 {
+  } @else if type-of($animation-params) == map and length($animation-params) > 0 {
     // 如果参数是 map 类型
     @each $key, $val in $animation-default-params {
       // 遍历默认参数
@@ -130,9 +126,7 @@ $animation-default-params-key-map: (
         @if map-has-key($animation-params, $key) {
           // 如果 map 中有该属性
           #{$property-name}: map-get($animation-params, $key); // 设置属性值
-        }
-
- @else {
+        } @else {
           #{$property-name}: map-get($animation-default-params, $key); // 否则使用默认值
         }
       }

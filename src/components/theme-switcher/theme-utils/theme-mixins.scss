@@ -67,7 +67,6 @@ $theme-map: (
 
   // 不存在则返回 `null` 并发出警告
   @warn "Theme variable `#{$key}` not found in theme `#{$theme-name}`.";
-
   @return null;
 }
 
@@ -87,18 +86,14 @@ $theme-map: (
       :root {
         @include generateThemeVars($theme);
       }
-    }
-
- @else {
+    } @else {
       // 为 指定主题 生成 样式作用域，基于 `[data-theme="#{$name}"]` 属性选择器
       [#{$theme-selector}='#{$name}'] & {
         @include generateThemeVars($theme);
         @content;
       }
     }
-  }
-
- @else {
+  } @else {
     @error "Theme `#{$name}` not found in $theme-map! (Called in `useTheme`)";
   }
 }

@@ -5,6 +5,6 @@
 
 /* 解决降级 iframe 时候的样式 */
 iframe {
-  overflow: hidden;
   border: none;
+  overflow: hidden;
 }

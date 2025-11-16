@@ -60,15 +60,11 @@ $background-default-params-key-map: (
           'background-image'
       ) {
         #{$property-name}: map-get($background-default-params, $key);
-      }
-
- @else {
+      } @else {
         background-image: url($background-params);
       }
     }
-  }
-
- @else if type-of($background-params) == map and length($background-params) > 0 {
+  } @else if type-of($background-params) == map and length($background-params) > 0 {
     @each $key, $val in $background-default-params {
       $property-name: getbackgroundpropertyname($key);
 
@@ -76,15 +72,12 @@ $background-default-params-key-map: (
         @if map-has-key($background-params, $key) {
           @if $property-name == 'background-image' {
             $property-value: map-get($background-params, $key);
-            #{$property-name}: url($property-value);
-          }
 
- @else {
+            #{$property-name}: url($property-value);
+          } @else {
             #{$property-name}: map-get($background-params, $key);
           }
-        }
-
- @else {
+        } @else {
           #{$property-name}: map-get($background-default-params, $key);
         }
       }

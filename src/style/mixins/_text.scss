@@ -2,19 +2,19 @@
  * 多行省略号
  */
 @mixin ellipsis($row: 1) {
-  overflow: hidden;
-  text-overflow: ellipsis;
   display: -webkit-box;
+  -webkit-box-orient: vertical;
   -webkit-line-clamp: $row;
   line-clamp: $row;
-  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /*
  * 单行省略号
  */
 @mixin uniline {
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
 }
