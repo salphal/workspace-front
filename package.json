@@ -13,9 +13,11 @@
     "preview": "vite preview",
     "prepare": "husky",
     "husky": "echo 'npx lint-staged' > .husky/pre-commit && echo 'npx --no-install commitlint --edit $1' > .husky/commit-msg",
-    "lint": "eslint . --ext js,jsx,ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
-    "prettier": "prettier . --write --check --fix",
-    "style:lint": "stylelint \"src/**/*.(scss)\" --fix",
+    "lint": "eslint . --ext js,jsx,ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint . --ext js,jsx,ts,tsx --report-unused-disable-directives --max-warnings 100 --fix",
+    "prettier:lint": "prettier . --write",
+    "prettier:fix": "prettier . --write",
+    "style:lint": "stylelint \"src/**/*.(scss)\"",
     "style:fix": "stylelint \"src/**/*.(scss)\" --fix",
     "tailwindcss": "npx tailwindcss -i ./src/main.scss -o ./public/tailwind.css --watch && npx tailwindcss -o ./public/tailwind.css --minify",
     "test": "jest",
@@ -161,9 +163,9 @@
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": [
-      "npm run prettier",
-      "npm run lint",
-      "npm run style"
+      "npm run prettier:lint",
+      "npm run style:lint",
+      "npm run lint"
     ]
   },
   "main": "index.js",
