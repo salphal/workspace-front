@@ -1,13 +1,5 @@
 .overview {
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-  height: 100%;
-
   .info {
-    margin-top: 10%;
-    text-align: center;
-
     .title {
       font-size: 32px;
     }
@@ -19,14 +11,19 @@
 
   .controller {
     display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     height: 8%;
     min-height: 40px;
+    flex-flow: row nowrap;
   }
 
   .content {
     flex: 1;
   }
+
+  display: flex;
+  align-items: center;
+  height: 100%;
+  flex-flow: column nowrap;
 }

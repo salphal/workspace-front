@@ -13,15 +13,14 @@ const Overview: React.FC<OverviewProps> = (props: OverviewProps) => {
   useEffect(() => {
     setData({ foo: 'bar' });
   }, []);
-  const { t, i18n } = useTranslation();
+
+  const { t } = useTranslation();
 
   return (
-    <React.Fragment>
-      <div className={classNames([styles.overview])}>
-        <h1>overview page</h1>
-        {t('title')}
-      </div>
-    </React.Fragment>
+    <div className={classNames([styles.overview])}>
+      <h1>overview page</h1>
+      {t('title')}
+    </div>
   );
 };
 
