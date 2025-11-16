@@ -14,7 +14,7 @@ export interface SubMicroServicesProps {
 }
 
 const SubMicroServices: React.FC<SubMicroServicesProps> = (props: SubMicroServicesProps) => {
-  const { error, microServiceApp } = useSubMicroServices({
+  const { error, microServiceApps } = useSubMicroServices({
     apps,
     prefix: demoPrefix,
     props: { foo: 'bar', ...props },
@@ -22,7 +22,7 @@ const SubMicroServices: React.FC<SubMicroServicesProps> = (props: SubMicroServic
 
   if (error) return <div style={wrapStyle}>load sub micro services error</div>;
 
-  return <div style={wrapStyle}>{microServiceApp()}</div>;
+  return <div style={wrapStyle}>{microServiceApps}</div>;
 };
 
 export default React.memo(SubMicroServices);

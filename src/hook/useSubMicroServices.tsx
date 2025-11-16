@@ -69,12 +69,8 @@ export const useSubMicroServices = (config: ISubMicroServices) => {
     setError(null);
     if (new RegExp(`^/?${prefix}.*`).test(pathname)) {
       if (!pathname || !Array.isArray(subApps) || !subApps.length) return;
-      const [app] = subApps.filter((v: any) => {
-        return pathname === v.name;
-      });
-      if (app?.name && app.url) {
-        setApp(app);
-      }
+      const app = subApps.find((v: any) => pathname === v.name);
+      if (app?.name && app.url) setApp(app);
     } else {
       console.log('=> The current sub-service is not matched according to pathname');
       console.log('=> pathname', pathname);
@@ -85,7 +81,7 @@ export const useSubMicroServices = (config: ISubMicroServices) => {
   /**
    * 根据筛选出的 单个子服务配置 创建 wujie 微服务
    */
-  const microServiceApp = useMemo(() => {
+  const microServiceApps = useMemo(() => {
     if (app?.name && app.url) {
       const appUrl = app.url + search + hash;
       const appMeta = app.meta || {};
@@ -117,6 +113,6 @@ export const useSubMicroServices = (config: ISubMicroServices) => {
   return {
     app,
     error,
-    microServiceApp,
+    microServiceApps,
   };
 };
