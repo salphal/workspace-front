@@ -1,58 +1,45 @@
-import { setStoreProperties, zustandLocalStorage } from '@src/utils/store/zustand.ts';
-import { ThemeConfig } from 'antd/es/config-provider/context';
+import { setStoreProperties, StoreProperties } from '@src/utils/store/zustand.ts';
+
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
-/**
- * https://ant-design.antgroup.com/docs/react/customize-theme-cn
- */
+const THEME_STORE = 'themeStore';
 
-export interface IThemeStore {
-  mode: 'light' | 'dark' | 'auto';
-  theme: ThemeConfig;
+export interface ThemeStore {
+  key: any;
 }
 
-export const initialTheme: IThemeStore = {
-  mode: 'light',
-  theme: {
-    token: {
-      // Seed Token，影响范围大
-    },
-  },
+export const initialThemeData: ThemeStore = {
+  key: {},
 };
 
-// useShallow(); 对象浅比较, 减少重绘
-// const {
-//   mode,
-// } = useThemeStore(useShallow((state: any) => state));
 const useThemeStore = create(
-  persist<IThemeStore>(
+  persist<ThemeStore>(
     (set, get) => ({
-      ...initialTheme,
+      ...initialThemeData,
       // data: [],
       // setData: () => set((state) => ({foo: "bar"})), // 将返回的对象与之前的对象合并
       // getData: () => get().data.map((v: any) => !!v),
     }),
     {
-      name: 'themeStore', // unique name
-      version: 1,
-      storage: createJSONStorage(() => zustandLocalStorage), // zustandLocalStorage | zustandSessionStorage | localStorage ...
+      name: THEME_STORE, // Unique Name
+      version: 1, // Version Upgrade
+      storage: createJSONStorage(() => localStorage), // LocalStorage | SessionStorage | ...
     },
   ),
 );
 
-export const setThemeStore = (props: any) =>
-  useThemeStore.setState((prev: any) => ({ ...prev, ...props }));
+//# region [common] ================================================================================
 
-export const setThemeProperty = (
-  key: string,
-  value: any,
+export const setThemeProperty = <T>({
+  key,
+  value,
   merge = false,
   insertBefore = false,
   isDeconstruct = true,
-) =>
+}: StoreProperties<T>) =>
   setStoreProperties({
-    name: 'useThemeStore',
+    name: THEME_STORE,
     store: useThemeStore,
     key,
     value,
@@ -61,13 +48,32 @@ export const setThemeProperty = (
     isDeconstruct,
   });
 
-export const setMode = (value: any, merge = false, insertBefore = false, isDeconstruct = false) =>
-  setThemeProperty('mode', value, merge, insertBefore, isDeconstruct);
+export const setThemeStore = (state: Partial<ThemeStore>) => useThemeStore.setState(state);
 
-export const resetMode = () => setThemeProperty('mode', initialTheme.mode, false);
+export const resetThemeStore = async () => {
+  useThemeStore.setState({ ...initialThemeData });
+  useThemeStore.persist.clearStorage();
+  await useThemeStore.persist.rehydrate();
+};
 
-export const resetThemeStore = () => useThemeStore.setState({ ...initialTheme });
+//# endregion ======================================================================================
 
-export const clearThemeStoreStorage = () => useThemeStore.persist.clearStorage();
+//# region [getters] ===============================================================================
+
+export const useKey = () => useThemeStore((state: any) => state.key);
+
+//# endregion ======================================================================================
+
+//# region [setters] ===============================================================================
+
+export const setKey = (value: any) => setThemeProperty<any>({ key: 'key', value });
+
+//# endregion ======================================================================================
+
+//# region [resets] ================================================================================
+
+export const resetKey = () => setThemeProperty({ key: 'key', value: initialThemeData.key });
+
+//# endregion ======================================================================================
 
 export default useThemeStore;

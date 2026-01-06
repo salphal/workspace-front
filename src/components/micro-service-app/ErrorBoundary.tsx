@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
-import { Button, Result } from 'antd';
+
 import { Link } from 'react-router-dom';
+
+import { Button, Result } from 'antd';
 
 interface Props {
   [key: string]: any;
@@ -18,9 +20,9 @@ export default class MicroServiceAppErrorBoundary extends PureComponent<
   State,
   Record<string, never>
 > {
-  static defaultProps: any = {};
+  static readonly defaultProps: any = {};
 
-  static propTypes: Props = {};
+  static readonly propTypes: Props = {};
 
   state: State = {
     hasError: false,

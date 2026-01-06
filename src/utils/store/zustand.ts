@@ -1,20 +1,23 @@
 import { StateStorage } from 'zustand/middleware';
 
-export interface ISetPropertiesConfig {
-  /** 状态库名称 */
-  name?: string;
-  /** 状态实例 */
-  store: ZustandStore;
+export interface StoreProperties<T> {
   /** 更新的键 */
   key: string;
   /** 更新的值 */
-  value: unknown;
+  value: T;
   /** 是否与之前的数据合并 */
   merge?: boolean;
   /** 如果该数据为数组, 是否从前面插入数据 */
   insertBefore?: boolean;
   /** 是否使用解构数据合并值 */
   isDeconstruct?: boolean;
+}
+
+export interface SetStoreOptions<T = unknown> extends StoreProperties<T> {
+  /** 状态库名称 */
+  name?: string;
+  /** 状态实例 */
+  store: ZustandStore;
 }
 
 export interface ZustandStore {
@@ -61,15 +64,15 @@ const loggerWrapper =
  *    - 会保证每次都是一个新的引用地址
  *    - 注意: 会失去解构对象上的私有成员
  */
-export const setStoreProperties = ({
-  name = '',
+export const setStoreProperties = <T>({
+  name = 'ZustandStore',
   store,
   key,
   value,
   merge = true,
   insertBefore = false,
   isDeconstruct = false,
-}: ISetPropertiesConfig) => {
+}: SetStoreOptions<T>) => {
   // 参数验证
   if (!store || !key) {
     console.warn('[setStoreProperties] store 和 key 参数不能为空');
@@ -131,65 +134,93 @@ export const setStoreProperties = ({
   updateState(updateStateByType);
 };
 
+//# region [zustand-storage-utils] =================================================================
+
+/** safe JSON parse */
+const safeParse = (value: string | null): unknown => {
+  if (!value) return null;
+  try {
+    return JSON.parse(value);
+  } catch (err) {
+    console.warn('[zustand-storage] JSON parse failed:', err, value);
+    return null;
+  }
+};
+
+/** safe JSON stringify */
+const safeStringify = (value: unknown): string => {
+  try {
+    return JSON.stringify(value);
+  } catch (err) {
+    console.warn('[zustand-storage] JSON stringify failed:', err, value);
+    return '';
+  }
+};
+
 /** custom zustand localStorage save methods */
 export const zustandLocalStorage: StateStorage = {
-  getItem: (key): string => {
-    return JSON.parse(localStorage.getItem(key) as string);
+  getItem: (key: string): string | null => {
+    const raw = localStorage.getItem(key);
+    return raw;
   },
-  setItem: (key, newValue): void => {
-    localStorage.setItem(key, JSON.stringify(newValue));
+  setItem: (key: string, newValue: unknown): void => {
+    localStorage.setItem(key, safeStringify(newValue));
   },
-  removeItem: (key): void => {
+  removeItem: (key: string): void => {
     localStorage.removeItem(key);
   },
 };
 
 /** custom zustand sessionStorage save methods */
 export const zustandSessionStorage: StateStorage = {
-  getItem: (key): string => {
-    return JSON.parse(sessionStorage.getItem(key) as string);
+  getItem: (key: string): string | null => {
+    const raw = sessionStorage.getItem(key);
+    return raw;
   },
-  setItem: (key, newValue): void => {
-    sessionStorage.setItem(key, JSON.stringify(newValue));
+  setItem: (key: string, newValue: unknown): void => {
+    sessionStorage.setItem(key, safeStringify(newValue));
   },
-  removeItem: (key): void => {
+  removeItem: (key: string): void => {
     sessionStorage.removeItem(key);
   },
 };
 
 /** custom zustand cookie save methods */
 export const zustandCookieStorage: StateStorage = {
-  getItem: (key): string => {
+  getItem: (key: string): string | null => {
     const cookies = document.cookie.split('; ');
     const cookie = cookies.find((c) => c.startsWith(`${key}=`));
-    return cookie ? JSON.parse(decodeURIComponent(cookie.split('=')[1])) : '';
+    return cookie ? decodeURIComponent(cookie.split('=')[1]) : null;
   },
-  setItem: (key, newValue): void => {
-    document.cookie = `${key}=${encodeURIComponent(JSON.stringify(newValue))}; path=/;`;
+  setItem: (key: string, newValue: unknown): void => {
+    document.cookie = `${key}=${encodeURIComponent(safeStringify(newValue))}; path=/;`;
   },
-  removeItem: (key): void => {
+  removeItem: (key: string): void => {
     document.cookie = `${key}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
   },
 };
 
 /** custom zustand url hash save methods */
 export const zustandUrlHashStorage: StateStorage = {
-  getItem: (key): string => {
+  getItem: (key: string): string | null => {
     const searchParams = new URLSearchParams(location.hash.slice(1));
-    const storedValue = searchParams.get(key) ?? '';
-    return JSON.parse(storedValue);
+    return searchParams.get(key);
   },
-  setItem: (key, newValue): void => {
+  setItem: (key: string, newValue: unknown): void => {
     const searchParams = new URLSearchParams(location.hash.slice(1));
-    searchParams.set(key, JSON.stringify(newValue));
+    searchParams.set(key, safeStringify(newValue));
     location.hash = searchParams.toString();
   },
-  removeItem: (key): void => {
+  removeItem: (key: string): void => {
     const searchParams = new URLSearchParams(location.hash.slice(1));
     searchParams.delete(key);
     location.hash = searchParams.toString();
   },
 };
+
+//# endregion  =====================================================================================
+
+//# region [zustand-channel-utils] =================================================================
 
 /** custom zustand cross tab sync save method */
 const createStorageEventHandler = (zustandStore: ZustandStore) => {
@@ -246,3 +277,5 @@ const initCrossTabSync = (
     window.addEventListener('storage', storageHandler);
   }
 };
+
+//# endregion  =====================================================================================

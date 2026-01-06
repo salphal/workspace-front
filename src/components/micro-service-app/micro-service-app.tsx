@@ -1,3 +1,5 @@
+import { destroyApp, plugin } from 'wujie';
+import WujieReact from 'wujie-react';
 import React, {
   ForwardRefRenderFunction,
   Ref,
@@ -5,9 +7,8 @@ import React, {
   useImperativeHandle,
   useState,
 } from 'react';
+
 import { Spin } from 'antd';
-import { destroyApp, plugin } from 'wujie';
-import WujieReact from 'wujie-react';
 
 import MicroServiceAppErrorBoundary from './ErrorBoundary';
 import styles from './index.module.scss';

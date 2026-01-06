@@ -1,6 +1,6 @@
-import React from 'react';
 import { useSubMicroServices } from '@src/hook/useSubMicroServices.tsx';
 import { apps } from '@src/microservice/apps.ts';
+import React from 'react';
 
 import { demoPrefix } from './apps';
 

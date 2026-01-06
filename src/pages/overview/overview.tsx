@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
 import { setData } from '@src/store/global.ts';
-import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import React, { useEffect } from 'react';
+
+import classNames from 'classnames';
 
 import styles from './index.module.scss';
 

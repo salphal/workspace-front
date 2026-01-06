@@ -1,20 +1,19 @@
-import React from 'react';
 import Layout from '@src/layout';
 import routes from '@src/route';
+import React from 'react';
+
 import { useLocation, useRoutes } from 'react-router-dom';
 
 import './app.scss';
 
 import { StyleProvider } from '@ant-design/cssinjs';
 import { WhitePageList } from '@src/constant/white-page.ts';
-import useThemeStore, { IThemeStore } from '@src/store/theme.ts';
-import { ConfigProvider, theme } from 'antd';
+
+import { ConfigProvider } from 'antd';
 import { ThemeProvider } from 'antd-style';
 import zhCN from 'antd/locale/zh_CN';
-import { useShallow } from 'zustand/react/shallow';
 
 function App() {
-  const { mode } = useThemeStore(useShallow((state: IThemeStore) => state));
   const { pathname } = useLocation();
 
   const page = useRoutes(routes);
@@ -27,16 +26,17 @@ function App() {
       <StyleProvider hashPriority="high">
         {/* antd 主题模式: https://ant-design.antgroup.com/docs/react/customize-theme-cn */}
         <ThemeProvider
-          appearance={mode}
+          // appearance={mode}
           theme={{
-            algorithm: mode === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,
+            // algorithm: mode === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,
             /** css-in-js: https://ant-design.antgroup.com/docs/react/css-variables-cn */
             cssVar: true,
             hashed: false,
             /** 重置样式 */
             components: {
               Layout: {
-                headerBg: mode === 'light' ? '#fff' : '#000',
+                // headerBg: mode === 'light' ? '#fff' : '#000',
+                headerBg: '#fff',
               },
             },
           }}

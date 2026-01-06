@@ -1,4 +1,5 @@
 import React, { FC, LazyExoticComponent, startTransition } from 'react';
+
 import { Spin } from 'antd';
 
 const Loading = () => (
@@ -22,7 +23,7 @@ interface LazyImportComponentProps {
 }
 
 // <LazyImportComponent lazyChildren={React.lazy(() => import('./component.tsx'))} />
-const LazyImportComponent: FC<LazyImportComponentProps> = ({
+const LazyImportComp: FC<LazyImportComponentProps> = ({
   lazyChildren: LazyChildren,
   meta = {},
   preload = null,
@@ -60,4 +61,4 @@ const LazyImportComponent: FC<LazyImportComponentProps> = ({
   );
 };
 
-export default React.memo(LazyImportComponent);
+export default React.memo(LazyImportComp);

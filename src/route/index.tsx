@@ -1,5 +1,6 @@
 import OverviewRoutes from '@src/pages/overview/route.tsx';
 import Test from '@src/pages/test';
+
 import { Navigate, type RouteObject } from 'react-router-dom';
 
 /**
@@ -8,7 +9,7 @@ import { Navigate, type RouteObject } from 'react-router-dom';
 const routes: RouteObject[] = [
   {
     path: '/',
-    element: <Navigate to="/test" />,
+    element: <Navigate to="/overview" />,
   },
   {
     path: '/overview/*',

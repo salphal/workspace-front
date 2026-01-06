@@ -10,10 +10,12 @@
 
 import '@testing-library/jest-dom';
 
-import * as React from 'react';
 import { server } from '@src/__mock__/node';
-import * as Antd from 'antd';
+import * as React from 'react';
+
 import * as ReactRouterDom from 'react-router-dom';
+
+import * as Antd from 'antd';
 
 // 🧩 设置基础 HTML 结构（jest 不会加载 index.html）
 document.title = 'vite react front temp';
