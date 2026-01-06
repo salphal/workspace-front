@@ -50,7 +50,7 @@ module.exports = {
     [
       '@babel/plugin-transform-runtime',
       {
-        corejs: false, // 不注入 polyfill(由 Vite/浏览器负责)
+        corejs: true, // 不注入 polyfill(由 Vite/浏览器负责)
         helpers: true,
         regenerator: true,
         version: '^7.0.0',

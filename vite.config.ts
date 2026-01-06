@@ -136,14 +136,60 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
         resolvers: [AntdResolver()],
         // 需要配置 tsconfig.json 中 includes: ['auto-imports.d.ts']
         imports: [
-          'react',
+          {
+            react: [
+              // 默认导出
+              ['default', 'React'],
+              // 基础 Hooks
+              'useState',
+              'useEffect',
+              'useLayoutEffect',
+              'useMemo',
+              'useCallback',
+              'useRef',
+              'useContext',
+              'useReducer',
+              'useTransition',
+              'useDeferredValue',
+              'useId',
+              'useSyncExternalStore',
+              'useDebugValue',
+              'useImperativeHandle',
+              // 组件辅助
+              'memo',
+              'forwardRef',
+              'lazy',
+              'Suspense',
+              'startTransition',
+              'Fragment',
+              'StrictMode',
+              // Children API
+              ['Children', 'ReactChildren'],
+              // Component API
+              'cloneElement',
+              'createElement',
+              'isValidElement',
+              'createFactory',
+              'createRef',
+              // Context
+              'createContext',
+              // Profiler
+              'Profiler',
+            ],
+            // ReactDOM 自动导入
+            'react-dom': [
+              'createPortal',
+              'findDOMNode',
+              'flushSync',
+            ],
+            // ReactDOM Client
+            'react-dom/client': [
+              'createRoot',
+              'hydrateRoot',
+            ],
+          },
+          // 路由
           'react-router-dom',
-          // {
-          //   react: [
-          //     // default imports
-          //     ['default', 'React'], // import { default as axios } from 'axios',
-          //   ],
-          // },
         ],
       }),
       /**
@@ -391,7 +437,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
         scss: {
           // 加入全局变量( 不要单独引入该文件样式, 否则在最中产物中会重复出现 )
           // 引入多个文件以；分割
-          additionalData: '@use \'@src/style/index.scss\' as *;',
+          additionalData: '@use \'@src/styles/index.scss\' as *;',
           javascriptEnabled: true,
         },
       },

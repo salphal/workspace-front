@@ -31,13 +31,33 @@ module.exports = {
    * ✅ 兼容 ESLint 9.x 的 import 规则
    */
   importOrder: [
-    '^(react|react-dom)$', // 1️⃣ React 核心包
-    '^([a-z]|@[a-z])', // 2️⃣ 第三方依赖(npm 包)
-    '', // 3️⃣ 分隔符(空行)
-    '^[./]', // 4️⃣ 本地文件(相对路径)
+    // 1️⃣ React 核心
+    '^(react|react-dom)$',
+    '', // 分隔符（空行）
+
+    // 2️⃣ 状态管理 / 路由 / Hooks / 常用上下文库
+    '^(@reduxjs|mobx|react-router.*|zustand|ahooks)',
+    '', // 分隔符（空行）
+
+    // 3️⃣ UI 组件库
+    '^antd|^@mui|^chakra-ui|^element-plus|^@ant-design/pro-components|^@ant-design/icons',
+    '', // 分隔符（空行）
+
+    // 4️⃣ 工具 / 通用库
+    '^axios|^lodash|^dayjs|^classnames|^uuid|^query-string|^copy-to-clipboard|^file-saver|^js-md5|^highlight.js',
+    '', // 分隔符（空行）
+
+    // 5️⃣ 第三方可视化 / 动画 / 数据处理库
+    '^d3|^rc-motion',
+    '', // 分隔符（空行）
+
+    // 6️⃣ 本地 alias
+    '^@/', // 你项目的 alias, 如 '@src', '@components'
+    '', // 分隔符（空行）
+
+    // 7️⃣ 相对路径
+    '^[./]', // 相对路径文件，如 './', '../'
   ],
-  // importOrderSeparation: true, // 各分组之间插入空行
-  // importOrderSortSpecifiers: true, // 同一导入语句内按字母顺序排列变量
 
   /**
    * 🔌 插件配置

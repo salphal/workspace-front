@@ -42,7 +42,6 @@ export default [
       /* ---------- ✨ 代码风格 ---------- */
       quotes: ['error', 'single'],
       semi: ['error', 'always'],
-
       /* ---------- 🧹 未使用代码清理 ---------- */
       'no-unused-vars': 'off',
     },
@@ -71,11 +70,12 @@ export default [
         'warn',
         {
           vars: 'all',
-          varsIgnorePattern: '.*',
+          varsIgnorePattern: '^_',
           args: 'after-used',
-          argsIgnorePattern: '.*',
+          argsIgnorePattern: '^_',
         },
       ],
+
     },
   },
 
@@ -96,6 +96,9 @@ export default [
       'react/prop-types': 'off',
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'off',
+      /* ---------- 🔧 Auto-Import 支持 ---------- */
+      'react/jsx-no-undef': 'off',
+      'no-undef': 'off',
     },
     settings: {
       react: {
