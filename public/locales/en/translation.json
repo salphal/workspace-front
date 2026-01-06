@@ -1,4 +1,4 @@
 {
-  "title": "Title",
-  "search": "Search"
+  "layout.header.title": "Title",
+  "layout.header.input.placeholder": "Please input key"
 }
