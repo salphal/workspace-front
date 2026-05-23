@@ -4,9 +4,9 @@ import React from 'react';
 import { useBreakpoint } from '@ant-design/pro-components';
 import { Layout } from 'antd';
 
-import '@ant-design/colors';
+import styles from './index.module.scss';
 
-const classPrefix = 'layout-plus';
+import '@ant-design/colors';
 
 export interface LayoutProps {
   children?: React.ReactNode;
@@ -32,14 +32,14 @@ const LayoutPlus: React.FC<LayoutProps> = (props: LayoutProps) => {
         },
       }}
     >
-      <Layout className={classPrefix} hasSider={screens === 'xs'}>
+      <Layout className={styles['layout-plus']} hasSider={screens === 'xs'}>
         <LayoutHeader />
-        <Layout className={`${classPrefix}__content`}>
+        <Layout className={styles['layout-plus__content']}>
           <Layout>
             <Layout.Content>
               <Suspense fallback={<Spin size={'large'} />}>{children}</Suspense>
             </Layout.Content>
-            <Layout.Footer className={`${classPrefix}__footer`}>footer</Layout.Footer>
+            <Layout.Footer className={styles['layout-plus__footer']}>footer</Layout.Footer>
           </Layout>
         </Layout>
       </Layout>

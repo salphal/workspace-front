@@ -1,6 +1,5 @@
 import LanguageSwitcher from '@src/components/language-switcher';
 import ThemeSwitcher from '@src/components/theme-switcher';
-import HeaderGithub from '@src/layout/components/header/components/github.tsx';
 import HeaderLogo from '@src/layout/components/header/components/logo.tsx';
 import HeaderSearch from '@src/layout/components/header/components/search.tsx';
 import { setLocale } from '@src/store/language';
@@ -8,7 +7,6 @@ import { setThemeStore } from '@src/store/theme';
 import i18n from 'i18next';
 import React, { ReactNode, Ref } from 'react';
 
-import { UserOutlined } from '@ant-design/icons';
 import { useBreakpoint } from '@ant-design/pro-components';
 import { Layout as AntdLayout } from 'antd';
 
@@ -57,8 +55,8 @@ const LayoutHeader: React.ForwardRefRenderFunction<LayoutHeaderRef, LayoutHeader
                   <Space align={'center'} split={<Divider type="vertical" />}>
                     <ThemeSwitcher onChange={themeOnChange} />
                     <LanguageSwitcher onChange={languageOnChange} />
-                    <HeaderGithub />
-                    <Avatar size={32} icon={<UserOutlined />} />
+                    {/*<HeaderGithub />*/}
+                    {/*<Avatar size={32} icon={<UserOutlined />} />*/}
                   </Space>
                 </Flex>
               </Col>
