@@ -7,10 +7,12 @@ const THEME_STORE = 'themeStore';
 
 export interface ThemeStore {
   key: any;
+  mode: string;
 }
 
 export const initialThemeData: ThemeStore = {
   key: {},
+  mode: 'light',
 };
 
 const useThemeStore = create(

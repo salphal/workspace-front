@@ -8,17 +8,24 @@ import './app.scss';
 
 import { StyleProvider } from '@ant-design/cssinjs';
 import { WhitePageList } from '@src/constant/white-page.ts';
+import useLanguageStore from '@src/store/language.ts';
+import useThemeStore from '@src/store/theme.ts';
 
-import { ConfigProvider } from 'antd';
+import { ConfigProvider, theme } from 'antd';
 import { ThemeProvider } from 'antd-style';
+import enUS from 'antd/locale/en_US';
 import zhCN from 'antd/locale/zh_CN';
 
 function App() {
   const { pathname } = useLocation();
+  const locale = useLanguageStore((s) => s.locale);
+  const appMode = useThemeStore((s) => s.mode);
 
   const page = useRoutes(routes);
 
   if (WhitePageList.includes(pathname)) return page;
+
+  const antdLocale = locale === 'en' ? enUS : zhCN;
 
   return (
     <React.Fragment>
@@ -26,23 +33,22 @@ function App() {
       <StyleProvider hashPriority="high">
         {/* antd 主题模式: https://ant-design.antgroup.com/docs/react/customize-theme-cn */}
         <ThemeProvider
-          // appearance={mode}
+          appearance={appMode}
           theme={{
-            // algorithm: mode === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,
+            algorithm: appMode === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,
             /** css-in-js: https://ant-design.antgroup.com/docs/react/css-variables-cn */
             cssVar: true,
             hashed: false,
             /** 重置样式 */
             components: {
               Layout: {
-                // headerBg: mode === 'light' ? '#fff' : '#000',
-                headerBg: '#fff',
+                headerBg: appMode === 'light' ? '#fff' : '#000',
               },
             },
           }}
         >
           {/* antd 语言设置*/}
-          <ConfigProvider locale={zhCN}>
+          <ConfigProvider locale={antdLocale}>
             <Layout>{page}</Layout>
           </ConfigProvider>
         </ThemeProvider>

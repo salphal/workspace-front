@@ -6,9 +6,9 @@ const HeaderLogo = () => {
   return (
     <div>
       <span className={''}>
-        <i className={'bi-tag-fill'}></i>
+        <i className={'bi-tag-fill'} />
       </span>
-      <span className={''}>{t('layout.header.title')}</span>
+      <span className={'header-title'}>{t('layout.header.title')}</span>
     </div>
   );
 };

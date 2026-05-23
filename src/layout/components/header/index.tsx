@@ -3,6 +3,9 @@ import ThemeSwitcher from '@src/components/theme-switcher';
 import HeaderGithub from '@src/layout/components/header/components/github.tsx';
 import HeaderLogo from '@src/layout/components/header/components/logo.tsx';
 import HeaderSearch from '@src/layout/components/header/components/search.tsx';
+import { setLocale } from '@src/store/language';
+import { setThemeStore } from '@src/store/theme';
+import i18n from 'i18next';
 import React, { ReactNode, Ref } from 'react';
 
 import { UserOutlined } from '@ant-design/icons';
@@ -27,9 +30,15 @@ const LayoutHeader: React.ForwardRefRenderFunction<LayoutHeaderRef, LayoutHeader
 
   useImperativeHandle(ref, () => ({}));
 
-  const themeOnChange = (mode: string) => {};
+  const themeOnChange = (mode: string) => {
+    setThemeStore({ mode });
+  };
 
-  const languageOnChange = (lang: string) => {};
+  const languageOnChange = (lang: string) => {
+    console.log(22222, lang);
+    i18n.changeLanguage(lang);
+    setLocale(lang);
+  };
 
   return (
     <Header className={classNames([['layout-header']])}>

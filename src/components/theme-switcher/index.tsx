@@ -109,7 +109,7 @@ const ThemeSwitcher: ForwardRefRenderFunction<ThemeSwitcherRef, ThemeSwitcherPro
     }
   };
 
-  const switchOnChange = (value: boolean) => {
+  const themeOnChange = (value: boolean) => {
     setChecked(value);
     const mode = getThemeMode(value);
     setMode(mode);
@@ -149,10 +149,9 @@ const ThemeSwitcher: ForwardRefRenderFunction<ThemeSwitcherRef, ThemeSwitcherPro
         <Switch
           className={styles['theme-switcher']}
           value={checked}
-          onChange={switchOnChange}
+          onChange={themeOnChange}
           checkedChildren={<SunFilled className={styles.sum} />}
           unCheckedChildren={<MoonFilled className={styles.moon} />}
-          style={styles}
           {...restProps}
         />
       )}

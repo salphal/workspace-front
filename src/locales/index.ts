@@ -1,16 +1,13 @@
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import Backend from 'i18next-http-backend';
 import { initReactI18next } from 'react-i18next';
 
 import dayjs from 'dayjs';
 
-/**
- * 多语言配置文件在 /public/locales 中
- */
+import en from './en/translation.json';
+import zh from './zh/translation.json';
 
 i18n
-  .use(Backend)
   // 检测用户当前使用的语言
   // 文档: https://github.com/i18next/i18next-browser-languageDetector
   .use(LanguageDetector)
@@ -21,11 +18,14 @@ i18n
   .init({
     debug: true,
     fallbackLng: 'en',
+    supportedLngs: ['en', 'zh'],
+    load: 'languageOnly',
+    resources: {
+      en: { translation: en },
+      zh: { translation: zh },
+    },
     interpolation: {
       escapeValue: false,
-    },
-    backend: {
-      loadPath: '/locales/{{lng}}/translation.json',
     },
     react: {
       useSuspense: false, // 禁用 suspense，避免刷新问题
