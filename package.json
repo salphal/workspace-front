@@ -12,6 +12,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "prepare": "husky",
+    "cf:deploy": "npx wrangler deploy",
     "husky": "echo 'npx lint-staged' > .husky/pre-commit && echo 'npx --no-install commitlint --edit $1' > .husky/commit-msg",
     "lint": "eslint . --ext js,jsx,ts,tsx --report-unused-disable-directives --max-warnings 100",
     "lint:fix": "eslint . --ext js,jsx,ts,tsx --report-unused-disable-directives --max-warnings 100 --fix",
@@ -64,7 +65,6 @@
     "unplugin-auto-import": "^0.18.3",
     "vite-plugin-cdn-import": "^1.0.1",
     "vite-plugin-imagemin": "^0.6.1",
-    "vite-plugin-pwa": "^0.20.5",
     "wujie": "^1.0.22",
     "wujie-react": "^1.0.22"
   },
@@ -106,7 +106,7 @@
     "@types/uuid": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
-    "@vitejs/plugin-legacy": "^5.4.2",
+    "@vitejs/plugin-legacy": "^8.0.2",
     "@vitejs/plugin-react": "^4.2.1",
     "antd-style": "^3.6.2",
     "autoprefixer": "^10.4.18",
@@ -162,7 +162,10 @@
     "uuid": "^9.0.1",
     "vite": "8.0.5",
     "vite-plugin-compression": "^0.5.1",
+    "vite-plugin-pwa": "^1.3.0",
     "vite-plugin-svgr": "^4.3.0",
+    "workbox-build": "^7.4.1",
+    "workbox-window": "^7.4.1",
     "zustand": "^4.5.2"
   },
   "lint-staged": {
