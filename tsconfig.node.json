@@ -18,7 +18,7 @@
      * Node 或 bundler 都可;此处推荐 "node",适合 Node 运行环境;
      * ("bundler" 更适用于前端代码)
      */
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
 
     /**
      * 🧠 跳过库文件类型检查
