@@ -1,2 +1,4 @@
-@forward './theme/light';
-@forward './theme/dark';
+// 使用 @use (而非 @forward) 避免两个文件的同名 SCSS 变量冲突
+// 每个文件的 CSS 自定义属性通过 [data-theme] 选择器独立输出
+@use './theme/light';
+@use './theme/dark';

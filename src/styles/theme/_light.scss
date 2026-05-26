@@ -1,0 +1,268 @@
+// ========================================================================
+// ☀️ 亮色主题 - CSS 自定义属性
+// 修改此文件中的颜色值即可调整亮色主题的色调
+// ========================================================================
+
+@use '../functions' as *;
+
+// ------------------------------------------------------------------------
+//  基础背景色
+// ------------------------------------------------------------------------
+$body-bg: #f5f5f5 !default;
+$component-bg: #fff !default;
+$elevated-bg: #fff !default;
+$hover-bg: rgba(0, 0, 0, 0.04) !default;
+$active-bg: rgba(0, 0, 0, 0.06) !default;
+
+// ------------------------------------------------------------------------
+//  文字颜色
+// ------------------------------------------------------------------------
+$text-primary: rgba(0, 0, 0, 0.88) !default;
+$text-secondary: rgba(0, 0, 0, 0.65) !default;
+$text-tertiary: rgba(0, 0, 0, 0.45) !default;
+$text-disabled: rgba(0, 0, 0, 0.25) !default;
+$text-inverse: #fff !default;
+
+// ------------------------------------------------------------------------
+//  边框颜色
+// ------------------------------------------------------------------------
+$border-color: #d9d9d9 !default;
+$border-color-secondary: #f0f0f0 !default;
+$border-color-split: #f0f0f0 !default;
+
+// ------------------------------------------------------------------------
+//  阴影
+// ------------------------------------------------------------------------
+$shadow-color: rgba(0, 0, 0, 0.15) !default;
+$shadow-color-secondary: rgba(0, 0, 0, 0.06) !default;
+
+// ------------------------------------------------------------------------
+//  品牌色 (primary)
+// ------------------------------------------------------------------------
+$primary-color: #1677ff !default;
+$primary-color-hover: #4096ff !default;
+$primary-color-active: #0958d9 !default;
+$primary-color-outline: rgba(22, 119, 255, 0.12) !default;
+$primary-1: #e6f4ff !default;
+$primary-2: #bae0ff !default;
+$primary-3: #91caff !default;
+$primary-4: #69b1ff !default;
+$primary-5: #4096ff !default;
+$primary-6: #1677ff !default;
+$primary-7: #0958d9 !default;
+
+// ------------------------------------------------------------------------
+//  状态色
+// ------------------------------------------------------------------------
+$success-color: #52c41a !default;
+$warning-color: #faad14 !default;
+$error-color: #ff4d4f !default;
+$info-color: #1677ff !default;
+
+// --- 状态色 背景/边框 变体 ---
+$success-bg: #f6ffed !default;
+$success-border: #b7eb8f !default;
+$warning-bg: #fffbe6 !default;
+$warning-border: #ffe58f !default;
+$error-bg: #fff2f0 !default;
+$error-border: #ffccc7 !default;
+$info-bg: #e6f4ff !default;
+$info-border: #91caff !default;
+
+// ------------------------------------------------------------------------
+//  链接
+// ------------------------------------------------------------------------
+$link-color: #1677ff !default;
+$link-hover-color: #4096ff !default;
+$link-active-color: #0958d9 !default;
+
+// ------------------------------------------------------------------------
+//  布局组件
+// ------------------------------------------------------------------------
+$header-bg: #fff !default;
+$header-text: rgba(0, 0, 0, 0.88) !default;
+$sider-bg: #fff !default;
+$sider-text: rgba(0, 0, 0, 0.65) !default;
+$footer-bg: #f5f5f5 !default;
+$footer-text: rgba(0, 0, 0, 0.45) !default;
+
+// ------------------------------------------------------------------------
+//  菜单
+// ------------------------------------------------------------------------
+$menu-bg: #fff !default;
+$menu-item-bg-hover: rgba(0, 0, 0, 0.04) !default;
+$menu-item-bg-active: rgba(0, 0, 0, 0.06) !default;
+$menu-text: rgba(0, 0, 0, 0.65) !default;
+$menu-text-hover: rgba(0, 0, 0, 0.88) !default;
+$menu-text-active: #1677ff !default;
+
+// ------------------------------------------------------------------------
+//  表格
+// ------------------------------------------------------------------------
+$table-header-bg: #fafafa !default;
+$table-header-text: rgba(0, 0, 0, 0.88) !default;
+$table-row-bg: #fff !default;
+$table-row-hover-bg: rgba(0, 0, 0, 0.02) !default;
+$table-border-color: #f0f0f0 !default;
+
+// ------------------------------------------------------------------------
+//  输入框 / 表单
+// ------------------------------------------------------------------------
+$input-bg: #fff !default;
+$input-border-color: #d9d9d9 !default;
+$input-hover-border-color: #4096ff !default;
+$input-placeholder-color: rgba(0, 0, 0, 0.25) !default;
+
+// ------------------------------------------------------------------------
+//  弹窗 / Modal / Drawer
+// ------------------------------------------------------------------------
+$modal-header-bg: #fff !default;
+$modal-content-bg: #fff !default;
+$modal-mask-bg: rgba(0, 0, 0, 0.45) !default;
+
+// ------------------------------------------------------------------------
+//  标签 / Tag
+// ------------------------------------------------------------------------
+$tag-bg: #fafafa !default;
+$tag-border-color: #d9d9d9 !default;
+
+// ------------------------------------------------------------------------
+//  滚动条
+// ------------------------------------------------------------------------
+$scrollbar-thumb: rgba(0, 0, 0, 0.2) !default;
+$scrollbar-track: transparent !default;
+$scrollbar-thumb-hover: rgba(0, 0, 0, 0.3) !default;
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  输出为 CSS 自定义属性 (CSS Variables)
+//  这些变量在 [data-theme="light"] 选择器下生效
+// ═══════════════════════════════════════════════════════════════════════════
+
+[data-theme='light'] {
+  // ----------------------------------------------------------------------
+  //  🌐 基础
+  // ----------------------------------------------------------------------
+  --app-body-bg: #{$body-bg};
+  --app-component-bg: #{$component-bg};
+  --app-elevated-bg: #{$elevated-bg};
+  --app-hover-bg: #{$hover-bg};
+  --app-active-bg: #{$active-bg};
+
+  // ----------------------------------------------------------------------
+  //  📝 文字
+  // ----------------------------------------------------------------------
+  --app-text-primary: #{$text-primary};
+  --app-text-secondary: #{$text-secondary};
+  --app-text-tertiary: #{$text-tertiary};
+  --app-text-disabled: #{$text-disabled};
+  --app-text-inverse: #{$text-inverse};
+
+  // ----------------------------------------------------------------------
+  //  🔲 边框
+  // ----------------------------------------------------------------------
+  --app-border-color: #{$border-color};
+  --app-border-color-secondary: #{$border-color-secondary};
+  --app-border-color-split: #{$border-color-split};
+
+  // ----------------------------------------------------------------------
+  //  💡 阴影
+  // ----------------------------------------------------------------------
+  --app-shadow-color: #{$shadow-color};
+  --app-shadow-color-secondary: #{$shadow-color-secondary};
+
+  // ----------------------------------------------------------------------
+  //  🎨 品牌色
+  // ----------------------------------------------------------------------
+  --app-primary-color: #{$primary-color};
+  --app-primary-color-hover: #{$primary-color-hover};
+  --app-primary-color-active: #{$primary-color-active};
+  --app-primary-1: #{$primary-1};
+  --app-primary-2: #{$primary-2};
+  --app-primary-3: #{$primary-3};
+  --app-primary-4: #{$primary-4};
+  --app-primary-5: #{$primary-5};
+  --app-primary-6: #{$primary-6};
+  --app-primary-7: #{$primary-7};
+
+  // ----------------------------------------------------------------------
+  //  ✅ 状态色
+  // ----------------------------------------------------------------------
+  --app-success-color: #{$success-color};
+  --app-warning-color: #{$warning-color};
+  --app-error-color: #{$error-color};
+  --app-info-color: #{$info-color};
+
+  --app-success-bg: #{$success-bg};
+  --app-warning-bg: #{$warning-bg};
+  --app-error-bg: #{$error-bg};
+  --app-info-bg: #{$info-bg};
+
+  --app-success-border: #{$success-border};
+  --app-warning-border: #{$warning-border};
+  --app-error-border: #{$error-border};
+  --app-info-border: #{$info-border};
+
+  // ----------------------------------------------------------------------
+  //  🔗 链接
+  // ----------------------------------------------------------------------
+  --app-link-color: #{$link-color};
+  --app-link-hover-color: #{$link-hover-color};
+  --app-link-active-color: #{$link-active-color};
+
+  // ----------------------------------------------------------------------
+  //  🧩 布局
+  // ----------------------------------------------------------------------
+  --app-header-bg: #{$header-bg};
+  --app-header-text: #{$header-text};
+  --app-sider-bg: #{$sider-bg};
+  --app-sider-text: #{$sider-text};
+  --app-footer-bg: #{$footer-bg};
+  --app-footer-text: #{$footer-text};
+
+  // ----------------------------------------------------------------------
+  //  📋 菜单
+  // ----------------------------------------------------------------------
+  --app-menu-bg: #{$menu-bg};
+  --app-menu-item-bg-hover: #{$menu-item-bg-hover};
+  --app-menu-item-bg-active: #{$menu-item-bg-active};
+  --app-menu-text: #{$menu-text};
+  --app-menu-text-hover: #{$menu-text-hover};
+  --app-menu-text-active: #{$menu-text-active};
+
+  // ----------------------------------------------------------------------
+  //  📊 表格
+  // ----------------------------------------------------------------------
+  --app-table-header-bg: #{$table-header-bg};
+  --app-table-header-text: #{$table-header-text};
+  --app-table-row-bg: #{$table-row-bg};
+  --app-table-row-hover-bg: #{$table-row-hover-bg};
+  --app-table-border-color: #{$table-border-color};
+
+  // ----------------------------------------------------------------------
+  //  ⌨️ 输入框
+  // ----------------------------------------------------------------------
+  --app-input-bg: #{$input-bg};
+  --app-input-border-color: #{$input-border-color};
+  --app-input-hover-border-color: #{$input-hover-border-color};
+  --app-input-placeholder-color: #{$input-placeholder-color};
+
+  // ----------------------------------------------------------------------
+  //  🗔 弹窗
+  // ----------------------------------------------------------------------
+  --app-modal-header-bg: #{$modal-header-bg};
+  --app-modal-content-bg: #{$modal-content-bg};
+  --app-modal-mask-bg: #{$modal-mask-bg};
+
+  // ----------------------------------------------------------------------
+  //  🏷️ 标签
+  // ----------------------------------------------------------------------
+  --app-tag-bg: #{$tag-bg};
+  --app-tag-border-color: #{$tag-border-color};
+
+  // ----------------------------------------------------------------------
+  //  📜 滚动条
+  // ----------------------------------------------------------------------
+  --app-scrollbar-thumb: #{$scrollbar-thumb};
+  --app-scrollbar-track: #{$scrollbar-track};
+  --app-scrollbar-thumb-hover: #{$scrollbar-thumb-hover};
+}

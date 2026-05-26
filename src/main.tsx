@@ -9,6 +9,7 @@ import 'bootstrap-icons/font/bootstrap-icons.min.css';
 import 'normalize.css';
 // 重置部分基础样式( eg: 设置高度 100% 并继承 )
 import '@src/styles/reboot.scss';
+import '@src/styles/theme.scss';
 // 初始化 px 转换 rem( 根据媒体查询, 仅在指定大小下生效, 用于移动端 )
 import '@src/utils/rem.ts';
 // 初始化 多语言

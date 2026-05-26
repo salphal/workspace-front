@@ -7,7 +7,7 @@ const THEME_STORE = 'themeStore';
 
 export interface ThemeStore {
   key: any;
-  mode: string;
+  mode: 'light' | 'dark';
 }
 
 export const initialThemeData: ThemeStore = {
