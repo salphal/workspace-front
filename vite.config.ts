@@ -63,14 +63,11 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
         },
       },
     },
-    plugins: [
-      react(),
-      /**
-       * code-inspector-plugin + locatorJs( chrome plugin )
-       * 开发时通过点击快速跳转到源码
-       */
-      codeInspectorPlugin({ bundler: 'vite' }),
-      /**
+    plugins: [react(), /**
+     * code-inspector-plugin + locatorJs( chrome plugin )
+     * 开发时通过点击快速跳转到源码
+     */
+      codeInspectorPlugin({ bundler: 'vite' }), /**
        * https://github.com/vite-pwa/vite-plugin-pwa/blob/main/src/types.ts
        * 离线缓存
        *   - workbox    // 内部使用 google 开发的这个库
@@ -127,8 +124,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
             },
           ],
         },
-      }),
-      /**
+      }), /**
        * 自动全局引入指定 API
        * https://github.com/unplugin/unplugin-auto-import
        */
@@ -191,12 +187,10 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
           // 路由
           'react-router-dom',
         ],
-      }),
-      /**
+      }), /**
        * 打包后开启资源大小分析页面
        */
-      visualizer({ open: true }),
-      /**
+      visualizer({ open: true }), /**
        * 兼容低版本浏览器
        * https://github.com/vitejs/vite/tree/main/packages/plugin-legacy
        */
@@ -205,8 +199,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
         targets: ['chrome 52', 'Android > 39', 'iOS >= 10.3', 'iOS >= 10.3'],
         // 面向 IE11 时需要此插件
         additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
-      }),
-      /**
+      }), /**
        * 需要配置在以下配置之一
        *  - 主模块 http
        *  - 各个服务 server
@@ -269,8 +262,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
          * nginx 中不要删除原文件( 否则无法匹配压缩的文件 demo.js => demo.js.gz )
          */
         deleteOriginFile: false, // 源文件压缩后是否删除( false: 服务器会自动优先返回同名的 .gzip 资源, 如果找不到还可以拿原始文件 )
-      }),
-      /**
+      }), /**
        * 将 svg 作为组件使用
        * https://github.com/pd4d10/vite-plugin-svgr
        *
@@ -292,8 +284,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
         esbuildOptions: {},
         include: '**/*.svg?react',
         exclude: '**/*.svg',
-      }),
-      /**
+      }), /**
        * 图片压缩
        */
       viteImagemin({
@@ -322,8 +313,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
             },
           ],
         },
-      }),
-      /**
+      }), /**
        * 开启 cdn
        */
       viteCDNPlugin({

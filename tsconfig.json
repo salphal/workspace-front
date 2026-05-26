@@ -123,6 +123,7 @@
     "src",
     "auto-imports.d.ts",
     "node_modules/vite-plugin-pwa/client.d.ts",
+    "vite.config.ts",
     "jest.setup.ts",
     "**/*.test.ts",
     "**/*.test.tsx"
