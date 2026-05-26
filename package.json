@@ -30,6 +30,7 @@
     "@ant-design/icons": "^5.3.7",
     "@ant-design/pro-components": "^2.6.51",
     "@popperjs/core": "^2.11.8",
+    "@rolldown/binding-darwin-arm64": "1.0.0-rc.12",
     "ahooks": "^3.8.1",
     "antd": "^5.15.3",
     "axios": "1.15.2",

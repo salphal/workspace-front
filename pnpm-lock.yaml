@@ -23,6 +23,9 @@ importers:
       '@popperjs/core':
         specifier: ^2.11.8
         version: 2.11.8
+      '@rolldown/binding-darwin-arm64':
+        specifier: 1.0.0-rc.12
+        version: 1.0.0-rc.12
       ahooks:
         specifier: ^3.8.1
         version: 3.8.1(react@18.3.1)
@@ -11432,8 +11435,7 @@ snapshots:
   '@rolldown/binding-android-arm64@1.0.0-rc.12':
     optional: true
 
-  '@rolldown/binding-darwin-arm64@1.0.0-rc.12':
-    optional: true
+  '@rolldown/binding-darwin-arm64@1.0.0-rc.12': {}
 
   '@rolldown/binding-darwin-x64@1.0.0-rc.12':
     optional: true
